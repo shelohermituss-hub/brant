@@ -11,12 +11,16 @@ const MEMBERS: WonnMember[] = Array.from({ length: 10 }, (_, i) => ({
   status: "upcoming" as const,
 }));
 
+// Reflète les manm envite nan group-create-members-screen.tsx (menm woustè
+// kontak, menm 3 premye konfime pa defo).
 const INVITEES = [
-  { name: "Marie L. (òganizatè)", confirmed: true },
+  { name: "Marie L. (manman sòl)", confirmed: true },
   { name: "Peterson J.", confirmed: true },
   { name: "Sandy G.", confirmed: true },
   { name: "Diego M.", confirmed: false },
-  { name: "Sara D.", confirmed: false },
+  { name: "Fabiola R.", confirmed: false },
+  { name: "Junior P.", confirmed: false },
+  { name: "Nadège C.", confirmed: false },
 ];
 
 export function GroupFormingScreen() {

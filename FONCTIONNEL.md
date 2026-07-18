@@ -147,3 +147,40 @@ reconstruit :
 ⚠️ Non traité dans cette passe : le transfert wallet → MonCash depuis la
 section "Kont konekte" est affiché mais pas encore relié à un flow de
 transfert réel (aucune route dédiée construite).
+
+## 9. Flow manman sòl — création/configuration d'un sòl (2026-07-18)
+
+Le flow `/group/create/*` (membre rejoignant) est étendu en flow de la
+**manman sòl** (organisatrice), passé de 4 à 5 étapes. Détail complet dans
+`DESIGN.md` §9. Résumé des fichiers :
+
+| Étape | Route | Composant | Statut |
+|---|---|---|---|
+| 1. Montant | `/group/create/amount` | `group-create-amount-screen.tsx` | ✅ Curseur (`AmountSlider`, nouveau) |
+| 2. Durée + fréquence | `/group/create/duration` | `group-create-duration-screen.tsx` (renommé depuis `contribution`) | ✅ Neuf |
+| 3. Position | `/group/create/position` | `group-create-position-screen.tsx` | ✅ Restylé (créneaux verrouillés/disponible, score gardé) |
+| 4. Membres | `/group/create/members` | `group-create-members-screen.tsx` | ✅ Nouveau |
+| 5. Récap | `/group/create/review` | `group-create-review-screen.tsx` | ✅ Étendu (frais dérivés de `calculateCollectionFee`) |
+
+Nouveaux composants : `amount-slider.tsx` (aucun slider n'existait avant
+dans le repo), `step-progress-bar.tsx` (barre segmentée, remplace le texte
+brut "Etap X sou Y" utilisé partout ailleurs jusqu'ici).
+
+`group-forming-screen.tsx` (déjà construit) reste la conclusion du flow —
+la confirmation de l'étape 5 y route directement. Sa liste `INVITEES`
+alignée sur le même jeu de contacts que `group-create-members-screen.tsx`
+(pas de state partagé entre routes — cohérent avec le reste de l'app, qui
+n'a jamais fait de threading d'état inter-écrans, seulement des données
+mock alignées).
+
+⚠️ **Contrainte moncash-flow respectée explicitement** : l'étape position
+ne montre aucun frais différencié par créneau (contrairement à la capture
+de référence) car ce mécanisme n'existe pas dans le barème réel du skill
+— l'inventer aurait violé sa Règle 6. Les frais du récapitulatif sont une
+somme dérivée de la vraie formule, jamais une estimation locale.
+
+⚠️ **Pas de framework de test automatisé dans ce repo** — vérification
+faite par capture Playwright (méthode constante du projet), pas de suite
+de tests unitaires/E2E branchée à `npm test`. Suggestions de tests futurs
+documentées dans le plan de cette tâche si un framework est introduit plus
+tard.

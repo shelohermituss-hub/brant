@@ -201,3 +201,41 @@ trois cartes tontine :
 Les logos de marques tierces (Nike, Coca-Cola, Walmart, GE), les news
 financières et la liste "Most Traded" n'ont aucune transposition possible
 et sont supprimés sans reformulation.
+
+## 9. Flow de création par la manman sòl (2026-07-18)
+
+`/group/create/*` (5 étapes) est le flow de la **manman sòl** — la
+personne qui configure et lance un sòl. Structure reprise d'une app
+tierce (curseur de montant, cartes de palier de durée, cartes de créneau,
+barre de progression segmentée) — jamais son vocabulaire, ses couleurs
+(bleu → notre vert), ni sa logique métier.
+
+1. **`amount`** — curseur (`AmountSlider`, nouveau composant,
+   `input[type=range]` stylé aux tokens, pas de librairie externe) pour le
+   montant du pot, 10 000–200 000 HTG.
+2. **`duration`** *(anciennement `contribution`)* — 3 paliers de durée
+   (5/10/20 mwa, adaptés à la contrainte 5-25 membres du §1) + choix de
+   **fréquence de paiement** (chak mwa / chak 2 semenn / chak 3 jou), qui
+   recalcule en direct le montant par versement. Même modèle "durée +
+   fréquence" que celui déjà affiché sur `/group` (§8 de `FONCTIONNEL.md`).
+3. **`position`** — cartes de créneau façon "Choose Turn" de la référence,
+   mais **la position reste déterminée par le score de fiabilité, jamais
+   un choix libre** (règle déjà posée au §1 et dans le skill
+   `moncash-flow`) : un seul créneau "disponible", les autres verrouillés
+   (cadenas + micro-copy expliquant que le score les débloque). Aucun
+   frais différencié par créneau n'est affiché — le barème réel du skill
+   `moncash-flow` ne varie pas par position ; en inventer un aurait été
+   une violation directe de sa Règle 6.
+4. **`members`** *(nouveau)* — invitation de membres (recherche/ajout de
+   contacts), bornée à 5-25 manm total (bouton "Next" désactivé hors
+   bornes).
+5. **`review`** — récapitulatif étendu (durée, fréquence, membres invités)
+   + un total de frais administratifs **dérivé de la vraie formule**
+   (`calculateCollectionFee`, palier Bronze 0,5 % par défaut — même
+   pattern que `cycle-payment-review-screen.tsx`), jamais un chiffre
+   inventé. La confirmation route vers `/group/forming` (déjà construit),
+   pas un nouvel écran terminal.
+
+Nouveau composant `StepProgressBar` (barre segmentée) affiché en haut des
+5 écrans, avec le texte "Etap X sou 5" conservé en légende sous la barre
+pour la lisibilité (exigence Fabiola du §1).

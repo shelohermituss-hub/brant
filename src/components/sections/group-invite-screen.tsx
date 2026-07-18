@@ -6,7 +6,7 @@ import { Users } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 
 const INFO_ROWS = [
-  { label: "Òganizatè", value: "Marie L." },
+  { label: "Manman sòl", value: "Marie L." },
   { label: "Pot", value: "50 000 HTG" },
   { label: "Kotizasyon mansyèl", value: "5 000 HTG" },
   { label: "Pozisyon ofri", value: "9 sou 10" },
