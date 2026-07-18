@@ -1,8 +1,20 @@
 import { cn } from "@/lib/utils";
+import { ComponentPropsWithoutRef, ElementType } from "react";
 
-export function SurfaceCard({ className, ...props }: React.ComponentProps<"div">) {
+interface SurfaceCardProps<T extends ElementType> {
+  as?: T;
+  className?: string;
+}
+
+export function SurfaceCard<T extends ElementType = "div">({
+  as,
+  className,
+  ...props
+}: SurfaceCardProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof SurfaceCardProps<T>>) {
+  const Component = as || "div";
+
   return (
-    <div
+    <Component
       className={cn("rounded-lg bg-surface p-5", className)}
       {...props}
     />

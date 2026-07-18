@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ChevronRight, ArrowUp, ArrowDown } from "lucide-react";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { PillButton } from "@/components/ui/pill-button";
@@ -22,7 +23,7 @@ export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
   const populated = variant === "populated";
 
   return (
-    <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 pt-4 pb-6">
+    <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-surface-muted px-4 pt-4 pb-6">
       <header className="flex items-center justify-between px-1 pb-1">
         <h1 className="text-[2.1rem] font-bold text-ink">Money</h1>
         <div className="h-11 w-11 shrink-0 rounded-full bg-ink-secondary/30" />
@@ -91,7 +92,7 @@ export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
           )}
         </SurfaceCard>
 
-        <SurfaceCard className="flex flex-col gap-4">
+        <SurfaceCard as={Link} href="/stocks" className="flex flex-col gap-4">
           <CardTitle label={populated ? "Stocks" : "Invest in stocks"} />
           {populated ? (
             <>
