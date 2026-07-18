@@ -184,3 +184,61 @@ faite par capture Playwright (méthode constante du projet), pas de suite
 de tests unitaires/E2E branchée à `npm test`. Suggestions de tests futurs
 documentées dans le plan de cette tâche si un framework est introduit plus
 tard.
+
+## 10. Backend réel — du mockup au produit branché (2026-07-18)
+
+L'app tournait entièrement sur des tableaux mockés en dur. Elle est
+maintenant branchée sur un projet Supabase existant, "Solid"
+(`mlcjrjopbaddxwpxlyrf`), qui implémente le skill `moncash-flow` au
+niveau base de données (triggers de transition d'état, RLS, calcul de
+frais serveur) — travail découvert déjà fait, pas construit dans cette
+tâche. Le travail de cette tâche a été le câblage frontend↔backend et
+quelques ajouts de schéma ciblés.
+
+### Ajouts de schéma (migrations, projet `mlcjrjopbaddxwpxlyrf`)
+
+| Ajout | Rôle |
+|---|---|
+| `wallets` + `wallet_transactions` + `apply_wallet_transaction()` | Wallet interne. Écriture admin-only (service_role), même rigueur que `contributions`/`payouts`. Wallet créé automatiquement à l'inscription (trigger). |
+| `membership_requests` | Support DB des deux sens d'entrée dans un sòl : "Mande antre" (membre s'auto-propose, organisatrice décide) et "Envite manm" (organisatrice invite, l'invité décide). Sur approbation, `assign_position()` + insert `memberships` automatiques (trigger). |
+| `score_history` | Historique du `trust_score` dans le temps, alimenté au passage de cycle (trigger sur `groups.current_cycle`). |
+| `assign_position()` + `position_assignment_policy` | Implémente enfin numériquement la règle "skò élevé → position précoce" (DESIGN.md §1), jusque-là seulement qualitative. Seuils en table de config, ajustables sans redéploiement. |
+| `users.referral_code` | Code de parrainage fixe par utilisateur (généré à l'inscription), remplace un premier essai (`referrals.code` unique par ligne) qui empêchait plusieurs filleuls d'utiliser le même code. |
+| `users.consent_signed_at` | Signé à l'étape `onboarding-verify-identity-screen.tsx`, qui contenait déjà le texte de consentement. |
+| `protect_user_privileged_columns_on_insert` | Corrige une faille trouvée pendant le câblage : la RLS `users_insert_self` n'empêchait pas un nouvel utilisateur de s'auto-attribuer `role=admin`/`trust_score=100` dès l'inscription (le trigger existant ne protégeait que les `UPDATE`, pas les `INSERT`). |
+
+### Écrans câblés sur données réelles (remplacement des mocks)
+
+`/card`, les 5 `/group/create/*`, `/group/forming`, `/group/invite`,
+`/group`, `/payment-hub` (+ wallet, history, eligibility, method),
+`/stocks/cycle` (+ buy, review), `/payment-status`, `/account`,
+`/stocks/score`, `/refer`, `/account/documents`, plus l'onboarding
+email/code/name/zip/verify-identity (vraie auth + création du profil).
+Écrans **non touchés** (hors périmètre du plan validé) :
+`notifications-screen.tsx` et `security-privacy-screen.tsx` restent des
+toggles locaux non persistés — aucune table de préférences n'a été
+créée.
+
+### Limites connues, explicitement signalées
+
+- **MonCash simulé** — `/api/moncash/simulate-payment` reproduit le
+  séquencement Règle 0 (webhook brut → idempotency_key → transitions
+  d'état) mais ne parle à aucune vraie API MonCash (pas de credentials
+  marchand disponibles ici).
+- **Auth email OTP, pas SMS** — aucun fournisseur télécom configuré.
+- **`SUPABASE_SERVICE_ROLE_KEY` non fournie** — les outils MCP
+  n'exposent jamais cette clé secrète par conception. `.env.local` a un
+  champ vide à remplir manuellement (Supabase Dashboard > Project
+  Settings > API) avant que les routes `/api/wallet/transfer-to-moncash`
+  et `/api/moncash/simulate-payment` puissent écrire en local.
+- **Pas de routing par id partout** — l'app n'avait jamais de routes
+  dynamiques (`/group/[id]`). Plutôt que refondre toute la navigation,
+  `/group` et `/group/forming` acceptent un `?id=` en paramètre de
+  requête (léger, cohérent avec le reste de l'app qui utilise déjà des
+  query params pour l'état, ex. `/payment-status?state=`).
+- **Parrainage à sens unique** — `/refer` affiche et partage un vrai
+  code, mais rien ne consomme un code entré par un nouvel utilisateur
+  (aucun champ de saisie de code n'existe dans l'onboarding). La table
+  `referrals` reste vide tant que cette étape n'est pas ajoutée.
+- **`notifications-screen.tsx`/`security-privacy-screen.tsx`** restent
+  mockés (hors périmètre du plan validé pour cette tâche).

@@ -239,3 +239,39 @@ barre de progression segmentée) — jamais son vocabulaire, ses couleurs
 Nouveau composant `StepProgressBar` (barre segmentée) affiché en haut des
 5 écrans, avec le texte "Etap X sou 5" conservé en légende sous la barre
 pour la lisibilité (exigence Fabiola du §1).
+
+## 10. Architecture backend réelle (2026-07-18)
+
+L'app est passée de mockup statique à produit branché sur Supabase
+(projet **Solid**, `mlcjrjopbaddxwpxlyrf`), qui implémente le skill
+`moncash-flow` au niveau base de données (triggers, RLS), pas seulement
+en documentation. Détail complet dans `FONCTIONNEL.md` §backend ; ici,
+uniquement ce qui touche le design system et les écrans.
+
+- **Auth** : email + code OTP Supabase (pas SMS, aucun fournisseur
+  télécom configuré). `onboarding-email/code-screen.tsx` font un vrai
+  aller-retour ; `onboarding-zip-screen.tsx` a été **repurposé** en
+  collecte du numéro MonCash (zéro pertinence du code postal en Haïti).
+- **Wallet interne** : nouvelle carte partagée
+  `src/components/ui/connected-accounts-card.tsx` (Wallet Sòlid +
+  MonCash), utilisée sur `/payment-hub` et `/group`. Écran dédié
+  `/payment-hub/wallet` + flow de transfert vers MonCash.
+- **Pozisyon selon skò** (§1) : désormais réellement calculée par
+  `assign_position()` (Postgres), pas juste documentée. Seuils par
+  percentile de `total_members` (≥90 → n'importe quelle position, ≥70 →
+  20e percentile, ≥40 → 50e percentile, <40 → 20% dernières positions) —
+  **valeurs proposées lors de cette implémentation, pas une règle métier
+  déjà validée ailleurs**, ajustables sans redéploiement via la table
+  `position_assignment_policy`.
+- **Simulation MonCash** : `cycle-payment-*-screen.tsx` appellent
+  `/api/moncash/simulate-payment`, qui reproduit le séquencement Règle 0
+  du skill (webhook brut → idempotency_key → due→pending→paid) mais ne
+  parle à aucune vraie API MonCash (pas de credentials marchand
+  disponibles). À remplacer le jour où ils existent.
+- **Écrans "Kont konekte" / paiement** couvrent désormais un état
+  "Konekte pou wè..." quand personne n'est connecté, en plus de
+  vide/chargement/erreur déjà en place — cohérent avec la règle §
+  "chaque composant couvre tous ses états visibles" de `CLAUDE.md`.
+- **Fils décoratifs retirés** : les tags de motif ("Lekòl", "Bòdwo",
+  "Telefòn") sur `/group` n'ont pas d'équivalent en base — retirés
+  plutôt que remplacés par une donnée inventée.
