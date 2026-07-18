@@ -1,13 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Wallet, Smartphone } from "lucide-react";
 import { WonnAvatarRoute, type AvatarMember } from "@/components/ui/wonn-avatar-route";
 import { PaymentCountdown } from "@/components/ui/payment-countdown";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { Chip } from "@/components/ui/chip";
 import { PillButton } from "@/components/ui/pill-button";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { ConnectedAccountsCard } from "@/components/ui/connected-accounts-card";
+import { useCurrentAppUser } from "@/lib/use-current-app-user";
 
 const MEMBERS: AvatarMember[] = [
   { position: 1, name: "Marie L.", initial: "M", color: "var(--color-purple)" },
@@ -35,6 +36,7 @@ const NEXT_PAYMENT_DATE = new Date("2026-07-21T00:00:00");
 
 export function GroupDetailScreen() {
   const router = useRouter();
+  const { profile } = useCurrentAppUser();
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto bg-surface-muted">
@@ -94,29 +96,12 @@ export function GroupDetailScreen() {
         </span>
       </div>
 
-      <div className="mx-4 mb-6 flex flex-col rounded-lg bg-surface">
-        <div className="flex items-center gap-4 border-b border-border px-5 py-4">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green">
-            <Wallet className="text-white" size={20} />
-          </span>
-          <div className="flex flex-1 flex-col">
-            <span className="text-[0.95rem] font-bold text-ink">Wallet Sòlid</span>
-            <span className="text-sm text-ink-secondary">Balans entèn</span>
-          </div>
-          <span className="text-[0.95rem] font-bold text-ink">1 250 HTG</span>
-        </div>
-
-        <div className="flex items-center gap-4 px-5 py-4">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue">
-            <Smartphone className="text-white" size={20} />
-          </span>
-          <div className="flex flex-1 flex-col">
-            <span className="text-[0.95rem] font-bold text-ink">MonCash</span>
-            <span className="text-sm text-ink-secondary">3711 2345 — konekte</span>
-          </div>
-          <AssetIcon name="chevron-right" className="text-ink-secondary" size={16} />
-        </div>
-      </div>
+      <ConnectedAccountsCard
+        walletBalance={profile?.wallets?.balance ?? null}
+        moncashNumber={profile?.moncash_number ?? null}
+        walletHref="/payment-hub/wallet"
+        moncashHref="/payment-hub/method"
+      />
 
       <div className="mt-auto flex gap-3 px-4 pb-6">
         <PillButton

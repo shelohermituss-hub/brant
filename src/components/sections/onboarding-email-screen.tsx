@@ -4,10 +4,34 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { OnboardingField } from "@/components/ui/onboarding-field";
 import { PillButton } from "@/components/ui/pill-button";
+import { createClient } from "@/lib/supabase/client";
+import { writeOnboardingDraft } from "@/lib/onboarding-store";
 
 export function OnboardingEmailScreen() {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit() {
+    setIsSubmitting(true);
+    setError(null);
+
+    const supabase = createClient();
+    const { error: otpError } = await supabase.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: true },
+    });
+
+    if (otpError) {
+      setIsSubmitting(false);
+      setError("Nou pa kapab voye kòd la. Tanpri verifye imèl ou eseye ankò.");
+      return;
+    }
+
+    writeOnboardingDraft({ email });
+    router.push("/onboarding/code");
+  }
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
@@ -17,32 +41,27 @@ export function OnboardingEmailScreen() {
         </button>
       </div>
 
-      <h1 className="pt-6 text-[1.6rem] font-bold text-ink">Enter your email</h1>
+      <h1 className="pt-6 text-[1.6rem] font-bold text-ink">Antre imèl ou</h1>
 
       <div className="pt-8">
         <OnboardingField
           value={email}
           onChange={setEmail}
-          placeholder="Email Address"
+          placeholder="Adrès imèl"
           type="email"
           autoFocus
         />
       </div>
 
+      {error && <p className="pt-3 text-[0.85rem] text-late">{error}</p>}
+
       <div className="mt-auto flex gap-3 pt-6">
         <PillButton
-          variant="secondary"
           className="flex-1"
-          onClick={() => router.push("/home")}
+          disabled={!email || isSubmitting}
+          onClick={handleSubmit}
         >
-          Use Phone
-        </PillButton>
-        <PillButton
-          className="flex-1"
-          disabled={!email}
-          onClick={() => router.push("/onboarding/code")}
-        >
-          Next
+          {isSubmitting ? "Voye..." : "Kontinye"}
         </PillButton>
       </div>
     </div>

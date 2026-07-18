@@ -4,9 +4,12 @@ import { useRouter } from "next/navigation";
 import { ShieldCheck, Clock, HelpCircle } from "lucide-react";
 import { SettingsListRow } from "@/components/ui/settings-list-row";
 import { SurfaceCard } from "@/components/ui/surface-card";
+import { ConnectedAccountsCard } from "@/components/ui/connected-accounts-card";
+import { useCurrentAppUser } from "@/lib/use-current-app-user";
 
 export function PaymentHubScreen() {
   const router = useRouter();
+  const { profile } = useCurrentAppUser();
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto bg-surface-muted">
@@ -20,6 +23,19 @@ export function PaymentHubScreen() {
           <span className="text-lg font-bold text-ink">Ou pa dwe anyen</span>
         </SurfaceCard>
       </div>
+
+      <div className="px-5 pb-2">
+        <span className="text-xs font-semibold tracking-wide text-ink-secondary">
+          KONT KONEKTE
+        </span>
+      </div>
+
+      <ConnectedAccountsCard
+        walletBalance={profile?.wallets?.balance ?? null}
+        moncashNumber={profile?.moncash_number ?? null}
+        walletHref="/payment-hub/wallet"
+        moncashHref="/payment-hub/method"
+      />
 
       <div className="mx-4 mb-8 flex flex-col rounded-lg bg-surface">
         <SettingsListRow

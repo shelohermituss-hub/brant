@@ -4,22 +4,32 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { OnboardingField } from "@/components/ui/onboarding-field";
 import { PillButton } from "@/components/ui/pill-button";
+import { writeOnboardingDraft } from "@/lib/onboarding-store";
 
 export function OnboardingZipScreen() {
   const router = useRouter();
-  const [zip, setZip] = useState("");
+  const [phone, setPhone] = useState("");
+
+  function handleSubmit() {
+    writeOnboardingDraft({ phone });
+    router.push("/onboarding/cashtag");
+  }
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
       <h1 className="pt-6 text-[1.6rem] leading-tight font-bold text-ink">
-        Please enter your ZIP Code
+        Ki nimewo MonCash ou
       </h1>
+      <p className="pt-2 text-[0.95rem] text-ink-secondary">
+        Se nimewo sa a n ap itilize pou peman ak vèsman ou yo.
+      </p>
 
       <div className="pt-8">
         <OnboardingField
-          value={zip}
-          onChange={setZip}
-          placeholder="ZIP Code"
+          value={phone}
+          onChange={setPhone}
+          placeholder="Nimewo MonCash"
+          type="tel"
           autoFocus
         />
       </div>
@@ -27,10 +37,10 @@ export function OnboardingZipScreen() {
       <div className="mt-auto pt-6">
         <PillButton
           className="w-full"
-          disabled={!zip}
-          onClick={() => router.push("/onboarding/cashtag")}
+          disabled={!phone}
+          onClick={handleSubmit}
         >
-          Next
+          Kontinye
         </PillButton>
       </div>
     </div>
