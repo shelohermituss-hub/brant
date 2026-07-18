@@ -202,13 +202,13 @@ Home (tab), carte (tab), $ (tab), recherche/loupe (tab), horloge/historique (tab
 
 | Écran | Statut |
 |---|---|
-| A1 Saisie email | ⬜ |
-| A2 Code confirmation email | ⬜ |
-| A3 Nom | ⬜ |
-| A4 ZIP Code | ⬜ |
-| A5 Choix $Cashtag | ⬜ |
-| A6 Intro vérification Bitcoin | ⬜ |
-| A7 Vérification identité | ⬜ |
+| A1 Saisie email | ✅ |
+| A2 Code confirmation email | ✅ |
+| A3 Nom | ✅ |
+| A4 ZIP Code | ✅ |
+| A5 Choix $Cashtag | ✅ |
+| A6 Intro vérification Bitcoin | ✅ |
+| A7 Vérification identité | ✅ |
 | B1 Home (vide/peuplé) | ✅ |
 | C1 Add Cash — sheet montants | ✅ |
 | C2 Add Cash — clavier | ✅ |
