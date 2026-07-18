@@ -8,7 +8,8 @@ screenshot en basse résolution, généré par IA, ou approximé) et qui devra
 
 | Écran d'origine | Fichier généré | Statut | Note |
 |---|---|---|---|
-| Bandeau d'attribution Mobbin (`design-refs/Cash_App_iOS_17.png`) | `public/logos/cash-app-logo.png` (62×62) + `cash-app-logo@2x.png` (256×256, upscale) | ⬜ À remplacer | Recadré/détouré depuis le seul endroit où le logo apparaît dans les captures. Basse résolution source (icône très petite dans le bandeau) → prévoir le fichier vectoriel officiel dès que possible. |
+| Bandeau d'attribution Mobbin (`design-refs/Cash_App_iOS_17.png`) | `public/logos/cash-app-logo.png` (62×62) + `cash-app-logo@2x.png` (256×256, upscale) | ⬜ Obsolète (Phase 1 uniquement) | Reste comme référence de reproduction pixel-perfect Phase 1, mais **retiré de l'écran splash Sòlid** (`onboarding-splash-screen.tsx`) — DESIGN.md interdit toute reproduction de la marque Cash App dans le produit reskiné. |
+| Écran splash Sòlid (`onboarding-splash-screen.tsx`) | Wordmark texte "Sòlid" (DM Sans, aucune image) | 🟡 Placeholder texte | Aucun logo Sòlid fourni à ce jour. Conformément à la règle du projet ("le logo n'est jamais généré par IA"), un simple wordmark texte est utilisé en attendant un fichier logo fourni par l'utilisateur ou recadré depuis une référence réelle. |
 
 ## Illustrations (MCP Higgsfield, modèle nano_banana_2 — validées et générées)
 

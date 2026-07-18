@@ -10,10 +10,8 @@ export function NotificationsScreen() {
   const [push, setPush] = useState(false);
   const [sms, setSms] = useState(true);
   const [email, setEmail] = useState(false);
-  const [cashTeam, setCashTeam] = useState(false);
-  const [squareOffers, setSquareOffers] = useState(false);
-  const [stock, setStock] = useState(true);
-  const [bitcoin, setBitcoin] = useState(false);
+  const [paymentReminders, setPaymentReminders] = useState(true);
+  const [groupActivity, setGroupActivity] = useState(false);
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto bg-surface-muted">
@@ -37,38 +35,14 @@ export function NotificationsScreen() {
 
       <div className="bg-surface">
         <CheckboxRow
-          label="Cash Team Notifications"
-          checked={cashTeam}
-          onToggle={() => setCashTeam((v) => !v)}
+          label="Rapèl kotizasyon"
+          checked={paymentReminders}
+          onToggle={() => setPaymentReminders((v) => !v)}
         />
         <CheckboxRow
-          label="Square Offers and Rewards"
-          checked={squareOffers}
-          onToggle={() => setSquareOffers((v) => !v)}
-        />
-        <CheckboxRow
-          label="Stock"
-          checked={stock}
-          onToggle={() => setStock((v) => !v)}
-          trailing={
-            <button type="button" className="text-[0.95rem] font-bold text-green">
-              Manage
-            </button>
-          }
-        />
-        <CheckboxRow
-          label="Bitcoin"
-          checked={bitcoin}
-          onToggle={() => setBitcoin((v) => !v)}
-          trailing={
-            <button
-              type="button"
-              className="text-[0.95rem] font-bold text-ink-secondary"
-              disabled
-            >
-              Manage
-            </button>
-          }
+          label="Aktivite gwoup"
+          checked={groupActivity}
+          onToggle={() => setGroupActivity((v) => !v)}
         />
       </div>
     </div>

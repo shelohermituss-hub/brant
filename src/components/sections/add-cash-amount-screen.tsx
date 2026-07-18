@@ -34,11 +34,11 @@ export function AddCashAmountScreen() {
         </button>
       </div>
 
-      <p className="pt-2 text-center text-[1.05rem] text-ink">Add Cash</p>
+      <p className="pt-2 text-center text-[1.05rem] text-ink">Mete lajan</p>
 
       <div className="flex flex-1 items-center justify-center">
         <p className="text-[4rem] leading-none font-bold text-green-bright">
-          ${amount}
+          {amount} HTG
         </p>
       </div>
 
@@ -54,7 +54,7 @@ export function AddCashAmountScreen() {
           className="w-full"
           onClick={() => router.push("/add-cash/success")}
         >
-          Add
+          Ajoute
         </PillButton>
       </div>
     </div>

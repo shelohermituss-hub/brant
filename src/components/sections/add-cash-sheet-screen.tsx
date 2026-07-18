@@ -25,7 +25,7 @@ export function AddCashSheetScreen() {
       >
         <SheetContent className="gap-7 pb-8">
           <SheetTitle className="text-center text-[1.05rem] font-normal text-ink">
-            Add Cash
+            Mete lajan
           </SheetTitle>
 
           <AmountGrid
@@ -45,7 +45,7 @@ export function AddCashSheetScreen() {
                 router.push(selected ? "/add-cash/success" : "/add-cash/amount")
               }
             >
-              Add
+              Ajoute
             </PillButton>
           </div>
         </SheetContent>

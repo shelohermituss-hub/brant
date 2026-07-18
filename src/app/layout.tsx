@@ -9,8 +9,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Money",
-  description: "Reproduction de référence visuelle — Phase 1",
+  title: "Sòlid",
+  description: "Sòlid — tontine digitale haïtienne",
 };
 
 export default function RootLayout({

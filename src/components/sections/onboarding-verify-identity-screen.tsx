@@ -34,7 +34,7 @@ export function OnboardingVerifyIdentityScreen() {
 
       <div className="mt-auto flex flex-col gap-6">
         <p className="text-center text-[0.85rem] text-ink-secondary">
-          By tapping &quot;Continue&quot;, you allow Cash App&apos;s partners
+          By tapping &quot;Continue&quot;, you allow Sòlid&apos;s partners
           to analyze your facial biometrics and photos for identity
           verification and agree to the{" "}
           <span className="text-green">

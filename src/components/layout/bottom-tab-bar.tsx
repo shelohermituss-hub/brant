@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ArrowLeftRight, type LucideIcon } from "lucide-react";
 import { AssetIcon, type AssetIconName } from "@/components/ui/asset-icon";
 import { cn } from "@/lib/utils";
 
-const TABS: { href: string; icon: AssetIconName }[] = [
+const TABS: { href: string; icon: AssetIconName | LucideIcon }[] = [
   { href: "/home", icon: "save" },
   { href: "/card", icon: "card" },
-  { href: "/pay", icon: "pay" },
+  { href: "/payment-hub", icon: ArrowLeftRight },
   { href: "/search", icon: "search" },
   { href: "/activity", icon: "history" },
 ];
@@ -28,12 +29,24 @@ export function BottomTabBar({ tone = "light" }: BottomTabBarProps) {
           const active = pathname === href;
           return (
             <Link key={href} href={href} className="p-2">
-              <AssetIcon
-                name={icon}
-                size={26}
-                tone={isDark ? "white" : "dark"}
-                className={cn(!active && "opacity-50")}
-              />
+              {typeof icon === "string" ? (
+                <AssetIcon
+                  name={icon}
+                  size={26}
+                  tone={isDark ? "white" : "dark"}
+                  className={cn(!active && "opacity-50")}
+                />
+              ) : (
+                (() => {
+                  const Icon = icon;
+                  return (
+                    <Icon
+                      size={26}
+                      className={cn(isDark ? "text-white" : "text-ink", !active && "opacity-50")}
+                    />
+                  );
+                })()
+              )}
             </Link>
           );
         })}

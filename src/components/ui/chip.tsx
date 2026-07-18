@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { AssetIcon } from "@/components/ui/asset-icon";
 import { ButtonHTMLAttributes } from "react";
 
-type ChipVariant = "primary" | "secondary" | "outline";
+type ChipVariant = "accent" | "secondary" | "outline" | "paid" | "wait" | "late";
 
 interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ChipVariant;
@@ -10,9 +10,12 @@ interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const classesByVariant: Record<ChipVariant, string> = {
-  primary: "bg-green-bright text-white",
+  accent: "bg-green-bright text-white",
   secondary: "bg-surface-muted text-ink",
   outline: "bg-surface text-ink border border-border-strong",
+  paid: "bg-paid/10 text-paid",
+  wait: "bg-wait/10 text-wait",
+  late: "bg-late/10 text-late",
 };
 
 export function Chip({

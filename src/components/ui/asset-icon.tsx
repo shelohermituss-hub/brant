@@ -7,7 +7,6 @@ const ICONS = {
   gift: "/icons/gift.png",
   history: "/icons/history.png",
   notifications: "/icons/notifications.png",
-  pay: "/icons/pay.png",
   save: "/icons/save.png",
   scan: "/icons/scan.png",
   search: "/icons/search.png",

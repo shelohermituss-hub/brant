@@ -38,6 +38,16 @@
   --color-cyan: #05d7f7; /* confirmé exact par la rampe Figma */
   --color-red: #e5504f;
 
+  /* Statuts de paiement (Sòlid) — dérivés de la palette existante, voir DESIGN.md §3.1 */
+  --color-paid: var(--color-green);
+  --color-wait: var(--color-orange);
+  --color-late: var(--color-red);
+
+  /* Soley — halo du bénéficiaire du mois sur le wonn (DESIGN.md §5). Pas de teinte
+     existante équivalente (distinct des couleurs de statut) : seule couleur ajoutée
+     sans réutiliser la palette Cash App. */
+  --color-soley: #f5b840;
+
   /* Rayons (échelle 4/8px) */
   --radius-sm: 0.5rem;
   --radius-md: 1rem;
@@ -106,6 +116,10 @@
   --color-orange: var(--color-orange);
   --color-cyan: var(--color-cyan);
   --color-red: var(--color-red);
+  --color-paid: var(--color-paid);
+  --color-wait: var(--color-wait);
+  --color-late: var(--color-late);
+  --color-soley: var(--color-soley);
 
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);

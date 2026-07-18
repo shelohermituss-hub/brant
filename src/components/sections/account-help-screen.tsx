@@ -10,11 +10,9 @@ const ARTICLES = [
   "Security & Privacy",
   "View Your Limits",
   "Provide Requested Documentation",
-  "Sponsored Accounts",
-  "$Cashtags",
-  "Cash for Business",
+  "Non itilizatè",
   "Loyalty Points and Rewards",
-  "FDIC Insurance",
+  "Pwoteksyon fon [A VALIDER - BRH]",
 ];
 
 export function AccountHelpScreen() {

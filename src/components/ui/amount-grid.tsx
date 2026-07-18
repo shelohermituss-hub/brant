@@ -1,13 +1,14 @@
-const PRESETS = ["$1", "$10", "$20", "$50", "$100", "..."];
+const DEFAULT_PRESETS = ["1 000", "2 500", "5 000", "10 000", "25 000", "..."];
 
 interface AmountGridProps {
+  presets?: string[];
   onSelect?: (label: string) => void;
 }
 
-export function AmountGrid({ onSelect }: AmountGridProps) {
+export function AmountGrid({ presets = DEFAULT_PRESETS, onSelect }: AmountGridProps) {
   return (
     <div className="grid grid-cols-3 gap-3 px-5">
-      {PRESETS.map((label) => (
+      {presets.map((label) => (
         <button
           key={label}
           type="button"

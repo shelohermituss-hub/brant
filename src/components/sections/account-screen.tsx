@@ -5,12 +5,12 @@ import {
   Grid2x2,
   Upload,
   PlusCircle,
-  Link as LinkIcon,
   Shield,
-  Star,
-  Users,
   ArrowDownToLine,
   FileText,
+  Globe,
+  Gift,
+  BadgeCheck,
 } from "lucide-react";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { PillButton } from "@/components/ui/pill-button";
@@ -24,7 +24,7 @@ export function AccountScreen() {
   return (
     <div className="flex flex-1 flex-col overflow-y-auto bg-surface-muted">
       <div className="flex items-center justify-between px-5 pt-4 pb-3">
-        <h1 className="text-[1.75rem] font-bold text-ink">Your Account</h1>
+        <h1 className="text-[1.75rem] font-bold text-ink">Kont ou</h1>
         <button type="button" onClick={() => router.push("/home")} aria-label="Fermer">
           <AssetIcon name="cross" className="text-ink" size={22} />
         </button>
@@ -39,7 +39,7 @@ export function AccountScreen() {
           <div className="h-20 w-20 rounded-full bg-ink-secondary/30" />
           <div className="flex flex-col items-center gap-0.5">
             <span className="text-lg font-bold text-ink">Judy Smith</span>
-            <span className="text-sm text-ink-secondary">$JudySmith</span>
+            <span className="text-sm text-ink-secondary">@JudySmith</span>
           </div>
           <PillButton variant="secondary" className="h-12 w-full text-[0.95rem]">
             Edit Profile
@@ -48,13 +48,18 @@ export function AccountScreen() {
       </div>
 
       <div className="px-4 pb-6">
-        <SurfaceCard className="flex items-center gap-4">
+        <SurfaceCard
+          as="button"
+          type="button"
+          onClick={() => router.push("/refer")}
+          className="flex w-full items-center gap-4 text-left"
+        >
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green">
             <PlusCircle className="text-white" size={22} />
           </span>
           <div className="flex flex-1 flex-col">
-            <span className="text-[0.95rem] font-bold text-ink">Invite friends</span>
-            <span className="text-sm text-ink-secondary">Get $5</span>
+            <span className="text-[0.95rem] font-bold text-ink">Envite zanmi ou</span>
+            <span className="text-sm text-ink-secondary">Jwenn 50 HTG</span>
           </div>
         </SurfaceCard>
       </div>
@@ -67,21 +72,25 @@ export function AccountScreen() {
 
       <div className="flex flex-col bg-surface">
         <SettingsListRow icon="user" label="Personal" />
-        <SettingsListRow icon={LinkIcon} label="Linked Banks" />
+        <SettingsListRow icon={BadgeCheck} label="Kategori kont" badge="Bronze" />
         <SettingsListRow
           icon={Shield}
           label="Security & Privacy"
           onClick={() => router.push("/account/security")}
         />
-        <SettingsListRow icon={Star} label="Favorites" badge="New" />
-        <SettingsListRow icon={Users} label="Family" />
-        <SettingsListRow icon={ArrowDownToLine} label="Limits" />
+        <SettingsListRow icon={Globe} label="Lang" badge="Kreyòl" />
+        <SettingsListRow icon={ArrowDownToLine} label="Limit kont" />
         <SettingsListRow
           icon="notifications"
           label="Notifications"
           onClick={() => router.push("/account/notifications")}
         />
-        <SettingsListRow icon={FileText} label="Documents" />
+        <SettingsListRow
+          icon={FileText}
+          label="Documents"
+          onClick={() => router.push("/account/documents")}
+        />
+        <SettingsListRow icon={Gift} label="Parennaj" onClick={() => router.push("/refer")} />
         <SettingsListRow
           icon={FileText}
           label="Support"
@@ -93,13 +102,13 @@ export function AccountScreen() {
 
       <div className="bg-surface py-5 text-center">
         <button type="button" className="text-[1.05rem] font-bold text-red">
-          Sign Out
+          Dekonekte
         </button>
       </div>
 
       <div className="flex flex-col items-center gap-5 bg-surface-muted px-8 py-6 text-center">
         <p className="text-sm text-ink-secondary">
-          Cash App&apos;s <span className="underline">Privacy Notice</span>,{" "}
+          Sòlid&apos;s <span className="underline">Privacy Notice</span>,{" "}
           <span className="underline">Terms of Service</span>, and{" "}
           <span className="underline">Open Source Software</span>
         </p>

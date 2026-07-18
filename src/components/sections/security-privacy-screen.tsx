@@ -63,7 +63,7 @@ export function SecurityPrivacyScreen() {
 
         <div className="py-5 text-center">
           <button type="button" className="text-[1.05rem] font-bold text-green">
-            Change Cash PIN
+            Chanje kòd PIN
           </button>
         </div>
       </div>
@@ -76,7 +76,7 @@ export function SecurityPrivacyScreen() {
             Your Devices (1)
           </span>
           <span className="text-[0.95rem] text-ink-secondary">
-            These are devices that are signed in to your Cash App account
+            These are devices that are signed in to your Sòlid account
           </span>
         </div>
 
