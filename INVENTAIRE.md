@@ -202,6 +202,7 @@ Home (tab), carte (tab), $ (tab), recherche/loupe (tab), horloge/historique (tab
 
 | Écran | Statut |
 |---|---|
+| A0 Splash/bienvenue (hors captures, logo seul) | ✅ |
 | A1 Saisie email | ✅ |
 | A2 Code confirmation email | ✅ |
 | A3 Nom | ✅ |
