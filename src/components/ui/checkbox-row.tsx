@@ -17,7 +17,7 @@ export function CheckboxRow({ label, checked, onToggle, trailing, readOnly = fal
     <span
       aria-pressed={checked}
       className={cn(
-        "flex h-6 w-6 shrink-0 items-center justify-center rounded-md border",
+        "flex h-6 w-6 shrink-0 items-center justify-center rounded-md border transition-[background-color,border-color,transform] duration-150 ease-[var(--ease-out)]",
         checked ? "border-green bg-green" : "border-border-strong bg-transparent"
       )}
     >
@@ -28,7 +28,7 @@ export function CheckboxRow({ label, checked, onToggle, trailing, readOnly = fal
   return (
     <div className="flex items-center gap-4 border-b border-border px-5 py-4 last:border-b-0">
       {readOnly ? indicator : (
-        <button type="button" onClick={onToggle}>
+        <button type="button" onClick={onToggle} className="active:scale-[0.9] transition-transform duration-150 ease-[var(--ease-out)]">
           {indicator}
         </button>
       )}

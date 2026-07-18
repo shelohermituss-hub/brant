@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { GroupCard } from "@/components/ui/group-card";
@@ -172,7 +172,7 @@ export function CardScreen() {
           type="button"
           onClick={() => setTab("active")}
           className={cn(
-            "h-11 flex-1 rounded-full text-[0.95rem] font-bold",
+            "h-11 flex-1 rounded-full text-[0.95rem] font-bold transition-[color,background-color,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97]",
             tab === "active" ? "bg-green text-white" : "bg-surface text-ink"
           )}
         >
@@ -182,7 +182,7 @@ export function CardScreen() {
           type="button"
           onClick={() => setTab("finished")}
           className={cn(
-            "h-11 flex-1 rounded-full text-[0.95rem] font-bold",
+            "h-11 flex-1 rounded-full text-[0.95rem] font-bold transition-[color,background-color,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97]",
             tab === "finished" ? "bg-green text-white" : "bg-surface text-ink"
           )}
         >
@@ -202,10 +202,12 @@ export function CardScreen() {
           <p className="py-8 text-center text-[0.95rem] text-ink-secondary">Chajman...</p>
         ) : list.length > 0 ? (
           <div className="flex flex-col gap-3">
-            {list.map(({ id, ...circle }) => (
+            {list.map(({ id, ...circle }, index) => (
               <Link
                 key={id}
                 href={myGroupStates[id] === "forming" ? `/group/forming?id=${id}` : `/group?id=${id}`}
+                className="stagger-item"
+                style={{ "--stagger-index": index } as CSSProperties}
               >
                 <GroupCard
                   potAmount={formatHtg(circle.potAmount)}
@@ -236,20 +238,21 @@ export function CardScreen() {
         <div className="flex flex-col gap-3">
           <h2 className="text-[1.05rem] font-bold text-ink">Rekòmande pou ou</h2>
           <div className="flex flex-col gap-3">
-            {(recommended ?? []).map(({ id, ...circle }) => (
-              <GroupCard
-                key={id}
-                potAmount={formatHtg(circle.potAmount)}
-                contribution={formatHtg(circle.contribution)}
-                memberCount={circle.memberCount}
-                yourPosition={circle.yourPosition}
-                startDate={circle.startDate}
-                endDate={circle.endDate}
-                adminFees={formatHtg(circle.adminFees)}
-                joined={false}
-                requested={requested.includes(id)}
-                onJoin={() => handleJoin(id)}
-              />
+            {(recommended ?? []).map(({ id, ...circle }, index) => (
+              <div key={id} className="stagger-item" style={{ "--stagger-index": index } as CSSProperties}>
+                <GroupCard
+                  potAmount={formatHtg(circle.potAmount)}
+                  contribution={formatHtg(circle.contribution)}
+                  memberCount={circle.memberCount}
+                  yourPosition={circle.yourPosition}
+                  startDate={circle.startDate}
+                  endDate={circle.endDate}
+                  adminFees={formatHtg(circle.adminFees)}
+                  joined={false}
+                  requested={requested.includes(id)}
+                  onJoin={() => handleJoin(id)}
+                />
+              </div>
             ))}
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import { Chip } from "@/components/ui/chip";
 import { AssetIcon } from "@/components/ui/asset-icon";
@@ -30,7 +30,7 @@ const CONTRIBUTION_STATE_TO_STATUS: Record<string, RowStatus> = {
 
 const dateFormatter = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" });
 
-function HistoryRow({ id, date, amount, status, ref }: HistoryEntry) {
+function HistoryRow({ id, date, amount, status, ref, index }: HistoryEntry & { index: number }) {
   const router = useRouter();
 
   return (
@@ -41,7 +41,8 @@ function HistoryRow({ id, date, amount, status, ref }: HistoryEntry) {
       onKeyDown={(e) => {
         if (e.key === "Enter") router.push(`/payment-status?contributionId=${id}`);
       }}
-      className="flex w-full items-center justify-between border-b border-border px-5 py-4 text-left last:border-b-0"
+      className="stagger-item flex w-full items-center justify-between border-b border-border px-5 py-4 text-left last:border-b-0 transition-transform duration-150 ease-[var(--ease-out)] active:scale-[0.99]"
+      style={{ "--stagger-index": index } as CSSProperties}
     >
       <div className="flex flex-col">
         <span className="text-[0.95rem] font-bold text-ink">{formatHtg(amount)}</span>
@@ -147,7 +148,7 @@ export function HistoryScreen() {
                 Ou poko gen okenn kotizasyon.
               </p>
             ) : (
-              contributions.map((row) => <HistoryRow key={row.id} {...row} />)
+              contributions.map((row, index) => <HistoryRow key={row.id} {...row} index={index} />)
             )}
           </div>
 
@@ -164,7 +165,7 @@ export function HistoryScreen() {
                 Ou poko resevwa okenn pot.
               </p>
             ) : (
-              payouts.map((row) => <HistoryRow key={row.id} {...row} />)
+              payouts.map((row, index) => <HistoryRow key={row.id} {...row} index={index} />)
             )}
           </div>
         </>

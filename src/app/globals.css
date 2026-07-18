@@ -55,6 +55,12 @@
   --radius-xl: 2rem;
   --radius-full: 9999px;
 
+  /* Easing (skill emil-design-eng) — courbes marquées, jamais les easings
+     CSS par défaut qui manquent de punch. Jamais sur les actions à haute
+     fréquence (clavier numérique, raccourcis). */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
   /*
    * Échelle typographique — reprend la nomenclature Apple HIG trouvée
    * telle quelle dans le kit Figma (container.png : Large Title, Title 1,
@@ -169,6 +175,36 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/*
+ * Cascade d'apparition légère pour les listes (skill emil-design-eng) —
+ * décalage court (40ms) entre éléments, jamais bloquant, jamais sur des
+ * listes qui se re-rendent à haute fréquence (clavier, formulaires).
+ * --stagger-index posé en inline style par le composant appelant.
+ */
+@keyframes stagger-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-item {
+  animation: stagger-fade-in 220ms var(--ease-out) backwards;
+  animation-delay: calc(var(--stagger-index, 0) * 40ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-item {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+    transform: none;
   }
 }
 

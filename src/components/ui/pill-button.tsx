@@ -44,7 +44,7 @@ export function PillButton({
   const isLightText = lightTextVariants.includes(variant);
 
   const classes = cn(
-    "flex h-14 shrink-0 items-center justify-center rounded-full text-base font-bold transition-colors disabled:pointer-events-none",
+    "flex h-14 shrink-0 items-center justify-center rounded-full text-base font-bold transition-[color,background-color,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97] disabled:pointer-events-none disabled:active:scale-100",
     backgroundByVariant[variant],
     isLightText
       ? disabled
