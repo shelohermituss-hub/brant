@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 import { GroupCard } from "@/components/ui/group-card";
 import { CircleEmptyIcon } from "@/components/ui/circle-empty-icon";
 import { cn } from "@/lib/utils";
@@ -82,10 +83,19 @@ export function CardScreen({ variant = "populated" }: CardScreenProps) {
     <div className="flex flex-1 flex-col gap-5 overflow-y-auto bg-surface-muted px-4 pt-4 pb-6">
       <header className="flex items-center justify-between px-1 pb-1">
         <h1 className="text-[2.1rem] font-bold text-ink">Sik mwen yo</h1>
-        <Link
-          href="/account"
-          className="h-11 w-11 shrink-0 rounded-full bg-ink-secondary/30"
-        />
+        <div className="flex items-center gap-3">
+          <Link
+            href="/group/create/amount"
+            aria-label="Kreye yon sòl"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green"
+          >
+            <Plus className="text-white" size={22} strokeWidth={2.5} />
+          </Link>
+          <Link
+            href="/account"
+            className="h-11 w-11 shrink-0 rounded-full bg-ink-secondary/30"
+          />
+        </div>
       </header>
 
       <div className="flex gap-2">
