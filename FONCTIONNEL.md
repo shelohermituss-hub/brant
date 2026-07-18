@@ -84,3 +84,29 @@ fois le wallet réel branché, ou s'il reste en l'état.
 De même, l'icône `$` a été réintroduite au 3e onglet de la tab bar (à la
 demande explicite), alors que le point 2 du plan précédent l'avait retirée
 comme interdite par DESIGN.md §2. Signalé pour la même raison.
+
+## 6. Refonte de la page `/card` (2026-07-18)
+
+Nouveau design de `GroupCard` sur retour utilisateur (référence : app
+tierce à onglets "Active"/"Finished" — structure reprise, couleurs et
+illustrations ignorées conformément à la règle Phase 2 de CLAUDE.md ; bleu
+remplacé par `--color-green`, illustration mascotte de l'app référence
+remplacée par une icône maison dessinée à la main `CircleEmptyIcon`) :
+
+- Onglets **Aktif / Fini** en haut de page.
+- Section "Sik ou yo" : cercles rejoints, statut "Konfime".
+- Section "Rekòmande pou ou" : cercles découvrables **sans invitation**,
+  bouton "Mande antre" → passe en "An atant apwobasyon" (nouveau modèle à
+  double entrée, voir DESIGN.md §1 mis à jour).
+- Les petits traits de progression représentent désormais le **nombre de
+  membres du cercle** (5 à 25, taille variable) et non plus une durée fixe
+  de 12 mois ; le libellé central affiche "{N} Manm", les dates de
+  début/fin restent aux extrémités.
+- État vide illustré pour l'onglet Aktif sans cercle rejoint.
+
+⚠️ **Dette non traitée dans cette passe** (signalée, pas résolue) :
+`WonnCircle` (détail de groupe, groupe en formation) reste codé pour une
+taille fixe et n'a pas encore été généralisé à N variable — voir
+DESIGN.md §5. Les données mock de `group-create-*` (flow Rejoindre/Créer)
+et `eligibility-screen.tsx` ("Pozisyon aksesib : 4–10") supposent aussi
+encore un cercle à 10 membres fixes.

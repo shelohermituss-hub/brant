@@ -1,53 +1,85 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { GroupCard } from "@/components/ui/group-card";
-import { PillButton } from "@/components/ui/pill-button";
-import { MiniWonnIcon } from "@/components/ui/mini-wonn-icon";
+import { CircleEmptyIcon } from "@/components/ui/circle-empty-icon";
+import { cn } from "@/lib/utils";
 
 interface CardScreenProps {
   variant?: "empty" | "populated";
 }
 
-const GROUPS = [
+const ACTIVE_CIRCLES = [
   {
     id: "fanmi",
     href: "/group",
-    name: "Sòl Fanmi",
     potAmount: "50 000 HTG",
     contribution: "5 000 HTG",
-    position: 6,
-    total: 10,
-    status: "active" as const,
-    isMyMonth: false,
+    memberCount: 10,
+    yourPosition: 6,
+    startDate: "Nov 2024",
+    endDate: "Out 2025",
+    adminFees: "2 400 HTG",
   },
   {
     id: "kominote",
     href: "/group",
-    name: "Sòl Kominote",
     potAmount: "20 000 HTG",
     contribution: "2 000 HTG",
-    position: 3,
-    total: 10,
-    status: "active" as const,
-    isMyMonth: true,
+    memberCount: 10,
+    yourPosition: 3,
+    startDate: "Jen 2025",
+    endDate: "Me 2026",
+    adminFees: "960 HTG",
+  },
+];
+
+const FINISHED_CIRCLES = [
+  {
+    id: "premye-sol",
+    href: "/group",
+    potAmount: "15 000 HTG",
+    contribution: "1 500 HTG",
+    memberCount: 10,
+    yourPosition: 8,
+    startDate: "Jan 2024",
+    endDate: "Des 2024",
+    adminFees: "720 HTG",
+  },
+];
+
+const RECOMMENDED_CIRCLES = [
+  {
+    id: "rekomande-1",
+    potAmount: "24 000 HTG",
+    contribution: "2 000 HTG",
+    memberCount: 18,
+    yourPosition: 12,
+    startDate: "Nov 2024",
+    endDate: "Avr 2026",
+    adminFees: "2 880 HTG",
   },
   {
-    id: "vwazinaj",
-    href: "/group/forming",
-    name: "Sòl Vwazinaj",
-    potAmount: "30 000 HTG",
-    contribution: "3 000 HTG",
-    position: 5,
-    total: 10,
-    status: "forming" as const,
-    isMyMonth: false,
+    id: "rekomande-2",
+    potAmount: "36 000 HTG",
+    contribution: "1 500 HTG",
+    memberCount: 24,
+    yourPosition: 20,
+    startDate: "Des 2024",
+    endDate: "Nov 2026",
+    adminFees: "1 800 HTG",
   },
 ];
 
 export function CardScreen({ variant = "populated" }: CardScreenProps) {
-  const populated = variant === "populated";
+  const [tab, setTab] = useState<"active" | "finished">("active");
+  const [requested, setRequested] = useState<string[]>([]);
+
+  const list = tab === "active" ? (variant === "populated" ? ACTIVE_CIRCLES : []) : FINISHED_CIRCLES;
 
   return (
-    <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-surface-muted px-4 pt-4 pb-6">
+    <div className="flex flex-1 flex-col gap-5 overflow-y-auto bg-surface-muted px-4 pt-4 pb-6">
       <header className="flex items-center justify-between px-1 pb-1">
         <h1 className="text-[2.1rem] font-bold text-ink">Sik mwen yo</h1>
         <Link
@@ -56,29 +88,66 @@ export function CardScreen({ variant = "populated" }: CardScreenProps) {
         />
       </header>
 
-      {populated ? (
-        <div className="flex flex-col gap-3">
-          {GROUPS.map(({ href, ...group }) => (
-            <Link key={group.id} href={href}>
-              <GroupCard {...group} />
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-1 flex-col items-center justify-center gap-4 py-16 text-center">
-          <MiniWonnIcon />
-          <div className="flex flex-col gap-1 px-6">
-            <p className="text-[1.1rem] font-bold text-ink">Ou pa gen sòl pou kounye a</p>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={() => setTab("active")}
+          className={cn(
+            "h-11 flex-1 rounded-full text-[0.95rem] font-bold",
+            tab === "active" ? "bg-green text-white" : "bg-surface text-ink"
+          )}
+        >
+          Aktif
+        </button>
+        <button
+          type="button"
+          onClick={() => setTab("finished")}
+          className={cn(
+            "h-11 flex-1 rounded-full text-[0.95rem] font-bold",
+            tab === "finished" ? "bg-green text-white" : "bg-surface text-ink"
+          )}
+        >
+          Fini
+        </button>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <h2 className="text-[1.05rem] font-bold text-ink">Sik ou yo</h2>
+
+        {list.length > 0 ? (
+          <div className="flex flex-col gap-3">
+            {list.map(({ id, href, ...circle }) => (
+              <Link key={id} href={href}>
+                <GroupCard {...circle} joined />
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center gap-3 py-8 text-center">
+            <CircleEmptyIcon />
             <p className="text-[0.95rem] text-ink-secondary">
-              Kreye yon sòl oswa tann yon envitasyon pou w antre nan youn.
+              {tab === "active"
+                ? "Sik aktif ou yo ap parèt isit la!"
+                : "Ou poko gen sik fini."}
             </p>
           </div>
-          <PillButton href="/group/create/amount" className="h-12 px-8 text-[0.95rem]">
-            Kreye yon sòl
-          </PillButton>
-          <Link href="/group/invite" className="text-[0.9rem] font-bold text-green">
-            Gen yon envitasyon? Wè li
-          </Link>
+        )}
+      </div>
+
+      {tab === "active" && (
+        <div className="flex flex-col gap-3">
+          <h2 className="text-[1.05rem] font-bold text-ink">Rekòmande pou ou</h2>
+          <div className="flex flex-col gap-3">
+            {RECOMMENDED_CIRCLES.map(({ id, ...circle }) => (
+              <GroupCard
+                key={id}
+                {...circle}
+                joined={false}
+                requested={requested.includes(id)}
+                onJoin={() => setRequested((prev) => [...prev, id])}
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>

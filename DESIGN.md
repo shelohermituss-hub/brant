@@ -8,11 +8,17 @@
 
 ## 1. Contexte produit (obligatoire à chaque session)
 
-Sòlid digitalise le **sòl** haïtien : tontine de 10 personnes, cotisation
-mensuelle fixe, pot versé chaque mois à un membre différent selon un
-ordre de position fixé au lancement du groupe et immuable ensuite. Cycle
-de 10 mois. Modèle **fermé sur invitation** — jamais un marketplace ouvert
-où l'on rejoint des inconnus.
+Sòlid digitalise le **sòl** haïtien : tontine de **5 à 25 personnes**
+(taille variable par groupe, plus fixée à 10), cotisation mensuelle fixe,
+pot versé chaque mois à un membre différent selon un ordre de position
+fixé au lancement du groupe et immuable ensuite. Durée du cycle = nombre
+de membres (un versement par membre par mois). Modèle à **double entrée** :
+un membre peut être invité directement, OU découvrir et demander à
+rejoindre un cercle existant sans invitation — mais dans les deux cas,
+l'entrée n'est jamais automatique : elle attend toujours l'**approbation
+du propriétaire** du cercle. Jamais un marketplace où l'on rejoint
+instantanément sans validation humaine. *(Mis à jour le 2026-07-18 —
+règle précédente : taille fixe de 10, fermé sur invitation uniquement.)*
 
 Utilisatrice de référence : Fabiola, 47 ans, commerçante à Port-au-Prince,
 Android d'entrée de gamme, connexion 3G instable, créole comme langue
@@ -152,12 +158,21 @@ Public Sans — la police du repo existant est conservée telle quelle.
   (Cash App, Dart, ou autre) — structure uniquement.
 - Le symbole `$` n'apparaît nulle part, y compris dans les icônes.
 
-## 5. Le wonn — composant signature (inchangé)
+## 5. Le wonn — composant signature
 
-Cercle SVG de 10 positions membres, départ 12h sens horaire, disques 26px
-colorés par statut, bénéficiaire du mois en `soley` avec halo, centre =
-montant du pot + nom du bénéficiaire. Ne jamais le remplacer par une
-liste ou un composant de librairie.
+Cercle SVG à **N positions membres** (N = taille du cercle, 5 à 25 — voir
+§1, plus fixé à 10), départ 12h sens horaire, disques colorés par statut,
+bénéficiaire du mois en `soley` avec halo, centre = montant du pot + nom
+du bénéficiaire. Ne jamais le remplacer par une liste ou un composant de
+librairie.
+
+⚠️ **Dette technique connue (2026-07-18)** : `WonnCircle`
+(`src/components/ui/wonn-circle.tsx`) est encore codé en dur pour un
+cercle à taille fixe partout où il est utilisé (`group-detail-screen.tsx`,
+`group-forming-screen.tsx`) ; il doit être généralisé pour accepter N
+variable avant que la taille de cercle variable (§1) soit cohérente sur
+tout le produit. Non fait dans cette passe — périmètre limité à la
+page `/card` sur demande explicite.
 
 ## 6. Références structurelles
 
