@@ -108,10 +108,42 @@ remplacée par une icône maison dessinée à la main `CircleEmptyIcon`) :
 
 `WonnCircle` (cercle SVG à taille fixe) remplacé par `WonnPath`
 (`src/components/ui/wonn-path.tsx`) — route serpentine à N nœuds (une main
-= un nœud), accepte nativement N variable (5-25). Même API, câblé dans
-`group-detail-screen.tsx` et `group-forming-screen.tsx`. **La dette
+= un nœud), accepte nativement N variable (5-25). Même API. **La dette
 technique "taille fixe" signalée en §6 est résolue pour ce composant.**
 
 ⚠️ **Dette restante** (signalée, pas résolue) : les données mock de
 `group-create-*` (flow Rejoindre/Créer) et `eligibility-screen.tsx`
 ("Pozisyon aksesib : 4–10") supposent encore un cercle à 10 membres fixes.
+
+## 8. Refonte de `/group` : route d'avatars + détails complets du pot (2026-07-18)
+
+Nouveau retour utilisateur, `group-detail-screen.tsx` entièrement
+reconstruit :
+
+- **`WonnPath` remplacé par `WonnAvatarRoute`** sur cet écran (nouveau
+  composant, `wonn-avatar-route.tsx`) : route horizontale scrollable
+  d'avatars reliés par des pointillés — seul le bénéficiaire du cycle
+  en cours est en couleur, les autres en niveaux de gris (`grayscale`),
+  jusqu'à ce que leur tour arrive. Défilement automatique vers le
+  bénéficiaire au chargement. `WonnPath` reste utilisé sur
+  `group-forming-screen.tsx` (pas de bénéficiaire avant le démarrage du
+  cycle, moins pertinent d'y montrer des avatars colorés).
+- **Section solde** : remplace l'ancien pattern "You have $0.00" par le
+  montant à payer pour l'échéance en cours.
+- **Carte "Detay"** (remplace "Set & Save") : tags de motif du sòl
+  (Lekòl/Bòdwo/Telefòn — remplace les boutons Create goal/Transfer
+  money), puis le détail complet du pot (nombre de membres, durée du
+  cycle, fréquence de paiement, montant par versement), un minuteur
+  temps réel (`payment-countdown.tsx`, nouveau) avant la prochaine
+  échéance, et la date du prochain paiement.
+- **Section "Kont konekte"** : wallet interne Sòlid + compte MonCash
+  connecté (remplace le pattern "Connected account" / Bank of America).
+- **Bouton "Peye kotizasyon"** en bas → `/stocks/cycle/buy`, désormais un
+  écran plein écran clavier numérique (`cycle-payment-amount-screen.tsx`,
+  remplace l'ancien sheet à montants prédéfinis) fond vert, montant
+  géant, sélecteur HTG, clavier — même structure que l'écran de paiement
+  P2P d'origine, réutilisée ici pour la kotizasyon.
+
+⚠️ Non traité dans cette passe : le transfert wallet → MonCash depuis la
+section "Kont konekte" est affiché mais pas encore relié à un flow de
+transfert réel (aucune route dédiée construite).

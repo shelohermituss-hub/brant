@@ -1,5 +1,5 @@
-import { CyclePaymentSheetScreen } from "@/components/sections/cycle-payment-sheet-screen";
+import { CyclePaymentAmountScreen } from "@/components/sections/cycle-payment-amount-screen";
 
 export default function Page() {
-  return <CyclePaymentSheetScreen />;
+  return <CyclePaymentAmountScreen />;
 }
