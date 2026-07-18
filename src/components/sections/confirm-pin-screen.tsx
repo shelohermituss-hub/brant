@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
 import { NumericKeypad } from "@/components/ui/numeric-keypad";
+import { AssetIcon } from "@/components/ui/asset-icon";
 import { cn } from "@/lib/utils";
 
 const PIN_LENGTH = 4;
@@ -14,7 +14,7 @@ export function ConfirmPinScreen() {
 
   useEffect(() => {
     if (pin.length === PIN_LENGTH) {
-      const timeout = setTimeout(() => router.push("/"), 300);
+      const timeout = setTimeout(() => router.push("/home"), 300);
       return () => clearTimeout(timeout);
     }
   }, [pin, router]);
@@ -28,7 +28,7 @@ export function ConfirmPinScreen() {
   };
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col overflow-y-auto">
       <div className="flex items-center justify-end gap-4 px-5 pt-4">
         <button
           type="button"
@@ -39,10 +39,10 @@ export function ConfirmPinScreen() {
         </button>
         <button
           type="button"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/home")}
           aria-label="Fermer"
         >
-          <X className="text-ink" size={24} />
+          <AssetIcon name="cross" className="text-ink" size={20} />
         </button>
       </div>
 

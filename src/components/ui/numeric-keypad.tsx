@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ChevronLeft } from "lucide-react";
+import { AssetIcon } from "@/components/ui/asset-icon";
 
 type NumericKeypadVariant = "boxed" | "plain" | "green";
 
@@ -57,7 +57,11 @@ export function NumericKeypad({
               isGreen ? "text-white" : "text-ink"
             )}
           >
-            {isBackspace ? <ChevronLeft size={26} strokeWidth={2} /> : key}
+            {isBackspace ? (
+              <AssetIcon name="chevron-left" size={22} tone={isGreen ? "white" : "dark"} />
+            ) : (
+              key
+            )}
           </button>
         );
       })}

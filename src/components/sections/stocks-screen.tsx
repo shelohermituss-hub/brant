@@ -1,19 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import {
-  ChevronLeft,
-  Bell,
-  Search,
-  Asterisk,
-  Landmark,
-  Briefcase,
-  Infinity as InfinityIcon,
-  ArrowDown,
-} from "lucide-react";
+import { Asterisk, Briefcase, Bell, Infinity as InfinityIcon } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { NewsCard } from "@/components/ui/news-card";
 import { Sparkline } from "@/components/ui/sparkline";
+import { AssetIcon, type AssetIconName } from "@/components/ui/asset-icon";
 
 const STOCK_CARDS = [
   { name: "Nike", bg: "#000000", label: null },
@@ -22,11 +14,11 @@ const STOCK_CARDS = [
   { name: "Walmart", bg: "#347BC0", label: null },
 ] as const;
 
-const CATEGORIES = [
-  { name: "Banking & Finance", bg: "#CC6B42", icon: Landmark },
-  { name: "Business Services", bg: "#D39C64", icon: Briefcase },
-  { name: "Retail", bg: "#F5BA61", icon: Briefcase },
-] as const;
+const CATEGORIES: { name: string; bg: string; icon: AssetIconName | null }[] = [
+  { name: "Banking & Finance", bg: "#CC6B42", icon: "save" },
+  { name: "Business Services", bg: "#D39C64", icon: null },
+  { name: "Retail", bg: "#F5BA61", icon: null },
+];
 
 function StockLogoCard({ name, bg, label }: (typeof STOCK_CARDS)[number]) {
   return (
@@ -70,16 +62,16 @@ export function StocksScreen() {
   return (
     <div className="flex flex-1 flex-col overflow-y-auto">
       <div className="flex items-center justify-between px-4 pt-4 pb-2">
-        <button type="button" onClick={() => router.push("/")} aria-label="Retour">
-          <ChevronLeft className="text-ink" size={26} />
+        <button type="button" onClick={() => router.push("/home")} aria-label="Retour">
+          <AssetIcon name="chevron-left" className="text-ink" size={22} />
         </button>
         <span className="text-lg font-bold text-ink">Stocks</span>
-        <Bell className="text-purple" size={24} />
+        <Bell className="text-purple" size={22} />
       </div>
 
       <div className="px-4 pb-5">
         <div className="flex h-11 items-center gap-2 rounded-full bg-surface-muted px-4">
-          <Search className="text-ink-secondary" size={18} />
+          <AssetIcon name="search" className="text-ink-secondary" size={16} />
           <span className="text-[0.95rem] text-placeholder">
             Search Stocks and Categories
           </span>
@@ -126,14 +118,18 @@ export function StocksScreen() {
       </div>
 
       <div className="flex gap-3 overflow-x-auto px-4 pb-6">
-        {CATEGORIES.map(({ name, bg, icon: Icon }) => (
+        {CATEGORIES.map(({ name, bg, icon }) => (
           <div
             key={name}
             className="flex h-32 w-32 shrink-0 flex-col items-start justify-between rounded-lg p-4"
             style={{ backgroundColor: bg }}
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
-              <Icon className="text-ink" size={16} />
+              {icon ? (
+                <AssetIcon name={icon} className="text-ink" size={16} />
+              ) : (
+                <Briefcase className="text-ink" size={16} />
+              )}
             </span>
             <span className="text-[0.95rem] leading-tight font-bold text-white">
               {name}
@@ -161,7 +157,7 @@ export function StocksScreen() {
           </span>
           <span className="flex-1 text-[0.95rem] font-bold text-ink">Meta</span>
           <span className="flex items-center gap-1 text-[0.95rem] text-ink-secondary">
-            <ArrowDown size={14} />
+            <AssetIcon name="arrow" size={10} />
             1.70%
           </span>
         </button>

@@ -20,7 +20,7 @@ export function AddCashSheetScreen() {
       <Sheet
         open
         onOpenChange={(open) => {
-          if (!open) router.push("/");
+          if (!open) router.push("/home");
         }}
       >
         <SheetContent className="gap-7 pb-8">

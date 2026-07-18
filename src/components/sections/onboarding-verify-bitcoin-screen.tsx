@@ -1,21 +1,22 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { X, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
+import { AssetIcon } from "@/components/ui/asset-icon";
 
 export function OnboardingVerifyBitcoinScreen() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-1 flex-col px-5 pt-4 pb-6">
+    <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
       <div className="flex justify-end">
         <button
           type="button"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/home")}
           aria-label="Fermer"
         >
-          <X className="text-ink" size={26} />
+          <AssetIcon name="cross" className="text-ink" size={22} />
         </button>
       </div>
 

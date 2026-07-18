@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ArrowDown, Gift, Infinity as InfinityIcon } from "lucide-react";
+import { Infinity as InfinityIcon } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { NewsCard } from "@/components/ui/news-card";
+import { AssetIcon } from "@/components/ui/asset-icon";
 import { cn } from "@/lib/utils";
 
 const RANGES = ["1D", "1W", "1M", "1Y", "ALL"] as const;
@@ -17,7 +18,7 @@ export function StockDetailScreen() {
     <div className="flex flex-1 flex-col overflow-y-auto">
       <div className="px-4 pt-4">
         <button type="button" onClick={() => router.push("/stocks")} aria-label="Retour">
-          <ChevronLeft className="text-ink" size={26} />
+          <AssetIcon name="chevron-left" className="text-ink" size={22} />
         </button>
       </div>
 
@@ -27,7 +28,7 @@ export function StockDetailScreen() {
         </span>
         <span className="text-xl font-bold text-ink">Meta</span>
         <span className="flex items-center gap-1 text-[0.95rem] font-medium text-blue">
-          <ArrowDown size={14} />
+          <AssetIcon name="arrow" size={10} />
           0.56%
         </span>
       </div>
@@ -72,7 +73,7 @@ export function StockDetailScreen() {
           Follow
         </PillButton>
         <PillButton variant="blue" className="w-16 shrink-0">
-          <Gift size={20} />
+          <AssetIcon name="gift" size={18} tone="white" />
         </PillButton>
       </div>
 

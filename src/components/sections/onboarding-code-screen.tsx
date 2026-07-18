@@ -10,7 +10,7 @@ export function OnboardingCodeScreen() {
   const [code, setCode] = useState("");
 
   return (
-    <div className="flex flex-1 flex-col px-5 pt-4 pb-6">
+    <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
       <div className="flex justify-end">
         <button type="button" className="text-2xl font-medium text-ink">
           ?

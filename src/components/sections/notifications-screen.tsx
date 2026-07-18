@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
 import { CheckboxRow } from "@/components/ui/checkbox-row";
+import { AssetIcon } from "@/components/ui/asset-icon";
 
 export function NotificationsScreen() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export function NotificationsScreen() {
     <div className="flex flex-1 flex-col overflow-y-auto bg-surface-muted">
       <div className="grid grid-cols-[1fr_auto_1fr] items-center px-5 pt-4">
         <button type="button" onClick={() => router.push("/account")} aria-label="Retour">
-          <ChevronLeft className="text-ink" size={26} />
+          <AssetIcon name="chevron-left" className="text-ink" size={22} />
         </button>
         <span className="text-lg font-bold text-ink">Notifications</span>
         <span />

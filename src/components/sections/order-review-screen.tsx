@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
+import { AssetIcon } from "@/components/ui/asset-icon";
 
 const ROWS = [
   { label: "Funding Source", value: "Debit Card" },
@@ -22,14 +22,14 @@ export function OrderReviewScreen() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-1 flex-col gap-6 px-5 pt-4 pb-6">
+    <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-5 pt-4 pb-6">
       <div className="flex justify-end">
         <button
           type="button"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/home")}
           aria-label="Fermer"
         >
-          <X className="text-ink" size={24} />
+          <AssetIcon name="cross" className="text-ink" size={20} />
         </button>
       </div>
 
@@ -78,7 +78,7 @@ export function OrderReviewScreen() {
       <PillButton
         variant="orange"
         className="w-full"
-        onClick={() => router.push("/")}
+        onClick={() => router.push("/home")}
       >
         Schedule
       </PillButton>

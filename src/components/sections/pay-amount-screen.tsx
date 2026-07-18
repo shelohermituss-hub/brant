@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Scan, ChevronDown } from "lucide-react";
 import { NumericKeypad } from "@/components/ui/numeric-keypad";
 import { BottomTabBar } from "@/components/layout/bottom-tab-bar";
+import { AssetIcon } from "@/components/ui/asset-icon";
 
 export function PayAmountScreen() {
   const router = useRouter();
@@ -23,9 +23,9 @@ export function PayAmountScreen() {
   };
 
   return (
-    <div className="flex flex-1 flex-col bg-green-deep">
+    <div className="flex flex-1 flex-col overflow-y-auto bg-green-deep">
       <div className="flex items-center justify-between px-5 pt-4">
-        <Scan className="text-white" size={26} strokeWidth={2} />
+        <AssetIcon name="scan" tone="white" size={24} />
         <div className="h-11 w-11 shrink-0 rounded-full bg-white/30" />
       </div>
 
@@ -41,7 +41,7 @@ export function PayAmountScreen() {
           className="flex items-center gap-1 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-white"
         >
           USD
-          <ChevronDown size={16} />
+          <AssetIcon name="chevron-down" tone="white" size={14} />
         </button>
       </div>
 

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight, ArrowUp, ArrowDown } from "lucide-react";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { PillButton } from "@/components/ui/pill-button";
 import { Sparkline } from "@/components/ui/sparkline";
 import { SavingsIcon } from "@/components/ui/savings-icon";
+import { AssetIcon } from "@/components/ui/asset-icon";
 
 interface HomeScreenProps {
   variant?: "empty" | "populated";
@@ -14,7 +14,7 @@ function CardTitle({ label }: { label: string }) {
   return (
     <div className="flex items-center justify-between">
       <span className="text-[1.05rem] font-bold text-ink">{label}</span>
-      <ChevronRight size={18} className="text-ink-secondary" />
+      <AssetIcon name="chevron-right" size={16} className="text-ink-secondary" />
     </div>
   );
 }
@@ -37,7 +37,7 @@ export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
           <span className="text-lg font-bold text-ink">Cash Balance</span>
           <span className="flex items-center gap-0.5 text-sm text-ink-secondary">
             Account &amp; Routing
-            <ChevronRight size={16} />
+            <AssetIcon name="chevron-right" size={14} />
           </span>
         </div>
         <p className="text-[2.75rem] leading-none font-bold text-ink">
@@ -78,7 +78,7 @@ export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
               <div>
                 <p className="text-xl font-bold text-ink">$92.05</p>
                 <p className="flex items-center gap-1 text-sm text-ink-secondary">
-                  <ArrowUp size={12} />
+                  <AssetIcon name="arrow" size={10} className="rotate-180" />
                   0.50% today
                 </p>
               </div>
@@ -106,7 +106,7 @@ export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
               <div>
                 <p className="text-xl font-bold text-ink">$2,995.85</p>
                 <p className="flex items-center gap-1 text-sm text-ink-secondary">
-                  <ArrowDown size={12} />
+                  <AssetIcon name="arrow" size={10} />
                   0.80% today
                 </p>
               </div>

@@ -2,24 +2,25 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Check, X } from "lucide-react";
+import { Check } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
+import { AssetIcon } from "@/components/ui/asset-icon";
 
 export function AddCashSuccessScreen() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-1 flex-col gap-8 px-5 pt-4 pb-6">
+    <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-5 pt-4 pb-6">
       <div className="flex items-start justify-between">
         <div className="flex h-11 w-11 items-center justify-center rounded-full bg-green">
           <Check className="text-white" size={24} strokeWidth={3} />
         </div>
         <button
           type="button"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/home")}
           aria-label="Fermer"
         >
-          <X className="text-ink" size={24} />
+          <AssetIcon name="cross" className="text-ink" size={20} />
         </button>
       </div>
 
@@ -44,7 +45,7 @@ export function AddCashSuccessScreen() {
         </PillButton>
       </div>
 
-      <PillButton className="w-full" onClick={() => router.push("/")}>
+      <PillButton className="w-full" onClick={() => router.push("/home")}>
         Done
       </PillButton>
     </div>

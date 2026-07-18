@@ -10,7 +10,7 @@ export function OnboardingEmailScreen() {
   const [email, setEmail] = useState("");
 
   return (
-    <div className="flex flex-1 flex-col px-5 pt-4 pb-6">
+    <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
       <div className="flex justify-end">
         <button type="button" className="text-2xl font-medium text-ink">
           ?
@@ -33,7 +33,7 @@ export function OnboardingEmailScreen() {
         <PillButton
           variant="secondary"
           className="flex-1"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/home")}
         >
           Use Phone
         </PillButton>

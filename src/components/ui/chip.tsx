@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
+import { AssetIcon } from "@/components/ui/asset-icon";
 import { ButtonHTMLAttributes } from "react";
 
 type ChipVariant = "primary" | "secondary" | "outline";
@@ -33,7 +33,7 @@ export function Chip({
       {...props}
     >
       {children}
-      {withChevron && <ChevronDown size={16} strokeWidth={2.5} />}
+      {withChevron && <AssetIcon name="chevron-down" size={14} />}
     </button>
   );
 }

@@ -1,8 +1,9 @@
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import { type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AssetIcon, type AssetIconName } from "@/components/ui/asset-icon";
 
 interface SettingsListRowProps {
-  icon: LucideIcon;
+  icon: LucideIcon | AssetIconName;
   label: string;
   badge?: string;
   iconStyle?: "bare" | "badge";
@@ -11,13 +12,23 @@ interface SettingsListRowProps {
 }
 
 export function SettingsListRow({
-  icon: Icon,
+  icon,
   label,
   badge,
   iconStyle = "bare",
   showChevron = true,
   onClick,
 }: SettingsListRowProps) {
+  const renderIcon = (size: number, className?: string) =>
+    typeof icon === "string" ? (
+      <AssetIcon name={icon} size={size} className={className} />
+    ) : (
+      (() => {
+        const Icon = icon;
+        return <Icon size={size} className={className} />;
+      })()
+    );
+
   return (
     <button
       type="button"
@@ -26,10 +37,10 @@ export function SettingsListRow({
     >
       {iconStyle === "badge" ? (
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-ink text-white">
-          <Icon size={16} />
+          {renderIcon(16)}
         </span>
       ) : (
-        <Icon className={cn("shrink-0 text-ink")} size={22} />
+        renderIcon(20, cn("shrink-0 text-ink"))
       )}
       <span className="flex-1 text-[0.95rem] font-bold text-ink">{label}</span>
       {badge && (
@@ -37,7 +48,7 @@ export function SettingsListRow({
           {badge}
         </span>
       )}
-      {showChevron && <ChevronRight className="text-ink-secondary" size={18} />}
+      {showChevron && <AssetIcon name="chevron-right" className="text-ink-secondary" size={16} />}
     </button>
   );
 }

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronDown, User } from "lucide-react";
 import { Chip } from "@/components/ui/chip";
+import { AssetIcon } from "@/components/ui/asset-icon";
 import { cn } from "@/lib/utils";
 
 interface Contact {
@@ -26,7 +26,7 @@ export function PaymentDetailsScreen() {
   const [sendAs, setSendAs] = useState<"cash" | "gift-card" | "stock">("cash");
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col overflow-y-auto">
       <div className="flex items-center justify-between px-5 pt-4 pb-3">
         <button
           type="button"
@@ -40,7 +40,7 @@ export function PaymentDetailsScreen() {
           <span className="text-lg font-bold text-ink">$10</span>
           <span className="flex items-center gap-0.5 text-xs text-ink-secondary">
             Bank of America
-            <ChevronDown size={12} />
+            <AssetIcon name="chevron-down" size={10} />
           </span>
         </div>
         <button
@@ -143,7 +143,7 @@ export function PaymentDetailsScreen() {
                 </span>
               </span>
 
-              <User className="text-ink-secondary" size={18} />
+              <AssetIcon name="user" className="text-ink-secondary" size={16} />
             </button>
           );
         })}

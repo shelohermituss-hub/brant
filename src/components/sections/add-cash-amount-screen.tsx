@@ -23,7 +23,7 @@ export function AddCashAmountScreen() {
   };
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col overflow-y-auto">
       <div className="px-5 pt-4">
         <button
           type="button"

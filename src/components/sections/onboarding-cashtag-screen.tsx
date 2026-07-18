@@ -9,7 +9,7 @@ export function OnboardingCashtagScreen() {
   const [cashtag, setCashtag] = useState("JudySmith");
 
   return (
-    <div className="flex flex-1 flex-col px-5 pt-4 pb-6">
+    <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
       <h1 className="pt-6 text-[1.6rem] font-bold text-ink">Choose a $Cashtag</h1>
       <p className="pt-2 text-[0.95rem] text-ink-secondary">
         Your unique name for getting paid by anyone

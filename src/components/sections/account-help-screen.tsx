@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ChevronLeft, X, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import { SettingsListRow } from "@/components/ui/settings-list-row";
+import { AssetIcon } from "@/components/ui/asset-icon";
 
 const ARTICLES = [
   "Can't Access Old Account",
@@ -23,10 +24,10 @@ export function AccountHelpScreen() {
     <div className="flex flex-1 flex-col overflow-y-auto bg-surface-muted">
       <div className="flex items-center justify-between px-5 pt-4">
         <button type="button" onClick={() => router.push("/account")} aria-label="Retour">
-          <ChevronLeft className="text-ink" size={26} />
+          <AssetIcon name="chevron-left" className="text-ink" size={22} />
         </button>
-        <button type="button" onClick={() => router.push("/")} aria-label="Fermer">
-          <X className="text-ink" size={24} />
+        <button type="button" onClick={() => router.push("/home")} aria-label="Fermer">
+          <AssetIcon name="cross" className="text-ink" size={20} />
         </button>
       </div>
 

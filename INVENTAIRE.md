@@ -231,4 +231,26 @@ Home (tab), carte (tab), $ (tab), recherche/loupe (tab), horloge/historique (tab
 
 ---
 
-**En attente de validation avant de passer à l'étape 2 (extraction du design system : couleurs, typographie, espacements, tokens).**
+## 7. Corrections post-revue (retour utilisateur après premier déploiement)
+
+1. **Icônes** : remplacement des approximations `lucide-react` par les vraies
+   images du kit (`public/icons/`, via le composant `AssetIcon`) partout où
+   un asset réel existe (chevrons, croix, search, user, scan, gift,
+   notifications, save, pay, card, history, arrow). Bug découvert au passage :
+   les 3 chevrons exportés contenaient une bordure violette pointillée
+   (repère de composant Figma) incrustée dans les pixels — retirée par
+   recadrage. Les icônes réellement multicolores sans équivalent recolorable
+   (cloche violette, croix verte) restent en `lucide-react`.
+2. **Tab bar qui défilait avec l'écran** : le cadre racine (`layout.tsx`)
+   utilisait `min-h-dvh` (hauteur minimale) au lieu de `h-dvh` (hauteur
+   fixe), donc le contenu long faisait défiler toute la page au lieu de
+   rester dans une zone de scroll interne — corrigé (`h-dvh` + `overflow-hidden`
+   sur le cadre, `overflow-y-auto` sur le contenu de chaque écran).
+3. **Onboarding/splash/connexion invisibles** : ces écrans existaient en
+   routes orphelines, jamais liées depuis l'app. `/` sert maintenant le
+   splash (A0) en point d'entrée réel, qui mène à l'onboarding puis à
+   `/home` (ex-`/`, le tableau de bord) une fois complété.
+
+---
+
+**Phase 1 terminée et corrigée suite au retour utilisateur.**

@@ -10,7 +10,7 @@ export function OnboardingZipScreen() {
   const [zip, setZip] = useState("");
 
   return (
-    <div className="flex flex-1 flex-col px-5 pt-4 pb-6">
+    <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
       <h1 className="pt-6 text-[1.6rem] leading-tight font-bold text-ink">
         Please enter your ZIP Code
       </h1>

@@ -11,7 +11,7 @@ export function OnboardingNameScreen() {
   const [lastName, setLastName] = useState("");
 
   return (
-    <div className="flex flex-1 flex-col px-5 pt-4 pb-6">
+    <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
       <h1 className="pt-6 text-[1.6rem] font-bold text-ink">What&apos;s your name</h1>
 
       <div className="flex flex-col gap-6 pt-8">

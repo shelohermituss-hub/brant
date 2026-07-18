@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Landmark, CreditCard, DollarSign, Search, Clock } from "lucide-react";
+import { AssetIcon, type AssetIconName } from "@/components/ui/asset-icon";
 import { cn } from "@/lib/utils";
 
-const TABS = [
-  { href: "/", icon: Landmark },
-  { href: "/card", icon: CreditCard },
-  { href: "/pay", icon: DollarSign },
-  { href: "/search", icon: Search },
-  { href: "/activity", icon: Clock },
-] as const;
+const TABS: { href: string; icon: AssetIconName }[] = [
+  { href: "/home", icon: "save" },
+  { href: "/card", icon: "card" },
+  { href: "/pay", icon: "pay" },
+  { href: "/search", icon: "search" },
+  { href: "/activity", icon: "history" },
+];
 
 interface BottomTabBarProps {
   tone?: "light" | "dark";
@@ -24,22 +24,15 @@ export function BottomTabBar({ tone = "light" }: BottomTabBarProps) {
   return (
     <nav className={cn("w-full shrink-0", !isDark && "bg-surface")}>
       <div className="flex items-center justify-between px-8 py-3">
-        {TABS.map(({ href, icon: Icon }) => {
+        {TABS.map(({ href, icon }) => {
           const active = pathname === href;
           return (
             <Link key={href} href={href} className="p-2">
-              <Icon
+              <AssetIcon
+                name={icon}
                 size={26}
-                strokeWidth={2}
-                className={cn(
-                  isDark
-                    ? active
-                      ? "text-white"
-                      : "text-white/60"
-                    : active
-                      ? "text-ink"
-                      : "text-ink-secondary/60"
-                )}
+                tone={isDark ? "white" : "dark"}
+                className={cn(!active && "opacity-50")}
               />
             </Link>
           );

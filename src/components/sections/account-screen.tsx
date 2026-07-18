@@ -2,23 +2,21 @@
 
 import { useRouter } from "next/navigation";
 import {
-  X,
   Grid2x2,
   Upload,
   PlusCircle,
-  User,
   Link as LinkIcon,
   Shield,
   Star,
   Users,
   ArrowDownToLine,
-  Bell,
   FileText,
 } from "lucide-react";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { PillButton } from "@/components/ui/pill-button";
 import { SettingsListRow } from "@/components/ui/settings-list-row";
 import { TwitterIcon, InstagramIcon } from "@/components/ui/social-icons";
+import { AssetIcon } from "@/components/ui/asset-icon";
 
 export function AccountScreen() {
   const router = useRouter();
@@ -27,8 +25,8 @@ export function AccountScreen() {
     <div className="flex flex-1 flex-col overflow-y-auto bg-surface-muted">
       <div className="flex items-center justify-between px-5 pt-4 pb-3">
         <h1 className="text-[1.75rem] font-bold text-ink">Your Account</h1>
-        <button type="button" onClick={() => router.push("/")} aria-label="Fermer">
-          <X className="text-ink" size={26} />
+        <button type="button" onClick={() => router.push("/home")} aria-label="Fermer">
+          <AssetIcon name="cross" className="text-ink" size={22} />
         </button>
       </div>
 
@@ -68,7 +66,7 @@ export function AccountScreen() {
       </div>
 
       <div className="flex flex-col bg-surface">
-        <SettingsListRow icon={User} label="Personal" />
+        <SettingsListRow icon="user" label="Personal" />
         <SettingsListRow icon={LinkIcon} label="Linked Banks" />
         <SettingsListRow
           icon={Shield}
@@ -79,7 +77,7 @@ export function AccountScreen() {
         <SettingsListRow icon={Users} label="Family" />
         <SettingsListRow icon={ArrowDownToLine} label="Limits" />
         <SettingsListRow
-          icon={Bell}
+          icon="notifications"
           label="Notifications"
           onClick={() => router.push("/account/notifications")}
         />
