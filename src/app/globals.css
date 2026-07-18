@@ -2,23 +2,40 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* Design system extrait de design-refs/ (voir INVENTAIRE.md) */
+/*
+ * Design system extrait de design-refs/ (voir INVENTAIRE.md).
+ * Échelle de gris et couleurs de marque confirmées pixel-exact depuis
+ * le kit de composants Figma (Cash_App_UI_2023_Community_extra2/
+ * Frame 56.png = rampe de gris, Frame 59.png = rampe de verts + accents,
+ * Button.png / Chip.png / Checkbox.png = usage réel par composant).
+ */
 :root {
-  /* Neutres */
-  --color-ink: #343434;
-  --color-ink-secondary: #9b9b9b;
-  --color-surface: #ffffff;
-  --color-surface-muted: #f5f5f5;
-  --color-border: #e7e7e7;
-  --color-placeholder: #c0c0c0;
+  /* Échelle de gris (rampe exacte, 100 -> 700) */
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e5e5e5;
+  --color-gray-300: #dadada;
+  --color-gray-400: #c0c0c0;
+  --color-gray-500: #9d9d9d;
+  --color-gray-600: #686868;
+  --color-gray-700: #343434;
 
-  /* Marque */
-  --color-green: #00d651;
-  --color-green-deep: #00b743;
+  /* Neutres sémantiques */
+  --color-ink: var(--color-gray-700);
+  --color-ink-secondary: var(--color-gray-500);
+  --color-surface: #ffffff;
+  --color-surface-muted: var(--color-gray-100);
+  --color-border: var(--color-gray-200);
+  --color-border-strong: var(--color-gray-300);
+  --color-placeholder: var(--color-gray-400);
+
+  /* Marque — 3 verts distincts confirmés par la rampe Figma */
+  --color-green: #01c248; /* Button.png — CTA pleins (Add Cash, Continue, Next...) */
+  --color-green-bright: #01d651; /* Chip.png — pastilles/chips, texte accentué */
+  --color-green-deep: #00b743; /* Pay amount.png — fond plein écran */
   --color-blue: #2d65db;
-  --color-purple: #8420f4;
+  --color-purple: #8420f4; /* confirmé exact par la rampe Figma */
   --color-orange: #ee9d44;
-  --color-cyan: #00d4ff;
+  --color-cyan: #05d7f7; /* confirmé exact par la rampe Figma */
   --color-red: #e5504f;
 
   /* Rayons (échelle 4/8px) */
@@ -27,6 +44,22 @@
   --radius-lg: 1.5rem;
   --radius-xl: 2rem;
   --radius-full: 9999px;
+
+  /*
+   * Échelle typographique — reprend la nomenclature Apple HIG trouvée
+   * telle quelle dans le kit Figma (container.png : Large Title, Title 1,
+   * Title 2, Title 3, Headline, Body, Callout, Subhead, Footnote, Caption).
+   */
+  --text-large-title: 2.125rem; /* 34px */
+  --text-title-1: 1.75rem; /* 28px */
+  --text-title-2: 1.375rem; /* 22px */
+  --text-title-3: 1.25rem; /* 20px */
+  --text-headline: 1.0625rem; /* 17px */
+  --text-body: 1.0625rem; /* 17px */
+  --text-callout: 1rem; /* 16px */
+  --text-subhead: 0.9375rem; /* 15px */
+  --text-footnote: 0.8125rem; /* 13px */
+  --text-caption: 0.75rem; /* 12px */
 
   /* Rethéming shadcn/ui — jamais le thème gris par défaut */
   --background: var(--color-surface-muted);
@@ -37,7 +70,7 @@
   --popover-foreground: var(--color-ink);
   --primary: var(--color-green);
   --primary-foreground: #ffffff;
-  --secondary: #eaeaea;
+  --secondary: var(--color-surface-muted);
   --secondary-foreground: var(--color-ink);
   --muted: var(--color-surface-muted);
   --muted-foreground: var(--color-ink-secondary);
@@ -50,13 +83,23 @@
 }
 
 @theme inline {
+  --color-gray-100: var(--color-gray-100);
+  --color-gray-200: var(--color-gray-200);
+  --color-gray-300: var(--color-gray-300);
+  --color-gray-400: var(--color-gray-400);
+  --color-gray-500: var(--color-gray-500);
+  --color-gray-600: var(--color-gray-600);
+  --color-gray-700: var(--color-gray-700);
+
   --color-ink: var(--color-ink);
   --color-ink-secondary: var(--color-ink-secondary);
   --color-surface: var(--color-surface);
   --color-surface-muted: var(--color-surface-muted);
+  --color-border-strong: var(--color-border-strong);
   --color-placeholder: var(--color-placeholder);
 
   --color-green: var(--color-green);
+  --color-green-bright: var(--color-green-bright);
   --color-green-deep: var(--color-green-deep);
   --color-blue: var(--color-blue);
   --color-purple: var(--color-purple);
@@ -69,6 +112,17 @@
   --radius-lg: var(--radius-lg);
   --radius-xl: var(--radius-xl);
   --radius-full: var(--radius-full);
+
+  --text-large-title: var(--text-large-title);
+  --text-title-1: var(--text-title-1);
+  --text-title-2: var(--text-title-2);
+  --text-title-3: var(--text-title-3);
+  --text-headline: var(--text-headline);
+  --text-body: var(--text-body);
+  --text-callout: var(--text-callout);
+  --text-subhead: var(--text-subhead);
+  --text-footnote: var(--text-footnote);
+  --text-caption: var(--text-caption);
 
   --font-sans: var(--font-dm-sans);
 

@@ -12,6 +12,49 @@ que des écrans distincts — c'est précisé dans chaque fiche.
 d'attribution "Cash App · curated by Mobbin" en bas — ce bandeau ne fait
 PAS partie de l'app et ne doit jamais être reproduit.
 
+## 0. Source complémentaire — kit de composants réel (prioritaire sur le sampling pixel)
+
+Deux archives supplémentaires ajoutées en cours de construction :
+`design-refs/Cash_App_UI_2023_Community_extra1/` (doublons des captures déjà
+inventoriées ci-dessus, rien de nouveau) et surtout
+`design-refs/Cash_App_UI_2023_Community_extra2/` — un export Figma isolé des
+composants, icônes, couleurs et typo réels de l'app. **Ces fichiers priment
+sur toute couleur échantillonnée au pixel dans les captures d'écran** (JPEG/
+compression pouvaient légèrement fausser le sampling).
+
+Contenu exploité (voir `src/app/globals.css` pour les valeurs intégrées) :
+- `Frame 56.png` : rampe de gris exacte (7 paliers, `#F5F5F5` → `#343434`).
+- `Frame 59.png` : rampe de verts exacte — **3 verts distincts** :
+  `#01D651` (chips/accents), `#01C248` (boutons CTA pleins), `#00B743`
+  (fond plein écran, ex. Pay) — plus violet `#8420F4` et cyan `#05D7F7`
+  confirmés exacts.
+- `Button.png` : bouton pill primaire (vert `#01C248`, texte blanc bold) et
+  secondaire (fond gris-100 `#F5F5F5`, texte ink).
+- `Chip.png` : pastilles primaire/secondaire/outline avec/sans chevron —
+  utilisées par ex. dans le sélecteur "Cash / Gift Card / Stock" de l'écran
+  Pay (E2) et "Change Order Type" des sheets d'achat.
+- `Checkbox.png` : coché (vert) / non coché (bordure gris-300 `#DADADA`).
+- `container.png` : spécimen typographique — confirme l'échelle Apple HIG
+  (Large Title/Title 1/2/3/Headline/Body/Callout/Subhead/Footnote/Caption)
+  et confirme visuellement le choix de police (grotesk géométrique à
+  g simple-étage, cohérent avec DM Sans).
+- `Nav bar.png` : la 1ʳᵉ icône de la tab bar n'est PAS une maison mais une
+  icône banque/temple (lucide `Landmark`) — corrigé dans `BottomTabBar`.
+- `Icon/*.png` : formes exactes de Card, Chevron, Cross, FAQ, Gift, History,
+  Notifications, Pay ($), Save (même icône Landmark), Scan, Search, User,
+  arrow — à utiliser pour vérifier/affiner le mapping lucide-react écran
+  par écran plutôt que d'improviser.
+- `Keyboard.png` : confirme le clavier numérique custom "plain" (pas de
+  boîtes, chiffres gris, chevron-left pour effacer) déjà implémenté dans
+  `NumericKeypad`.
+- `Sheet/Amount.png` : structure exacte du bottom sheet d'achat/dépôt
+  (poignée, titre, sous-titre, chip "Change Order Type", grille de 6
+  montants gris-100 arrondis, CTA pill pleine largeur) — référence directe
+  pour C1/F3.
+- `News card.png`, `Search input.png`, `List item/User.png`,
+  `Profile pic.png` : références directes pour les écrans Stocks (F1) et
+  Pay — destinataire (E2) à venir.
+
 ---
 
 ## 1. Liste des écrans identifiés (23 écrans logiques, 27 captures)
@@ -166,7 +209,7 @@ Home (tab), carte (tab), $ (tab), recherche/loupe (tab), horloge/historique (tab
 | A5 Choix $Cashtag | ⬜ |
 | A6 Intro vérification Bitcoin | ⬜ |
 | A7 Vérification identité | ⬜ |
-| B1 Home (vide/peuplé) | ⬜ |
+| B1 Home (vide/peuplé) | ✅ |
 | C1 Add Cash — sheet montants | ⬜ |
 | C2 Add Cash — clavier | ⬜ |
 | C3 Add Cash — succès | ⬜ |

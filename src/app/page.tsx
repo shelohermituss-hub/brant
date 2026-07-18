@@ -1,9 +1,17 @@
-export default function Home() {
+import { HomeScreen } from "@/components/sections/home-screen";
+import { BottomTabBar } from "@/components/layout/bottom-tab-bar";
+
+interface HomePageProps {
+  searchParams: Promise<{ state?: string }>;
+}
+
+export default async function Page({ searchParams }: HomePageProps) {
+  const { state } = await searchParams;
+
   return (
-    <main className="flex flex-1 items-center justify-center p-6 text-center">
-      <p className="text-ink-secondary text-sm">
-        Écrans en construction — voir INVENTAIRE.md
-      </p>
-    </main>
+    <>
+      <HomeScreen variant={state === "empty" ? "empty" : "populated"} />
+      <BottomTabBar />
+    </>
   );
 }

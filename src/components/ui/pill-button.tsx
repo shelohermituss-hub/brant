@@ -44,7 +44,7 @@ export function PillButton({
     <button
       disabled={disabled}
       className={cn(
-        "flex h-14 w-full shrink-0 items-center justify-center rounded-full text-base font-bold transition-colors disabled:pointer-events-none",
+        "flex h-14 shrink-0 items-center justify-center rounded-full text-base font-bold transition-colors disabled:pointer-events-none",
         backgroundByVariant[variant],
         isLightText
           ? disabled

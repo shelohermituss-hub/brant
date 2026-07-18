@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, CreditCard, DollarSign, Search, Clock } from "lucide-react";
+import { Landmark, CreditCard, DollarSign, Search, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TABS = [
-  { href: "/", icon: Home },
+  { href: "/", icon: Landmark },
   { href: "/card", icon: CreditCard },
   { href: "/pay", icon: DollarSign },
   { href: "/search", icon: Search },
@@ -17,7 +17,7 @@ export function BottomTabBar() {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky bottom-0 w-full bg-surface">
+    <nav className="w-full shrink-0 bg-surface">
       <div className="flex items-center justify-between px-8 py-3">
         {TABS.map(({ href, icon: Icon }) => {
           const active = pathname === href;
