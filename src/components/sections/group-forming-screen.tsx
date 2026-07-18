@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { WonnCircle, type WonnMember } from "@/components/ui/wonn-circle";
+import { WonnPath, type WonnMember } from "@/components/ui/wonn-path";
 import { SettingsListRow } from "@/components/ui/settings-list-row";
 import { AssetIcon } from "@/components/ui/asset-icon";
 import { UserCheck, UserRoundX } from "lucide-react";
@@ -33,7 +33,7 @@ export function GroupFormingScreen() {
         <span className="w-[22px]" />
       </div>
 
-      <WonnCircle members={MEMBERS} beneficiaryPosition={0} potAmount="An fòmasyon" beneficiaryName="Sik la poko kòmanse" />
+      <WonnPath members={MEMBERS} beneficiaryPosition={0} potAmount="An fòmasyon" beneficiaryName="Sik la poko kòmanse" />
 
       <p className="px-5 pb-2 text-center text-[0.95rem] text-ink-secondary">
         {confirmedCount} sou {INVITEES.length} manm konfime — sik la kòmanse

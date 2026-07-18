@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { WonnCircle, type WonnMember } from "@/components/ui/wonn-circle";
+import { WonnPath, type WonnMember } from "@/components/ui/wonn-path";
 import { PillButton } from "@/components/ui/pill-button";
 import { AssetIcon } from "@/components/ui/asset-icon";
 
@@ -37,7 +37,7 @@ export function GroupDetailScreen() {
         <span className="w-[22px]" />
       </div>
 
-      <WonnCircle
+      <WonnPath
         members={MEMBERS}
         beneficiaryPosition={6}
         potAmount="50 000 HTG"

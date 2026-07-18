@@ -25,7 +25,7 @@ Légende : ⬜ à faire · 🟡 en cours · ✅ fait
 |---|---|---|---|
 | 1 | Accueil — carte de groupe | 🟡 Déplacé | `GroupCard` déplacé sur `/card` (`card-screen.tsx`, 2e icône de la tab bar) suite à la décision utilisateur du 2026-07-18 : `/home` redevient l'écran de solde façon Cash App (Cash Balance/Add Cash/Cash Out), destiné à afficher le solde d'un wallet réel à intégrer. Voir §5 ci-dessous. |
 | 2 | Rejoindre/Créer un sòl (4 étapes) | ✅ Neuf, composé | Presets façon `AmountGrid`, `PillButton`, pattern de récap façon `CyclePaymentReviewScreen` — routes `/group/create/{amount,contribution,position,review}` |
-| 3 | Détail de groupe — le wonn | ✅ Neuf | `WonnCircle` (composant signature DESIGN.md §5, neuf), `group-detail-screen.tsx` — route `/group` |
+| 3 | Détail de groupe — le wonn | ✅ Neuf | `WonnPath` (composant signature DESIGN.md §5, neuf), `group-detail-screen.tsx` — route `/group` |
 | 4 | Moyen de versement | ✅ Adapté | `payment-details-screen.tsx` réutilisé quasi directement (structure de sélection), contenu réduit à MonCash seul (aucune méthode hors contexte haïtien) — route `/payment-hub/method` |
 | 5 | Hub paiement | ✅ Neuf | `PaymentHubScreen` (neuf, `SettingsListRow`+`SurfaceCard`) — route `/payment-hub`, cible de l'onglet central de la tab bar |
 | 6 | Éligibilité | ✅ Neuf | `CheckboxRow` variante `readOnly` (neuve) — route `/payment-hub/eligibility` |
@@ -39,7 +39,7 @@ Légende : ⬜ à faire · 🟡 en cours · ✅ fait
 | Écran | Statut | Détail |
 |---|---|---|
 | Accepter/refuser une invitation | ✅ | `group-invite-screen.tsx` — pied de page double `PillButton` (Refize/Aksepte), accepter mène à `/group/create/position` (étape 3, montant/cotisation déjà fixés par le groupe) |
-| Groupe en formation | ✅ | `group-forming-screen.tsx` — `WonnCircle` sans bénéficiaire + liste `SettingsListRow` des invités (confirmé/en attente) |
+| Groupe en formation | ✅ | `group-forming-screen.tsx` — `WonnPath` sans bénéficiaire + liste `SettingsListRow` des invités (confirmé/en attente) |
 | États de paiement distincts | ✅ | `payment-status-screen.tsx` — 3 variantes (`Chip` paid/wait/late), icône et chemin de résolution propres à chacune ; reliée depuis Historique (tap sur une ligne) et depuis la confirmation de kotizasyon |
 | Fin de cycle | ✅ | `AddCashSuccessScreen` étendu (`variant="cycle-complete"`) — illustration `SoleyBurst` (SVG dessiné à la main, pas de génération Higgsfield sans validation préalable) |
 
@@ -104,9 +104,14 @@ remplacée par une icône maison dessinée à la main `CircleEmptyIcon`) :
   début/fin restent aux extrémités.
 - État vide illustré pour l'onglet Aktif sans cercle rejoint.
 
-⚠️ **Dette non traitée dans cette passe** (signalée, pas résolue) :
-`WonnCircle` (détail de groupe, groupe en formation) reste codé pour une
-taille fixe et n'a pas encore été généralisé à N variable — voir
-DESIGN.md §5. Les données mock de `group-create-*` (flow Rejoindre/Créer)
-et `eligibility-screen.tsx` ("Pozisyon aksesib : 4–10") supposent aussi
-encore un cercle à 10 membres fixes.
+## 7. Remplacement du wonn cercle par une route (2026-07-18)
+
+`WonnCircle` (cercle SVG à taille fixe) remplacé par `WonnPath`
+(`src/components/ui/wonn-path.tsx`) — route serpentine à N nœuds (une main
+= un nœud), accepte nativement N variable (5-25). Même API, câblé dans
+`group-detail-screen.tsx` et `group-forming-screen.tsx`. **La dette
+technique "taille fixe" signalée en §6 est résolue pour ce composant.**
+
+⚠️ **Dette restante** (signalée, pas résolue) : les données mock de
+`group-create-*` (flow Rejoindre/Créer) et `eligibility-screen.tsx`
+("Pozisyon aksesib : 4–10") supposent encore un cercle à 10 membres fixes.

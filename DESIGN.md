@@ -160,19 +160,20 @@ Public Sans — la police du repo existant est conservée telle quelle.
 
 ## 5. Le wonn — composant signature
 
-Cercle SVG à **N positions membres** (N = taille du cercle, 5 à 25 — voir
-§1, plus fixé à 10), départ 12h sens horaire, disques colorés par statut,
-bénéficiaire du mois en `soley` avec halo, centre = montant du pot + nom
-du bénéficiaire. Ne jamais le remplacer par une liste ou un composant de
-librairie.
-
-⚠️ **Dette technique connue (2026-07-18)** : `WonnCircle`
-(`src/components/ui/wonn-circle.tsx`) est encore codé en dur pour un
-cercle à taille fixe partout où il est utilisé (`group-detail-screen.tsx`,
-`group-forming-screen.tsx`) ; il doit être généralisé pour accepter N
-variable avant que la taille de cercle variable (§1) soit cohérente sur
-tout le produit. Non fait dans cette passe — périmètre limité à la
-page `/card` sur demande explicite.
+**Depuis le 2026-07-18, ce n'est plus un cercle.** `WonnPath`
+(`src/components/ui/wonn-path.tsx`) représente le wonn comme une
+**route serpentine à N nœuds** (N = taille du cercle, 5 à 25 — voir §1) :
+chaque nœud = une main (le tour d'un membre), disposés en grille
+4 colonnes qui serpente ligne par ligne, reliés par un tracé — vert pour
+le trajet déjà parcouru, gris pointillé pour ce qui reste. Nœuds colorés
+par statut (`--color-paid/wait/late`, gris pour à venir), bénéficiaire du
+mois en `soley` avec halo, plus grand que les autres. Montant du pot +
+nom du bénéficiaire en légende au-dessus de la route (plus au centre —
+il n'y a plus de centre). Repères "Kòmanse"/"Fini" au premier et dernier
+nœud. Même API que l'ancien composant (`members`/`beneficiaryPosition`/
+`potAmount`/`beneficiaryName`) — accepte nativement N variable, plus de
+dette technique sur ce point. Ne jamais le remplacer par une liste ou un
+composant de librairie.
 
 ## 6. Références structurelles
 
