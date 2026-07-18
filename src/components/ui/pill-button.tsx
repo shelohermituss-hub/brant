@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ButtonHTMLAttributes } from "react";
 
@@ -12,6 +13,7 @@ type PillButtonVariant =
 
 interface PillButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: PillButtonVariant;
+  href?: string;
 }
 
 const backgroundByVariant: Record<PillButtonVariant, string> = {
@@ -36,26 +38,31 @@ export function PillButton({
   variant = "primary",
   className,
   disabled,
+  href,
   ...props
 }: PillButtonProps) {
   const isLightText = lightTextVariants.includes(variant);
 
-  return (
-    <button
-      disabled={disabled}
-      className={cn(
-        "flex h-14 shrink-0 items-center justify-center rounded-full text-base font-bold transition-colors disabled:pointer-events-none",
-        backgroundByVariant[variant],
-        isLightText
-          ? disabled
-            ? "text-white/50"
-            : "text-white"
-          : disabled
-            ? "text-ink/40"
-            : "text-ink",
-        className
-      )}
-      {...props}
-    />
+  const classes = cn(
+    "flex h-14 shrink-0 items-center justify-center rounded-full text-base font-bold transition-colors disabled:pointer-events-none",
+    backgroundByVariant[variant],
+    isLightText
+      ? disabled
+        ? "text-white/50"
+        : "text-white"
+      : disabled
+        ? "text-ink/40"
+        : "text-ink",
+    className
   );
+
+  if (href && !disabled) {
+    return (
+      <Link href={href} className={classes}>
+        {props.children}
+      </Link>
+    );
+  }
+
+  return <button disabled={disabled} className={classes} {...props} />;
 }

@@ -40,7 +40,11 @@ export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
           {populated ? "$88.44" : "$0.00"}
         </p>
         <div className="flex gap-3">
-          <PillButton variant="secondary" className="h-12 flex-1 text-[0.95rem]">
+          <PillButton
+            variant="secondary"
+            href="/add-cash"
+            className="h-12 flex-1 text-[0.95rem]"
+          >
             Add Cash
           </PillButton>
           <PillButton variant="secondary" className="h-12 flex-1 text-[0.95rem]">

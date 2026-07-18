@@ -210,9 +210,9 @@ Home (tab), carte (tab), $ (tab), recherche/loupe (tab), horloge/historique (tab
 | A6 Intro vérification Bitcoin | ⬜ |
 | A7 Vérification identité | ⬜ |
 | B1 Home (vide/peuplé) | ✅ |
-| C1 Add Cash — sheet montants | ⬜ |
-| C2 Add Cash — clavier | ⬜ |
-| C3 Add Cash — succès | ⬜ |
+| C1 Add Cash — sheet montants | ✅ |
+| C2 Add Cash — clavier | ✅ |
+| C3 Add Cash — succès | ✅ |
 | D1 Confirmer Cash PIN | ⬜ |
 | E1 Pay — montant | ⬜ |
 | E2 Pay — destinataire | ⬜ |
