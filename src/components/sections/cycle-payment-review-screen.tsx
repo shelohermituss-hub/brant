@@ -1,30 +1,113 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PillButton } from "@/components/ui/pill-button";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { useCurrentAppUser } from "@/lib/use-current-app-user";
+import { createClient } from "@/lib/supabase/client";
+import { formatHtg } from "@/lib/utils";
 
-const ROWS = [
-  { label: "Metòd peman", value: "MonCash" },
-  { label: "Sik", value: "6 sou 10" },
-  { label: "Kotizasyon", value: "5 000 HTG" },
-];
+interface CyclePaymentReviewScreenProps {
+  groupId?: string;
+}
 
-const TOTAL_ROWS = [
-  { label: "Kotizasyon", value: "5 000 HTG" },
-  { label: "Frè kolèkt (0,5 %)", value: "25 HTG" },
-  { label: "Total", value: "5 025 HTG" },
-];
+interface ReviewData {
+  monthlyAmount: number;
+  currentCycle: number;
+  totalMembers: number;
+  collectionFee: number;
+}
 
-export function CyclePaymentReviewScreen() {
+export function CyclePaymentReviewScreen({ groupId }: CyclePaymentReviewScreenProps) {
   const router = useRouter();
+  const { authUserId, profile } = useCurrentAppUser();
+  const [data, setData] = useState<ReviewData | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!groupId) return;
+    let cancelled = false;
+    const supabase = createClient();
+
+    async function load(gid: string) {
+      const { data: group } = await supabase
+        .from("groups")
+        .select("monthly_amount, current_cycle, total_members, organizer:users!organizer_id(merchant_tier)")
+        .eq("id", gid)
+        .maybeSingle();
+      if (!group) return;
+
+      const { data: fee } = await supabase.rpc("calculate_collection_fee", {
+        p_amount: group.monthly_amount,
+        p_tier: group.organizer?.merchant_tier ?? "bronze",
+      });
+
+      if (!cancelled) {
+        setData({
+          monthlyAmount: group.monthly_amount,
+          currentCycle: group.current_cycle,
+          totalMembers: group.total_members,
+          collectionFee: typeof fee === "number" ? fee : 0,
+        });
+      }
+    }
+
+    load(groupId);
+    return () => {
+      cancelled = true;
+    };
+  }, [groupId]);
+
+  async function handleConfirm() {
+    if (!groupId || !authUserId) return;
+    setIsSubmitting(true);
+    setError(null);
+
+    const res = await fetch("/api/moncash/simulate-payment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ groupId }),
+    });
+    const body = await res.json().catch(() => null);
+
+    setIsSubmitting(false);
+
+    if (!res.ok) {
+      setError(body?.error ?? "Nou pa kapab konfime kotizasyon an. Tanpri eseye ankò.");
+      return;
+    }
+
+    router.push(`/payment-status?contributionId=${body.contribution.id}`);
+  }
+
+  if (!groupId || !data) {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <p className="text-[0.95rem] text-ink-secondary">Chajman...</p>
+      </div>
+    );
+  }
+
+  const total = data.monthlyAmount + data.collectionFee;
+  const rows = [
+    { label: "Metòd peman", value: "MonCash" },
+    { label: "Sik", value: `${data.currentCycle} sou ${data.totalMembers}` },
+    { label: "Kotizasyon", value: formatHtg(data.monthlyAmount) },
+  ];
+  const totalRows = [
+    { label: "Kotizasyon", value: formatHtg(data.monthlyAmount) },
+    { label: "Frè kolèkt", value: formatHtg(data.collectionFee) },
+    { label: "Total", value: formatHtg(total) },
+  ];
 
   return (
     <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-5 pt-4 pb-6">
       <div className="flex justify-end">
         <button
           type="button"
-          onClick={() => router.push("/stocks/cycle")}
+          onClick={() => router.push(`/group?id=${groupId}`)}
           aria-label="Fermer"
         >
           <AssetIcon name="cross" className="text-ink" size={20} />
@@ -39,7 +122,7 @@ export function CyclePaymentReviewScreen() {
       </div>
 
       <div className="flex flex-col gap-4">
-        {ROWS.map((row) => (
+        {rows.map((row) => (
           <div key={row.label} className="flex items-center justify-between">
             <span className="text-[0.95rem] text-ink-secondary">{row.label}</span>
             <span className="text-[0.95rem] text-ink-secondary">{row.value}</span>
@@ -48,13 +131,15 @@ export function CyclePaymentReviewScreen() {
       </div>
 
       <div className="flex flex-col gap-4">
-        {TOTAL_ROWS.map((row) => (
+        {totalRows.map((row) => (
           <div key={row.label} className="flex items-center justify-between">
             <span className="text-[0.95rem] text-ink-secondary">{row.label}</span>
             <span className="text-[0.95rem] text-ink-secondary">{row.value}</span>
           </div>
         ))}
       </div>
+
+      {error && <p className="text-center text-[0.85rem] text-late">{error}</p>}
 
       <p className="mt-auto text-center text-sm text-ink-secondary">
         Yon resi ak referans MonCash ap voye ba ou apre konfimasyon.
@@ -63,9 +148,10 @@ export function CyclePaymentReviewScreen() {
       <PillButton
         variant="primary"
         className="w-full"
-        onClick={() => router.push("/payment-status?state=wait")}
+        disabled={isSubmitting || !profile?.moncash_number}
+        onClick={handleConfirm}
       >
-        Konfime
+        {isSubmitting ? "Konfimasyon..." : "Konfime"}
       </PillButton>
     </div>
   );

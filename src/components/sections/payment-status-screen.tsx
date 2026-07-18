@@ -1,16 +1,27 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Check, Clock, X } from "lucide-react";
 import { Chip } from "@/components/ui/chip";
 import { PillButton } from "@/components/ui/pill-button";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { createClient } from "@/lib/supabase/client";
 
 export type PaymentStatus = "paid" | "wait" | "late";
 
 interface PaymentStatusScreenProps {
   status: PaymentStatus;
+  contributionId?: string;
 }
+
+const CONTRIBUTION_STATE_TO_STATUS: Record<string, PaymentStatus> = {
+  paid: "paid",
+  pending: "wait",
+  due: "wait",
+  late: "late",
+  defaulted: "late",
+};
 
 const CONTENT: Record<
   PaymentStatus,
@@ -39,8 +50,28 @@ const CONTENT: Record<
   },
 };
 
-export function PaymentStatusScreen({ status }: PaymentStatusScreenProps) {
+export function PaymentStatusScreen({ status: fallbackStatus, contributionId }: PaymentStatusScreenProps) {
   const router = useRouter();
+  const [status, setStatus] = useState(fallbackStatus);
+
+  useEffect(() => {
+    if (!contributionId) return;
+    let cancelled = false;
+    createClient()
+      .from("contributions")
+      .select("state")
+      .eq("id", contributionId)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (!cancelled && data) {
+          setStatus(CONTRIBUTION_STATE_TO_STATUS[data.state] ?? "wait");
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [contributionId]);
+
   const { icon: Icon, title, body, chipLabel, cta } = CONTENT[status];
 
   return (

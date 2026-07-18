@@ -2,9 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { useCurrentAppUser } from "@/lib/use-current-app-user";
 
 export function PaymentDetailsScreen() {
   const router = useRouter();
+  const { loading, authUserId, profile } = useCurrentAppUser();
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto">
@@ -25,30 +27,40 @@ export function PaymentDetailsScreen() {
         MonCash se sèl metòd peman disponib pou kounye a.
       </p>
 
-      <div className="flex items-center gap-3 border-t border-b border-border px-5 py-4">
-        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-green bg-green">
-          <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
-            <path
-              d="M1 4.5L4.2 7.5L11 1"
-              stroke="white"
-              strokeWidth={1.6}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
+      {!loading && !authUserId ? (
+        <p className="px-5 py-6 text-center text-[0.9rem] text-ink-secondary">
+          Konekte pou wè metòd peman ou.
+        </p>
+      ) : !profile?.moncash_number ? (
+        <p className="px-5 py-6 text-center text-[0.9rem] text-ink-secondary">
+          Ou pa gen nimewo MonCash konekte.
+        </p>
+      ) : (
+        <div className="flex items-center gap-3 border-t border-b border-border px-5 py-4">
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-green bg-green">
+            <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
+              <path
+                d="M1 4.5L4.2 7.5L11 1"
+                stroke="white"
+                strokeWidth={1.6}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
 
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green text-base font-bold text-white">
-          M
-        </span>
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green text-base font-bold text-white">
+            M
+          </span>
 
-        <span className="flex flex-1 flex-col">
-          <span className="text-[0.95rem] font-bold text-ink">MonCash</span>
-          <span className="text-sm text-ink-secondary">3711 2345</span>
-        </span>
+          <span className="flex flex-1 flex-col">
+            <span className="text-[0.95rem] font-bold text-ink">MonCash</span>
+            <span className="text-sm text-ink-secondary">{profile.moncash_number}</span>
+          </span>
 
-        <AssetIcon name="chevron-right" className="text-ink-secondary" size={16} />
-      </div>
+          <AssetIcon name="chevron-right" className="text-ink-secondary" size={16} />
+        </div>
+      )}
     </div>
   );
 }

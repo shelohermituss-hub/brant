@@ -35,6 +35,7 @@ export function OnboardingVerifyIdentityScreen() {
         full_name: draft.fullName ?? "",
         phone: draft.phone ?? "",
         moncash_number: draft.phone ?? "",
+        consent_signed_at: new Date().toISOString(),
       },
       { onConflict: "id" }
     );

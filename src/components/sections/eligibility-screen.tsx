@@ -3,16 +3,18 @@
 import { useRouter } from "next/navigation";
 import { CheckboxRow } from "@/components/ui/checkbox-row";
 import { AssetIcon } from "@/components/ui/asset-icon";
-
-const REQUIREMENTS = [
-  { label: "Idantite verifye (CIN)", checked: true },
-  { label: "Metòd peman konfime", checked: true },
-  { label: "Konsantman siyen", checked: false },
-];
+import { useCurrentAppUser } from "@/lib/use-current-app-user";
 
 export function EligibilityScreen() {
   const router = useRouter();
-  const allDone = REQUIREMENTS.every((r) => r.checked);
+  const { loading, authUserId, profile } = useCurrentAppUser();
+
+  const requirements = [
+    { label: "Idantite verifye (CIN)", checked: profile?.kyc_status === "verified" },
+    { label: "Metòd peman konfime", checked: !!profile?.moncash_number },
+    { label: "Konsantman siyen", checked: !!profile?.consent_signed_at },
+  ];
+  const allDone = requirements.every((r) => r.checked);
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto bg-surface-muted">
@@ -24,21 +26,29 @@ export function EligibilityScreen() {
         <span />
       </div>
 
-      <div className="px-5 pt-4 pb-2">
-        <p className="text-[0.95rem] text-ink-secondary">
-          {allDone
-            ? "Ou elijib pou resevwa yon pot."
-            : "Konplete kondisyon sa yo pou w ka resevwa yon pot."}
+      {!loading && !authUserId ? (
+        <p className="px-5 py-8 text-center text-[0.9rem] text-ink-secondary">
+          Konekte pou wè elijibilite ou.
         </p>
-      </div>
+      ) : (
+        <>
+          <div className="px-5 pt-4 pb-2">
+            <p className="text-[0.95rem] text-ink-secondary">
+              {allDone
+                ? "Ou elijib pou resevwa yon pot."
+                : "Konplete kondisyon sa yo pou w ka resevwa yon pot."}
+            </p>
+          </div>
 
-      <div className="bg-surface-muted py-3" />
+          <div className="bg-surface-muted py-3" />
 
-      <div className="bg-surface">
-        {REQUIREMENTS.map((req) => (
-          <CheckboxRow key={req.label} label={req.label} checked={req.checked} readOnly />
-        ))}
-      </div>
+          <div className="bg-surface">
+            {requirements.map((req) => (
+              <CheckboxRow key={req.label} label={req.label} checked={req.checked} readOnly />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

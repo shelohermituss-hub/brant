@@ -227,7 +227,7 @@ export function GroupDetailScreen({ groupId }: GroupDetailScreenProps) {
             variant="primary"
             className="flex-1"
             disabled={isPaid}
-            onClick={() => router.push("/stocks/cycle/buy")}
+            onClick={() => router.push(`/stocks/cycle/buy?groupId=${groupId}`)}
           >
             {isPaid ? "Peye" : "Peye kotizasyon"}
           </PillButton>
