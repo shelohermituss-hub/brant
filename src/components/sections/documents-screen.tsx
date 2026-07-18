@@ -4,14 +4,18 @@ import { useRouter } from "next/navigation";
 import { FileText } from "lucide-react";
 import { SettingsListRow } from "@/components/ui/settings-list-row";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { useCurrentAppUser } from "@/lib/use-current-app-user";
 
-const DOCUMENTS: { label: string; status: string; tone: "paid" | "wait" }[] = [
-  { label: "Kat idantite (CIN)", status: "Verifye", tone: "paid" },
-  { label: "Prèv revni", status: "An atant", tone: "wait" },
-];
+const KYC_STATUS_LABEL: Record<string, { label: string; tone: "paid" | "wait" }> = {
+  verified: { label: "Verifye", tone: "paid" },
+  pending: { label: "An atant", tone: "wait" },
+  rejected: { label: "Rejte", tone: "wait" },
+};
 
 export function DocumentsScreen() {
   const router = useRouter();
+  const { loading, authUserId, profile } = useCurrentAppUser();
+  const kyc = profile ? KYC_STATUS_LABEL[profile.kyc_status] : null;
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto bg-surface-muted">
@@ -31,19 +35,22 @@ export function DocumentsScreen() {
         </p>
       </div>
 
-      <div className="mx-4 mb-8 flex flex-col rounded-lg bg-surface">
-        {DOCUMENTS.map((doc) => (
+      {!loading && !authUserId ? (
+        <p className="px-5 py-6 text-center text-[0.9rem] text-ink-secondary">
+          Konekte pou wè dokiman ou.
+        </p>
+      ) : (
+        <div className="mx-4 mb-8 flex flex-col rounded-lg bg-surface">
           <SettingsListRow
-            key={doc.label}
             icon={FileText}
-            label={doc.label}
+            label="Kat idantite (CIN)"
             iconStyle="badge"
-            badge={doc.status}
-            badgeTone={doc.tone}
+            badge={kyc?.label}
+            badgeTone={kyc?.tone}
             showChevron={false}
           />
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

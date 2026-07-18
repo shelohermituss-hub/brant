@@ -348,7 +348,6 @@ export type Database = {
       }
       referrals: {
         Row: {
-          code: string
           completed_at: string | null
           created_at: string
           id: string
@@ -357,7 +356,6 @@ export type Database = {
           status: string
         }
         Insert: {
-          code: string
           completed_at?: string | null
           created_at?: string
           id?: string
@@ -366,7 +364,6 @@ export type Database = {
           status?: string
         }
         Update: {
-          code?: string
           completed_at?: string | null
           created_at?: string
           id?: string
@@ -433,6 +430,7 @@ export type Database = {
           merchant_tier: Database["public"]["Enums"]["merchant_tier"]
           moncash_number: string
           phone: string
+          referral_code: string
           role: Database["public"]["Enums"]["user_role"]
           trust_score: number
           updated_at: string
@@ -446,6 +444,7 @@ export type Database = {
           merchant_tier?: Database["public"]["Enums"]["merchant_tier"]
           moncash_number: string
           phone: string
+          referral_code?: string
           role?: Database["public"]["Enums"]["user_role"]
           trust_score?: number
           updated_at?: string
@@ -459,6 +458,7 @@ export type Database = {
           merchant_tier?: Database["public"]["Enums"]["merchant_tier"]
           moncash_number?: string
           phone?: string
+          referral_code?: string
           role?: Database["public"]["Enums"]["user_role"]
           trust_score?: number
           updated_at?: string

@@ -10,19 +10,7 @@ import { useCurrentAppUser } from "@/lib/use-current-app-user";
 import { createClient } from "@/lib/supabase/client";
 import { readGroupCreateDraft } from "@/lib/group-create-store";
 import { MIN_MEMBERS, MAX_MEMBERS } from "@/components/sections/group-create-members-screen";
-
-interface PositionPolicy {
-  min_score_for_any_position: number;
-  min_score_for_20th_percentile: number;
-  min_score_for_50th_percentile: number;
-}
-
-function minPositionFor(score: number, totalMembers: number, policy: PositionPolicy) {
-  if (score >= policy.min_score_for_any_position) return 1;
-  if (score >= policy.min_score_for_20th_percentile) return Math.max(1, Math.ceil(totalMembers * 0.2));
-  if (score >= policy.min_score_for_50th_percentile) return Math.max(1, Math.ceil(totalMembers * 0.5));
-  return Math.max(1, Math.floor(totalMembers * 0.8) + 1);
-}
+import { minPositionFor, type PositionPolicy } from "@/lib/position-policy";
 
 export function GroupCreatePositionScreen() {
   const router = useRouter();
