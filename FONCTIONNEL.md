@@ -35,12 +35,12 @@ Légende : ⬜ à faire · 🟡 en cours · ✅ fait
 
 ## 2. Écrans sans équivalent (à concevoir neuf — voir point 6 du plan validé)
 
-| Écran | Statut |
-|---|---|
-| Accepter/refuser une invitation | ⬜ |
-| Groupe en formation | ⬜ |
-| États de paiement distincts (échoué/en attente/réussi) | ⬜ |
-| Fin de cycle (extension `AddCashSuccessScreen`) | ⬜ |
+| Écran | Statut | Détail |
+|---|---|---|
+| Accepter/refuser une invitation | ✅ | `group-invite-screen.tsx` — pied de page double `PillButton` (Refize/Aksepte), accepter mène à `/group/create/position` (étape 3, montant/cotisation déjà fixés par le groupe) |
+| Groupe en formation | ✅ | `group-forming-screen.tsx` — `WonnCircle` sans bénéficiaire + liste `SettingsListRow` des invités (confirmé/en attente) |
+| États de paiement distincts | ✅ | `payment-status-screen.tsx` — 3 variantes (`Chip` paid/wait/late), icône et chemin de résolution propres à chacune ; reliée depuis Historique (tap sur une ligne) et depuis la confirmation de kotizasyon |
+| Fin de cycle | ✅ | `AddCashSuccessScreen` étendu (`variant="cycle-complete"`) — illustration `SoleyBurst` (SVG dessiné à la main, pas de génération Higgsfield sans validation préalable) |
 
 ## 3. Écrans Cash App retirés (zéro transposition possible)
 

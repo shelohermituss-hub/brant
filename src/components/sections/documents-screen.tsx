@@ -5,9 +5,9 @@ import { FileText } from "lucide-react";
 import { SettingsListRow } from "@/components/ui/settings-list-row";
 import { AssetIcon } from "@/components/ui/asset-icon";
 
-const DOCUMENTS = [
-  { label: "Kat idantite (CIN)", status: "Verifye" },
-  { label: "Prèv revni", status: "An atant" },
+const DOCUMENTS: { label: string; status: string; tone: "paid" | "wait" }[] = [
+  { label: "Kat idantite (CIN)", status: "Verifye", tone: "paid" },
+  { label: "Prèv revni", status: "An atant", tone: "wait" },
 ];
 
 export function DocumentsScreen() {
@@ -39,6 +39,7 @@ export function DocumentsScreen() {
             label={doc.label}
             iconStyle="badge"
             badge={doc.status}
+            badgeTone={doc.tone}
             showChevron={false}
           />
         ))}

@@ -25,14 +25,24 @@ function HistoryRow({
   status: "paid" | "wait" | "late";
   ref: string;
 }) {
+  const router = useRouter();
+
   return (
-    <div className="flex items-center justify-between border-b border-border px-5 py-4 last:border-b-0">
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={() => router.push(`/payment-status?state=${status}`)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") router.push(`/payment-status?state=${status}`);
+      }}
+      className="flex w-full items-center justify-between border-b border-border px-5 py-4 text-left last:border-b-0"
+    >
       <div className="flex flex-col">
         <span className="text-[0.95rem] font-bold text-ink">{amount}</span>
         <span className="text-sm text-ink-secondary">{date}</span>
         <span className="text-xs text-ink-secondary">Ref. {ref}</span>
       </div>
-      <Chip variant={status} className="h-7 px-3 text-xs">
+      <Chip variant={status} className="h-7 px-3 text-xs pointer-events-none">
         {STATUS_LABEL[status]}
       </Chip>
     </div>

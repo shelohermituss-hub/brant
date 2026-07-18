@@ -10,6 +10,7 @@ interface HomeScreenProps {
 const GROUPS = [
   {
     id: "fanmi",
+    href: "/group",
     name: "Sòl Fanmi",
     potAmount: "50 000 HTG",
     contribution: "5 000 HTG",
@@ -20,6 +21,7 @@ const GROUPS = [
   },
   {
     id: "kominote",
+    href: "/group",
     name: "Sòl Kominote",
     potAmount: "20 000 HTG",
     contribution: "2 000 HTG",
@@ -27,6 +29,17 @@ const GROUPS = [
     total: 10,
     status: "active" as const,
     isMyMonth: true,
+  },
+  {
+    id: "vwazinaj",
+    href: "/group/forming",
+    name: "Sòl Vwazinaj",
+    potAmount: "30 000 HTG",
+    contribution: "3 000 HTG",
+    position: 5,
+    total: 10,
+    status: "forming" as const,
+    isMyMonth: false,
   },
 ];
 
@@ -45,8 +58,8 @@ export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
 
       {populated ? (
         <div className="flex flex-col gap-3">
-          {GROUPS.map((group) => (
-            <Link key={group.id} href="/group">
+          {GROUPS.map(({ href, ...group }) => (
+            <Link key={group.id} href={href}>
               <GroupCard {...group} />
             </Link>
           ))}
@@ -63,6 +76,9 @@ export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
           <PillButton href="/group/create/amount" className="h-12 px-8 text-[0.95rem]">
             Kreye yon sòl
           </PillButton>
+          <Link href="/group/invite" className="text-[0.9rem] font-bold text-green">
+            Gen yon envitasyon? Wè li
+          </Link>
         </div>
       )}
     </div>

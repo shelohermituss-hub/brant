@@ -2,10 +2,18 @@ import { type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AssetIcon, type AssetIconName } from "@/components/ui/asset-icon";
 
+type BadgeTone = "paid" | "wait";
+
+const BADGE_TONE_CLASSES: Record<BadgeTone, string> = {
+  paid: "bg-paid/10 text-paid",
+  wait: "bg-wait/10 text-wait",
+};
+
 interface SettingsListRowProps {
   icon: LucideIcon | AssetIconName;
   label: string;
   badge?: string;
+  badgeTone?: BadgeTone;
   iconStyle?: "bare" | "badge";
   showChevron?: boolean;
   onClick?: () => void;
@@ -15,6 +23,7 @@ export function SettingsListRow({
   icon,
   label,
   badge,
+  badgeTone = "paid",
   iconStyle = "bare",
   showChevron = true,
   onClick,
@@ -44,7 +53,7 @@ export function SettingsListRow({
       )}
       <span className="flex-1 text-[0.95rem] font-bold text-ink">{label}</span>
       {badge && (
-        <span className="rounded-full bg-green/10 px-3 py-1 text-sm font-bold text-green">
+        <span className={cn("rounded-full px-3 py-1 text-sm font-bold", BADGE_TONE_CLASSES[badgeTone])}>
           {badge}
         </span>
       )}

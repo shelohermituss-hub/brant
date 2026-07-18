@@ -44,7 +44,7 @@ export function GroupCard({
     >
       <div className="flex items-start justify-between gap-3">
         <span className="text-[1.05rem] font-bold text-ink">{name}</span>
-        <Chip variant={STATUS_VARIANT[status]} className="h-7 px-3 text-xs">
+        <Chip variant={STATUS_VARIANT[status]} className="h-7 px-3 text-xs pointer-events-none">
           {STATUS_LABEL[status]}
         </Chip>
       </div>

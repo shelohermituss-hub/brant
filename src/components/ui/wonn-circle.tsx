@@ -23,6 +23,7 @@ const SIZE = 280;
 const CENTER = SIZE / 2;
 const RADIUS = 104;
 const DISK_RADIUS = 13;
+const round = (n: number) => Math.round(n * 100) / 100;
 
 export function WonnCircle({
   members,
@@ -43,8 +44,8 @@ export function WonnCircle({
 
       {members.map(({ position, status }) => {
         const angle = (Math.PI / 180) * (-90 + ((position - 1) * 360) / members.length);
-        const x = CENTER + RADIUS * Math.cos(angle);
-        const y = CENTER + RADIUS * Math.sin(angle);
+        const x = round(CENTER + RADIUS * Math.cos(angle));
+        const y = round(CENTER + RADIUS * Math.sin(angle));
         const isBeneficiary = position === beneficiaryPosition;
 
         return (

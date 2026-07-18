@@ -63,7 +63,7 @@ export function CyclePaymentReviewScreen() {
       <PillButton
         variant="primary"
         className="w-full"
-        onClick={() => router.push("/stocks/cycle")}
+        onClick={() => router.push("/payment-status?state=wait")}
       >
         Konfime
       </PillButton>
