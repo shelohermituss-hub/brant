@@ -5,6 +5,7 @@ type NumericKeypadVariant = "boxed" | "plain" | "green";
 
 interface NumericKeypadProps {
   variant?: NumericKeypadVariant;
+  showDecimal?: boolean;
   onDigit?: (digit: string) => void;
   onDecimal?: () => void;
   onBackspace?: () => void;
@@ -15,6 +16,7 @@ const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0", "backspace"
 
 export function NumericKeypad({
   variant = "plain",
+  showDecimal = true,
   onDigit,
   onDecimal,
   onBackspace,
@@ -34,6 +36,10 @@ export function NumericKeypad({
       {KEYS.map((key) => {
         const isBackspace = key === "backspace";
         const isDecimal = key === ".";
+
+        if (isDecimal && !showDecimal) {
+          return <div key={key} aria-hidden="true" />;
+        }
 
         return (
           <button
