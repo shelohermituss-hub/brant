@@ -214,8 +214,8 @@ Home (tab), carte (tab), $ (tab), recherche/loupe (tab), horloge/historique (tab
 | C2 Add Cash — clavier | ✅ |
 | C3 Add Cash — succès | ✅ |
 | D1 Confirmer Cash PIN | ✅ |
-| E1 Pay — montant | ⬜ |
-| E2 Pay — destinataire | ⬜ |
+| E1 Pay — montant | ✅ |
+| E2 Pay — destinataire | ✅ |
 | F1 Stocks — accueil | ⬜ |
 | F2 Détail action (Meta) | ⬜ |
 | F3 Buy Stock — sheet montants | ⬜ |

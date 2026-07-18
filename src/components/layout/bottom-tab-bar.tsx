@@ -13,11 +13,16 @@ const TABS = [
   { href: "/activity", icon: Clock },
 ] as const;
 
-export function BottomTabBar() {
+interface BottomTabBarProps {
+  tone?: "light" | "dark";
+}
+
+export function BottomTabBar({ tone = "light" }: BottomTabBarProps) {
   const pathname = usePathname();
+  const isDark = tone === "dark";
 
   return (
-    <nav className="w-full shrink-0 bg-surface">
+    <nav className={cn("w-full shrink-0", !isDark && "bg-surface")}>
       <div className="flex items-center justify-between px-8 py-3">
         {TABS.map(({ href, icon: Icon }) => {
           const active = pathname === href;
@@ -26,14 +31,22 @@ export function BottomTabBar() {
               <Icon
                 size={26}
                 strokeWidth={2}
-                className={cn(active ? "text-ink" : "text-ink-secondary/60")}
+                className={cn(
+                  isDark
+                    ? active
+                      ? "text-white"
+                      : "text-white/60"
+                    : active
+                      ? "text-ink"
+                      : "text-ink-secondary/60"
+                )}
               />
             </Link>
           );
         })}
       </div>
       <div className="flex justify-center pb-2">
-        <div className="h-[5px] w-32 rounded-full bg-ink" />
+        <div className={cn("h-[5px] w-32 rounded-full", isDark ? "bg-white" : "bg-ink")} />
       </div>
     </nav>
   );
