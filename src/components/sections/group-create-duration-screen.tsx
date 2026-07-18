@@ -1,17 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AssetIcon } from "@/components/ui/asset-icon";
 import { StepProgressBar } from "@/components/ui/step-progress-bar";
 import { PillButton } from "@/components/ui/pill-button";
 import { cn } from "@/lib/utils";
-
-const POT_AMOUNT = 50_000;
+import { readGroupCreateDraft, writeGroupCreateDraft, type Frequency } from "@/lib/group-create-store";
 
 const DURATION_OPTIONS = [5, 10, 20];
-
-type Frequency = "mwa" | "2-semenn" | "3-jou";
 
 const FREQUENCY_OPTIONS: { key: Frequency; label: string; installmentsPerMonth: number }[] = [
   { key: "mwa", label: "Chak mwa", installmentsPerMonth: 1 },
@@ -23,12 +20,30 @@ const formatAmount = (value: number) => Math.round(value).toLocaleString("fr-FR"
 
 export function GroupCreateDurationScreen() {
   const router = useRouter();
-  const [duration, setDuration] = useState(10);
-  const [frequency, setFrequency] = useState<Frequency>("mwa");
+  const [potAmount] = useState(() => readGroupCreateDraft().potAmount ?? null);
+  const [duration, setDuration] = useState(() => readGroupCreateDraft().durationMonths ?? 10);
+  const [frequency, setFrequency] = useState<Frequency>(
+    () => readGroupCreateDraft().frequency ?? "mwa"
+  );
 
-  const monthlyAmount = POT_AMOUNT / duration;
+  useEffect(() => {
+    if (!potAmount) router.replace("/group/create/amount");
+  }, [potAmount, router]);
+
+  if (!potAmount) return null;
+
+  const monthlyAmount = potAmount / duration;
   const activeFrequency = FREQUENCY_OPTIONS.find((f) => f.key === frequency)!;
   const perInstallment = monthlyAmount / activeFrequency.installmentsPerMonth;
+
+  function handleNext() {
+    writeGroupCreateDraft({
+      durationMonths: duration,
+      frequency,
+      installmentsPerMonth: activeFrequency.installmentsPerMonth,
+    });
+    router.push("/group/create/position");
+  }
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
@@ -48,7 +63,7 @@ export function GroupCreateDurationScreen() {
         Chwazi dire sik la
       </h1>
       <p className="pt-2 text-[0.95rem] text-ink-secondary">
-        Pot la ({formatAmount(POT_AMOUNT)} HTG) separe sou kantite mwa ou chwazi a
+        Pot la ({formatAmount(potAmount)} HTG) separe sou kantite mwa ou chwazi a
       </p>
 
       <div className="flex gap-3 pt-6">
@@ -73,7 +88,7 @@ export function GroupCreateDurationScreen() {
             <span className="text-xs text-ink-secondary">Mwa</span>
             <span className="h-px w-full bg-border" />
             <span className="text-center text-sm font-bold text-ink">
-              {formatAmount(POT_AMOUNT / months)}
+              {formatAmount(potAmount / months)}
               <br />
               HTG/mwa
             </span>
@@ -106,7 +121,7 @@ export function GroupCreateDurationScreen() {
       </div>
 
       <div className="mt-auto pt-6">
-        <PillButton className="w-full" onClick={() => router.push("/group/create/position")}>
+        <PillButton className="w-full" onClick={handleNext}>
           Next
         </PillButton>
       </div>

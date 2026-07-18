@@ -1,5 +1,11 @@
 import { GroupFormingScreen } from "@/components/sections/group-forming-screen";
 
-export default function Page() {
-  return <GroupFormingScreen />;
+interface PageProps {
+  searchParams: Promise<{ id?: string }>;
+}
+
+export default async function Page({ searchParams }: PageProps) {
+  const { id } = await searchParams;
+
+  return <GroupFormingScreen groupId={id} />;
 }

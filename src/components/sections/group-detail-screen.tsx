@@ -1,42 +1,152 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { WonnAvatarRoute, type AvatarMember } from "@/components/ui/wonn-avatar-route";
 import { PaymentCountdown } from "@/components/ui/payment-countdown";
 import { SurfaceCard } from "@/components/ui/surface-card";
-import { Chip } from "@/components/ui/chip";
 import { PillButton } from "@/components/ui/pill-button";
 import { AssetIcon } from "@/components/ui/asset-icon";
 import { ConnectedAccountsCard } from "@/components/ui/connected-accounts-card";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
+import { createClient } from "@/lib/supabase/client";
+import { avatarColorFor, initialFor } from "@/lib/avatar-color";
+import { formatHtg } from "@/lib/utils";
 
-const MEMBERS: AvatarMember[] = [
-  { position: 1, name: "Marie L.", initial: "M", color: "var(--color-purple)" },
-  { position: 2, name: "Peterson J.", initial: "P", color: "var(--color-blue)" },
-  { position: 3, name: "Sandy G.", initial: "S", color: "var(--color-orange)" },
-  { position: 4, name: "Diego M.", initial: "D", color: "var(--color-cyan)" },
-  { position: 5, name: "Fabiola R.", initial: "F", color: "var(--color-purple)" },
-  { position: 6, name: "Sara D.", initial: "S", color: "var(--color-green-deep)" },
-  { position: 7, name: "Junior P.", initial: "J", color: "var(--color-blue)" },
-  { position: 8, name: "Nadège C.", initial: "N", color: "var(--color-orange)" },
-  { position: 9, name: "Wilson B.", initial: "W", color: "var(--color-cyan)" },
-  { position: 10, name: "Kettelie A.", initial: "K", color: "var(--color-purple)" },
-];
+interface GroupDetailScreenProps {
+  groupId?: string;
+}
 
-const MOTIF_TAGS = ["Lekòl", "Bòdwo", "Telefòn"];
+interface GroupRow {
+  id: string;
+  name: string;
+  monthly_amount: number;
+  total_members: number;
+  pot_day: number;
+  state: string;
+  current_cycle: number;
+}
 
-const POT_ROWS = [
-  { label: "Manm", value: "10" },
-  { label: "Dire sik la", value: "30 jou" },
-  { label: "Frekans peman", value: "Chak 3 jou" },
-  { label: "Kantite pou chak vèsman", value: "5 000 HTG" },
-];
+function nextPotDate(potDay: number): Date {
+  const now = new Date();
+  const candidate = new Date(now.getFullYear(), now.getMonth(), potDay);
+  if (candidate.getTime() <= now.getTime()) candidate.setMonth(candidate.getMonth() + 1);
+  return candidate;
+}
 
-const NEXT_PAYMENT_DATE = new Date("2026-07-21T00:00:00");
+const dateFormatter = new Intl.DateTimeFormat("fr-FR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
 
-export function GroupDetailScreen() {
+export function GroupDetailScreen({ groupId }: GroupDetailScreenProps) {
   const router = useRouter();
-  const { profile } = useCurrentAppUser();
+  const { loading: userLoading, authUserId, profile } = useCurrentAppUser();
+  const [group, setGroup] = useState<GroupRow | null | undefined>(undefined);
+  const [members, setMembers] = useState<AvatarMember[]>([]);
+  const [myDue, setMyDue] = useState<{ amount: number; state: string } | null>(null);
+
+  useEffect(() => {
+    if (!groupId || !authUserId) return;
+    let cancelled = false;
+    const supabase = createClient();
+
+    async function load(gid: string, uid: string) {
+      const { data: groupRow } = await supabase
+        .from("groups")
+        .select("id, name, monthly_amount, total_members, pot_day, state, current_cycle")
+        .eq("id", gid)
+        .maybeSingle();
+
+      const { data: membershipRows } = await supabase
+        .from("memberships")
+        .select("position, user_id, users(full_name)")
+        .eq("group_id", gid)
+        .order("position");
+
+      const { data: myMembership } = await supabase
+        .from("memberships")
+        .select("id")
+        .eq("group_id", gid)
+        .eq("user_id", uid)
+        .maybeSingle();
+
+      let due: { amount: number; state: string } | null = null;
+      if (myMembership && groupRow) {
+        const { data: contribution } = await supabase
+          .from("contributions")
+          .select("amount, state")
+          .eq("membership_id", myMembership.id)
+          .eq("cycle_number", groupRow.current_cycle)
+          .maybeSingle();
+        due = contribution;
+      }
+
+      if (cancelled) return;
+      setGroup(groupRow ?? null);
+      setMembers(
+        (membershipRows ?? []).map((m) => ({
+          position: m.position,
+          name: m.users?.full_name ?? "Manm",
+          initial: initialFor(m.users?.full_name ?? "?"),
+          color: avatarColorFor(m.user_id),
+        }))
+      );
+      setMyDue(due);
+    }
+
+    load(groupId, authUserId);
+    return () => {
+      cancelled = true;
+    };
+  }, [groupId, authUserId]);
+
+  if (!groupId) {
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-2 px-5 text-center">
+        <p className="text-[0.95rem] text-ink-secondary">Chwazi yon sik nan lis ou a.</p>
+        <PillButton className="mt-2" onClick={() => router.push("/card")}>
+          Retounen
+        </PillButton>
+      </div>
+    );
+  }
+
+  if (!userLoading && !authUserId) {
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-2 px-5 text-center">
+        <p className="text-[0.95rem] text-ink-secondary">Konekte pou wè sik sa a.</p>
+        <PillButton className="mt-2" onClick={() => router.push("/onboarding/email")}>
+          Konekte
+        </PillButton>
+      </div>
+    );
+  }
+
+  if (group === undefined) {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <p className="text-[0.95rem] text-ink-secondary">Chajman...</p>
+      </div>
+    );
+  }
+
+  if (group === null) {
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-2 px-5 text-center">
+        <p className="text-[0.95rem] text-ink-secondary">Nou pa jwenn sik sa a.</p>
+        <PillButton className="mt-2" onClick={() => router.push("/card")}>
+          Retounen
+        </PillButton>
+      </div>
+    );
+  }
+
+  const potDate = nextPotDate(group.pot_day);
+  const isForming = group.state === "forming";
+  const owedAmount = myDue?.amount ?? group.monthly_amount;
+  const isPaid = myDue?.state === "paid";
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto bg-surface-muted">
@@ -44,48 +154,56 @@ export function GroupDetailScreen() {
         <button type="button" onClick={() => router.push("/card")} aria-label="Retour">
           <AssetIcon name="chevron-left" className="text-ink" size={22} />
         </button>
-        <span className="text-lg font-bold text-ink">Sòl Fanmi</span>
+        <span className="text-lg font-bold text-ink">{group.name}</span>
         <span className="w-[22px]" />
       </div>
 
       <div className="bg-surface pb-4">
-        <WonnAvatarRoute members={MEMBERS} currentPosition={6} />
+        <WonnAvatarRoute members={members} currentPosition={group.current_cycle} />
       </div>
 
       <div className="flex flex-col gap-1 px-5 pt-5 pb-3">
-        <span className="text-[0.9rem] text-ink-secondary">Ou dwe peye</span>
-        <p className="text-[2.5rem] leading-none font-bold text-ink">5 000 HTG</p>
+        <span className="text-[0.9rem] text-ink-secondary">
+          {isForming ? "Sik la poko kòmanse" : isPaid ? "Ou pa dwe anyen" : "Ou dwe peye"}
+        </span>
+        {!isForming && !isPaid && (
+          <p className="text-[2.5rem] leading-none font-bold text-ink">{formatHtg(owedAmount)}</p>
+        )}
       </div>
 
       <div className="px-4 pb-4">
         <SurfaceCard className="flex flex-col gap-5">
           <span className="text-lg font-bold text-ink">Detay</span>
 
-          <div className="flex gap-2 overflow-x-auto">
-            {MOTIF_TAGS.map((tag) => (
-              <Chip key={tag} variant="secondary" className="pointer-events-none">
-                {tag}
-              </Chip>
-            ))}
-          </div>
-
           <div className="flex flex-col gap-3">
-            {POT_ROWS.map((row) => (
-              <div key={row.label} className="flex items-center justify-between">
-                <span className="text-[0.9rem] text-ink-secondary">{row.label}</span>
-                <span className="text-[0.9rem] font-bold text-ink">{row.value}</span>
-              </div>
-            ))}
+            <div className="flex items-center justify-between">
+              <span className="text-[0.9rem] text-ink-secondary">Manm</span>
+              <span className="text-[0.9rem] font-bold text-ink">{group.total_members}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[0.9rem] text-ink-secondary">Dire sik la</span>
+              <span className="text-[0.9rem] font-bold text-ink">{group.total_members} mwa</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[0.9rem] text-ink-secondary">Frekans peman</span>
+              <span className="text-[0.9rem] font-bold text-ink">Chak mwa</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[0.9rem] text-ink-secondary">Kantite pou chak vèsman</span>
+              <span className="text-[0.9rem] font-bold text-ink">{formatHtg(group.monthly_amount)}</span>
+            </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <span className="text-[0.9rem] font-bold text-ink">Pwochen peman nan</span>
-            <PaymentCountdown targetDate={NEXT_PAYMENT_DATE} />
-          </div>
+          {!isForming && (
+            <div className="flex flex-col gap-2">
+              <span className="text-[0.9rem] font-bold text-ink">Pwochen peman nan</span>
+              <PaymentCountdown targetDate={potDate} />
+            </div>
+          )}
 
           <div className="flex items-center justify-between border-t border-border pt-4">
             <span className="text-[0.9rem] text-ink-secondary">Dat pwochen peman</span>
-            <span className="text-[0.9rem] font-bold text-ink">21 jiyè 2026</span>
+            <span className="text-[0.9rem] font-bold text-ink">{dateFormatter.format(potDate)}</span>
           </div>
         </SurfaceCard>
       </div>
@@ -103,15 +221,18 @@ export function GroupDetailScreen() {
         moncashHref="/payment-hub/method"
       />
 
-      <div className="mt-auto flex gap-3 px-4 pb-6">
-        <PillButton
-          variant="primary"
-          className="flex-1"
-          onClick={() => router.push("/stocks/cycle/buy")}
-        >
-          Peye kotizasyon
-        </PillButton>
-      </div>
+      {!isForming && (
+        <div className="mt-auto flex gap-3 px-4 pb-6">
+          <PillButton
+            variant="primary"
+            className="flex-1"
+            disabled={isPaid}
+            onClick={() => router.push("/stocks/cycle/buy")}
+          >
+            {isPaid ? "Peye" : "Peye kotizasyon"}
+          </PillButton>
+        </div>
+      )}
     </div>
   );
 }
