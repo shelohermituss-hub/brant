@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Chip } from "@/components/ui/chip";
 import { AssetIcon } from "@/components/ui/asset-icon";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
@@ -133,6 +134,21 @@ export function HistoryScreen() {
         <p className="px-5 py-8 text-center text-[0.9rem] text-ink-secondary">
           Konekte pou wè istwa peman ou.
         </p>
+      ) : contributions !== null && payouts !== null && contributions.length === 0 && payouts.length === 0 ? (
+        <div className="flex flex-1 flex-col items-center justify-center gap-4 px-8 pb-12 text-center">
+          <div className="relative aspect-[16/9] w-full max-w-[280px]">
+            <Image
+              src="/images/illustration-empty-history.png"
+              alt=""
+              fill
+              className="object-contain"
+            />
+          </div>
+          <p className="text-[0.95rem] text-ink-secondary">
+            Ou poko gen okenn tranzaksyon. Istwa kotizasyon ak pot ou yo ap
+            parèt isit la.
+          </p>
+        </div>
       ) : (
         <>
           <div className="bg-surface-muted px-5 py-3 pt-6">

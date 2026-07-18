@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Check } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
@@ -28,11 +29,21 @@ export function WalletTransferSuccessScreen({ amount }: WalletTransferSuccessScr
         Ou voye {formatHtg(amount)} nan MonCash ou
       </p>
 
-      <p className="text-[0.95rem] text-ink-secondary">
-        Lajan an ap parèt sou kont MonCash ou nan kèk minit.
-      </p>
+      <div className="mt-auto flex flex-col gap-4 rounded-lg border border-border p-5">
+        <div className="relative mx-auto flex aspect-[16/9] w-full max-w-[220px] items-center justify-center">
+          <Image
+            src="/images/illustration-wallet-transfer-success.png"
+            alt=""
+            fill
+            className="object-contain"
+          />
+        </div>
+        <p className="text-[0.95rem] text-ink-secondary">
+          Lajan an ap parèt sou kont MonCash ou nan kèk minit.
+        </p>
+      </div>
 
-      <PillButton className="mt-auto w-full" onClick={() => router.push("/payment-hub/wallet")}>
+      <PillButton className="w-full" onClick={() => router.push("/payment-hub/wallet")}>
         Done
       </PillButton>
     </div>
