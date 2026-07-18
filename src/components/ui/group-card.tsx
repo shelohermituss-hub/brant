@@ -30,7 +30,7 @@ export function GroupCard({
   const tooltipLeft = ((yourPosition - 0.5) / memberCount) * 100;
 
   return (
-    <div className="flex w-full flex-col gap-4 rounded-lg bg-surface-muted p-5 text-left">
+    <div className="flex w-full flex-col gap-4 rounded-lg bg-surface p-5 text-left">
       <div className="flex items-start justify-between gap-3">
         <p className="text-[1.6rem] leading-none font-bold text-ink">{potAmount}</p>
         {joined ? (
