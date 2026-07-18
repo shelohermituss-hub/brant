@@ -23,6 +23,16 @@ screenshot en basse résolution, généré par IA, ou approximé) et qui devra
 Ces 4 visuels sont des approximations IA (jamais l'original) — à remplacer
 si l'utilisateur fournit les assets officiels Cash App un jour.
 
+## Icônes UI (chevrons, card, search, history, notifications, gift, user, cross, arrow, scan)
+
+Initialement extraites en PNG basse résolution (16-32px natif) depuis le
+kit Figma — pixelisaient à l'affichage, notamment sur écrans haute
+densité. **Remplacées par des icônes vectorielles `lucide-react`** en
+trait épais (`strokeWidth={2.5}`) via `AssetIcon` (même API, implémentation
+interne changée). Les PNG d'origine ont été supprimés de `public/icons/`.
+Statut : ✅ résolu, plus de dépendance à des rasters basse résolution pour
+ces icônes.
+
 ## Icône Savings (Home)
 
 Icône ronde verte/noire type "coffre-fort" sur la card "Savings" : recréée

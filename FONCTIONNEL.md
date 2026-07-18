@@ -13,7 +13,8 @@ Légende : ⬜ à faire · 🟡 en cours · ✅ fait
 | Cartographie sémantique des couleurs | ✅ | Documentée dans `DESIGN.md` §3.1. `--color-green` = action primaire confirmée. Bleu/violet/orange/cyan = décoratifs, pas sémantiques. |
 | Tokens de statut `--color-paid/wait/late` | ✅ | Dérivés de green/orange/red existants. `--color-soley` ajouté (seule teinte réellement nouvelle, halo du bénéficiaire du wonn). |
 | Renommage `Chip` "primary" → "accent" | ✅ | Lève l'ambiguïté avec `PillButton`. Variantes `paid`/`wait`/`late` ajoutées au passage. |
-| Suppression `pay.png` ($) | ✅ | Remplacé par l'icône lucide `ArrowLeftRight` dans la tab bar. |
+| Suppression `pay.png` ($) | 🟡 Réintroduit | Retiré (icône lucide `ArrowLeftRight`), puis **réintroduit** en `DollarSign` (lucide, bold) au 3e onglet le 2026-07-18 sur demande explicite de l'utilisateur — voir §5. |
+| Icônes UI pixelisées (PNG 16-32px) | ✅ | Remplacées par des icônes vectorielles `lucide-react` (`strokeWidth={2.5}`) via `AssetIcon` — plus de flou/pixelisation à aucune résolution. |
 | Purge vocabulaire Cash App | ✅ | Voir §1-10 ci-dessous pour le détail écran par écran. Étape bitcoin/cashtag de l'onboarding : bitcoin retiré (zéro transposition), cashtag → "non itilizatè". |
 | `DESIGN.md` déposé (racine) | ✅ | §3 remplacé par les tokens réels du repo + cartographie sémantique. |
 | `.claude/skills/moncash-flow/SKILL.md` déposé | ✅ | Verbatim, non modifié. |
@@ -22,7 +23,7 @@ Légende : ⬜ à faire · 🟡 en cours · ✅ fait
 
 | § | Écran sòl | Traitement | Composants réutilisés |
 |---|---|---|---|
-| 1 | Accueil — carte de groupe | ✅ Neuf, composé | `GroupCard` (neuf, `SurfaceCard`+`Chip`), `home-screen.tsx` reconstruit |
+| 1 | Accueil — carte de groupe | 🟡 Déplacé | `GroupCard` déplacé sur `/card` (`card-screen.tsx`, 2e icône de la tab bar) suite à la décision utilisateur du 2026-07-18 : `/home` redevient l'écran de solde façon Cash App (Cash Balance/Add Cash/Cash Out), destiné à afficher le solde d'un wallet réel à intégrer. Voir §5 ci-dessous. |
 | 2 | Rejoindre/Créer un sòl (4 étapes) | ✅ Neuf, composé | Presets façon `AmountGrid`, `PillButton`, pattern de récap façon `CyclePaymentReviewScreen` — routes `/group/create/{amount,contribution,position,review}` |
 | 3 | Détail de groupe — le wonn | ✅ Neuf | `WonnCircle` (composant signature DESIGN.md §5, neuf), `group-detail-screen.tsx` — route `/group` |
 | 4 | Moyen de versement | ✅ Adapté | `payment-details-screen.tsx` réutilisé quasi directement (structure de sélection), contenu réduit à MonCash seul (aucune méthode hors contexte haïtien) — route `/payment-hub/method` |
@@ -58,3 +59,28 @@ suivi) plutôt que 3 étapes séquentielles distinctes mentionnées dans
 `TONTINE_FLOW_REFERENCE.md` — jugé suffisant fonctionnellement pour un flow
 informatif sans décision multi-étapes réelle. À reconfirmer avec
 l'utilisateur si un flow en 3 écrans séparés est explicitement souhaité.
+
+## 5. Ré-arbitrage Accueil / Card (2026-07-18)
+
+Suite à un retour utilisateur, l'architecture de navigation change :
+
+- **`/home` (1er onglet)** redevient l'écran de solde d'origine (structure
+  Cash Balance / Add Cash / Cash Out / Savings / Bitcoin / Stocks / Free tax
+  filing), restauré à l'identique depuis l'historique git d'avant reskin.
+  Objectif affiché par l'utilisateur : y afficher le solde d'un **wallet
+  réel à intégrer prochainement** (MonCash ou équivalent).
+- **`/card` (2e onglet, "card")** — jusqu'ici une route morte — accueille
+  désormais la liste des sòl (`GroupCard`, ex-contenu de `/home`).
+
+⚠️ **Incohérence avec DESIGN.md non résolue** : `/home` réaffiche du texte
+Cash App littéral ("Cash Balance", "Add Cash", "Cash Out", "Bitcoin",
+"Stocks", "Free tax filing", montants en `$`) alors que DESIGN.md §2/§4
+interdit explicitement ce vocabulaire et le symbole `$`, et que le point 4
+du plan précédent avait justement purgé cet écran. Restauré tel quel à la
+demande explicite de l'utilisateur ("laisse-le tel qu'il était"). **Signalé,
+pas tranché** : à reconfirmer si ce texte doit être traduit en Kreyòl une
+fois le wallet réel branché, ou s'il reste en l'état.
+
+De même, l'icône `$` a été réintroduite au 3e onglet de la tab bar (à la
+demande explicite), alors que le point 2 du plan précédent l'avait retirée
+comme interdite par DESIGN.md §2. Signalé pour la même raison.

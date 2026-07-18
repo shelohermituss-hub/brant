@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowLeftRight, type LucideIcon } from "lucide-react";
+import { DollarSign, type LucideIcon } from "lucide-react";
 import { AssetIcon, type AssetIconName } from "@/components/ui/asset-icon";
 import { cn } from "@/lib/utils";
 
 const TABS: { href: string; icon: AssetIconName | LucideIcon }[] = [
   { href: "/home", icon: "save" },
   { href: "/card", icon: "card" },
-  { href: "/payment-hub", icon: ArrowLeftRight },
+  { href: "/payment-hub", icon: DollarSign },
   { href: "/search", icon: "search" },
   { href: "/activity", icon: "history" },
 ];
@@ -42,6 +42,7 @@ export function BottomTabBar({ tone = "light" }: BottomTabBarProps) {
                   return (
                     <Icon
                       size={26}
+                      strokeWidth={2.5}
                       className={cn(isDark ? "text-white" : "text-ink", !active && "opacity-50")}
                     />
                   );
