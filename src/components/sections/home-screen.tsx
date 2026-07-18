@@ -26,7 +26,10 @@ export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
     <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-surface-muted px-4 pt-4 pb-6">
       <header className="flex items-center justify-between px-1 pb-1">
         <h1 className="text-[2.1rem] font-bold text-ink">Money</h1>
-        <div className="h-11 w-11 shrink-0 rounded-full bg-ink-secondary/30" />
+        <Link
+          href="/account"
+          className="h-11 w-11 shrink-0 rounded-full bg-ink-secondary/30"
+        />
       </header>
 
       <SurfaceCard className="flex flex-col gap-7">

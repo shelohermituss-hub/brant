@@ -220,11 +220,11 @@ Home (tab), carte (tab), $ (tab), recherche/loupe (tab), horloge/historique (tab
 | F2 Détail action (Meta) | ✅ |
 | F3 Buy Stock — sheet montants | ✅ |
 | F4 Buy Stock — récapitulatif | ✅ |
-| G1 Your Account — profil | ⬜ |
-| G2 Your Account — menu | ⬜ |
-| G3 Account & Settings — aide | ⬜ |
-| G4 Security & Privacy | ⬜ |
-| G5 Notifications | ⬜ |
+| G1 Your Account — profil | ✅ |
+| G2 Your Account — menu | ✅ |
+| G3 Account & Settings — aide | ✅ |
+| G4 Security & Privacy | ✅ |
+| G5 Notifications | ✅ |
 
 ⬜ à faire · 🟡 en cours · ✅ validé
 
