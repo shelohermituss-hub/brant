@@ -19,8 +19,18 @@ screenshot en basse résolution, généré par IA, ou approximé) et qui devra
 | 2 | Home (vide/peuplé) | Card "Invest in stocks" | `public/images/illustration-stocks.png` | ✅ Généré |
 | 3 | Home (vide/peuplé) | Card "Free tax filing" | `public/images/illustration-tax-filing.png` | ✅ Généré |
 | 4 | Add Cash — Success | Bloc upsell "Get paid up to 2 days faster" | `public/images/illustration-success-deposit.png` | ✅ Généré |
+| 5 | Splash/onboarding — slide 1 | Carrousel "Rejwenn yon Sòl Fasilman" | `public/images/illustration-onboarding-group.png` | ✅ Généré (modèle `nano_banana_2`/`nano_banana_flash`, style 3D glossy demandé explicitement par l'utilisateur suite à des captures de référence) |
+| 6 | Splash/onboarding — slide 2 | Carrousel "Swiv Peman ou yo" | `public/images/illustration-onboarding-wallet.png` | ✅ Généré |
+| 7 | Splash/onboarding — slide 3 | Carrousel "Lajan ou an Sekirite" | `public/images/illustration-onboarding-shield.png` | ✅ Généré |
 
-Ces 4 visuels sont des approximations IA (jamais l'original) — à remplacer
+Les visuels #5-7 rompent délibérément avec le style trait-fin/étincelles vert
+des visuels #1-4 : l'utilisateur a fourni des captures de référence (kit
+"Registration UI templates") montrant des illustrations 3D glossy et a
+explicitement demandé cette esthétique pour le carrousel d'onboarding.
+Palette recolorée aux tokens Sòlid (vert/cyan, vert/violet, vert/bleu) au
+lieu des couleurs orange/violet/noir de la référence.
+
+Ces 7 visuels sont des approximations/générations IA (jamais l'original) — à remplacer
 si l'utilisateur fournit les assets officiels Cash App un jour.
 
 ## Icônes UI (chevrons, card, search, history, notifications, gift, user, cross, arrow, scan)
