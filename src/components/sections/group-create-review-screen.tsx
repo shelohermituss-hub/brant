@@ -56,7 +56,7 @@ export function GroupCreateReviewScreen() {
 
   async function handleConfirm() {
     if (!authUserId) {
-      router.push("/onboarding/email");
+      router.push("/onboarding/signin");
       return;
     }
 

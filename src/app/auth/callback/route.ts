@@ -2,19 +2,27 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
 /**
- * Cible du lien de confirmation d'email envoyé après signUp() (auth par
- * mot de passe). Supabase redirige ici avec ?code=..., qu'on échange
- * contre une session (flow PKCE standard de @supabase/ssr).
+ * Cible du lien envoyé par email après signUp() (confirmation) ou
+ * resetPasswordForEmail() (récupération de modpas) — auth par mot de
+ * passe. Supabase redirige ici avec ?code=..., qu'on échange contre une
+ * session (flow PKCE standard de @supabase/ssr). `?next=` (passé dans
+ * `redirectTo` par le flow mot de passe oublié) prend le dessus sur la
+ * redirection par défaut basée sur l'existence du profil.
  */
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
+  const next = searchParams.get("next");
 
   if (code) {
     const supabase = await createClient();
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error && data.user) {
+      if (next) {
+        return NextResponse.redirect(`${origin}${next}`);
+      }
+
       const { data: existingProfile } = await supabase
         .from("users")
         .select("id")
@@ -27,5 +35,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}/onboarding/email?error=link`);
+  return NextResponse.redirect(`${origin}/onboarding/signin?error=link`);
 }

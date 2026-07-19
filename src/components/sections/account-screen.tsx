@@ -34,7 +34,7 @@ export function AccountScreen() {
 
   async function handleSignOut() {
     await createClient().auth.signOut();
-    router.push("/onboarding/email");
+    router.push("/onboarding/signin");
   }
 
   async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -149,7 +149,7 @@ export function AccountScreen() {
             <PillButton
               variant="secondary"
               className="h-12 w-full text-[0.95rem]"
-              onClick={() => router.push("/onboarding/email")}
+              onClick={() => router.push("/onboarding/signin")}
             >
               Konekte
             </PillButton>

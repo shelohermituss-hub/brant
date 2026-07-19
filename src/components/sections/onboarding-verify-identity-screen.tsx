@@ -24,7 +24,7 @@ export function OnboardingVerifyIdentityScreen() {
 
     if (!user) {
       setIsSubmitting(false);
-      router.replace("/onboarding/email");
+      router.replace("/onboarding/signin");
       return;
     }
 

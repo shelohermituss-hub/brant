@@ -300,3 +300,51 @@ réussit avec le bon mot de passe et échoue proprement avec un mauvais.
 `/auth/callback` est conservé (sert maintenant de cible au lien de
 confirmation d'email si ce réglage venait à être activé plus tard), mais
 n'est plus le chemin principal.
+
+### Refonte inscription/connexion sur le template fourni
+
+L'écran unique à étapes ci-dessus est remplacé par des écrans dédiés,
+reproduisant la structure du template `Registration UI templates`
+fourni (variantes "Sign Up 6" + "Log In 1"), avec les tokens et le
+bouton pill vert de Sòlid à la place du noir/étoile du template :
+
+- `onboarding-signup-screen.tsx` (`/onboarding/signup`, nouvelle
+  destination du splash) : bouton retour, champs Email/Kreye modpas/
+  Konfime modpas dans un nouveau composant `AuthField` (champ encadré
+  avec label, œil montrer/cacher pour les modpas), CTA vert, lien
+  "Ou gen deja yon kont? Konekte".
+- `onboarding-signin-screen.tsx` (`/onboarding/signin`) : même
+  structure, champ modpas avec lien "Bliye modpas?", lien vers signup.
+  Cible aussi le fallback `?error=link` de `/auth/callback`.
+- `forgot-password-screen.tsx` / `reset-password-screen.tsx` /
+  `password-changed-screen.tsx` (nouveau flow mot de passe oublié,
+  n'existait pas avant) : `resetPasswordForEmail()` → lien email →
+  `/auth/callback?next=/onboarding/reset-password` → `updateUser()`
+  → écran de succès.
+- Toutes les redirections "pas connecté" ailleurs dans l'app
+  (`account-screen.tsx`, `group-detail-screen.tsx`, etc.) pointent
+  maintenant vers `/onboarding/signin` au lieu de l'ancien
+  `/onboarding/email`.
+
+**Écart assumé vs. le template** : l'écran "Forgot password - code"
+du template montre 4 cases de code à taper. Le flow réel Supabase
+(`resetPasswordForEmail`) envoie un **lien** cliquable, pas un code —
+en taper un nécessiterait de personnaliser un troisième template email
+côté Dashboard Supabase (accès qu'on n'a pas). L'écran de confirmation
+reflète donc honnêtement un lien, pas un code à 4 chiffres.
+
+**⚠️ Faille de sécurité découverte et corrigée pendant les tests** :
+`supabase.auth.signUp()` sur un email déjà existant **sans mot de
+passe défini** (le cas de tous les comptes de démo, créés à l'origine
+par l'ancien flow OTP) retourne une session valide et **définit un
+nouveau mot de passe sans jamais vérifier l'identité du demandeur** —
+n'importe qui connaissant l'email d'un compte pouvait donc s'en
+emparer. Vérifié en direct par `curl` sur `admin@solid.demo`, puis son
+mot de passe corrompu par le test a été aussitôt régénéré aléatoirement
+en base. Mitigation ajoutée côté app : `onboarding-signup-screen.tsx`
+vérifie toujours `email_exists()` et refuse d'appeler `signUp()` si le
+compte existe déjà. Ça ferme la faille pour notre UI, mais pas pour un
+appel direct à l'API Supabase (la clé anon est publique) — **la vraie
+correction demande d'activer "Confirm email" dans Supabase Dashboard
+→ Authentication → Providers → Email**, réglage que nos outils ne
+peuvent pas activer à distance. Signalé explicitement à l'utilisateur.

@@ -8,7 +8,7 @@ export function OnboardingSplashScreen() {
   return (
     <button
       type="button"
-      onClick={() => router.push("/onboarding/email")}
+      onClick={() => router.push("/onboarding/signup")}
       className="flex flex-1 items-center justify-center bg-green-deep"
       aria-label="Continuer"
     >

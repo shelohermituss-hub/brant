@@ -1,4 +1,4 @@
-import { OnboardingEmailScreen } from "@/components/sections/onboarding-email-screen";
+import { OnboardingSigninScreen } from "@/components/sections/onboarding-signin-screen";
 
 interface PageProps {
   searchParams: Promise<{ error?: string }>;
@@ -7,5 +7,5 @@ interface PageProps {
 export default async function Page({ searchParams }: PageProps) {
   const { error } = await searchParams;
 
-  return <OnboardingEmailScreen linkError={error === "link"} />;
+  return <OnboardingSigninScreen linkError={error === "link"} />;
 }

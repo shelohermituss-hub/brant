@@ -117,7 +117,7 @@ export function GroupDetailScreen({ groupId }: GroupDetailScreenProps) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-2 px-5 text-center">
         <p className="text-[0.95rem] text-ink-secondary">Konekte pou wè sik sa a.</p>
-        <PillButton className="mt-2" onClick={() => router.push("/onboarding/email")}>
+        <PillButton className="mt-2" onClick={() => router.push("/onboarding/signin")}>
           Konekte
         </PillButton>
       </div>
