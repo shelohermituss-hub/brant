@@ -14,7 +14,7 @@ export function AddCashSheetScreen() {
   return (
     <div className="relative flex flex-1 flex-col">
       <div className="pointer-events-none absolute inset-0">
-        <HomeScreen variant="empty" />
+        <HomeScreen />
       </div>
 
       <Sheet

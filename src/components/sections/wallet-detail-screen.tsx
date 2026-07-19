@@ -75,10 +75,18 @@ export function WalletDetailScreen() {
         </SurfaceCard>
       </div>
 
-      <div className="px-4 pt-2 pb-4">
+      <div className="flex gap-3 px-4 pt-2 pb-4">
+        <PillButton
+          variant="secondary"
+          className="flex-1"
+          disabled={!authUserId}
+          onClick={() => router.push("/payment-hub/wallet/deposit")}
+        >
+          Ajoute lajan
+        </PillButton>
         <PillButton
           variant="primary"
-          className="w-full"
+          className="flex-1"
           disabled={!authUserId || !balance}
           onClick={() => router.push("/payment-hub/wallet/transfer")}
         >

@@ -1,14 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { SurfaceCard } from "@/components/ui/surface-card";
-import { PillButton } from "@/components/ui/pill-button";
 import { Sparkline } from "@/components/ui/sparkline";
 import { SavingsIcon } from "@/components/ui/savings-icon";
 import { AssetIcon } from "@/components/ui/asset-icon";
-
-interface HomeScreenProps {
-  variant?: "empty" | "populated";
-}
+import { ConnectedAccountsCard } from "@/components/ui/connected-accounts-card";
+import { useCurrentAppUser } from "@/lib/use-current-app-user";
 
 function CardTitle({ label }: { label: string }) {
   return (
@@ -19,8 +18,9 @@ function CardTitle({ label }: { label: string }) {
   );
 }
 
-export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
-  const populated = variant === "populated";
+export function HomeScreen() {
+  const { authUserId, profile } = useCurrentAppUser();
+  const populated = !!authUserId;
 
   return (
     <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-surface-muted px-4 pt-4 pb-6">
@@ -28,34 +28,26 @@ export function HomeScreen({ variant = "populated" }: HomeScreenProps) {
         <h1 className="text-[2.1rem] font-bold text-ink">Sòlid</h1>
         <Link
           href="/account"
-          className="h-11 w-11 shrink-0 rounded-full bg-ink-secondary/30"
-        />
+          aria-label="Kont ou"
+          className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-ink-secondary/30"
+        >
+          {profile?.avatar_url && (
+            <Image src={profile.avatar_url} alt="" fill className="object-cover" />
+          )}
+        </Link>
       </header>
 
-      <SurfaceCard className="flex flex-col gap-7">
-        <div className="flex items-start justify-between">
-          <span className="text-lg font-bold text-ink">Cash Balance</span>
-          <span className="flex items-center gap-0.5 text-sm text-ink-secondary">
-            Account &amp; Routing
-            <AssetIcon name="chevron-right" size={14} />
-          </span>
-        </div>
-        <p className="text-[2.75rem] leading-none font-bold text-ink">
-          {populated ? "$88.44" : "$0.00"}
-        </p>
-        <div className="flex gap-3">
-          <PillButton
-            variant="secondary"
-            href="/add-cash"
-            className="h-12 flex-1 text-[0.95rem]"
-          >
-            Add Cash
-          </PillButton>
-          <PillButton variant="secondary" className="h-12 flex-1 text-[0.95rem]">
-            Cash Out
-          </PillButton>
-        </div>
-      </SurfaceCard>
+      <div className="px-1 pb-1">
+        <span className="text-xs font-semibold tracking-wide text-ink-secondary">
+          KONT KONEKTE
+        </span>
+      </div>
+      <ConnectedAccountsCard
+        walletBalance={profile?.wallets?.balance ?? null}
+        moncashNumber={profile?.moncash_number ?? null}
+        walletHref="/payment-hub/wallet"
+        moncashHref="/payment-hub/method"
+      />
 
       <div className="grid grid-cols-2 gap-3">
         <SurfaceCard className="flex flex-col gap-4">

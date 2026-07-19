@@ -3,7 +3,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Plus } from "lucide-react";
+import { CopyPlus } from "lucide-react";
 import { GroupCard } from "@/components/ui/group-card";
 import { CircleEmptyIcon } from "@/components/ui/circle-empty-icon";
 import { cn, formatHtg } from "@/lib/utils";
@@ -159,7 +159,7 @@ export function CardScreen() {
             aria-label="Kreye yon sòl"
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green"
           >
-            <Plus className="text-white" size={22} strokeWidth={2.5} />
+            <CopyPlus className="text-white" size={22} strokeWidth={2.5} />
           </Link>
           <Link
             href="/account"

@@ -9,10 +9,26 @@ import { formatHtg } from "@/lib/utils";
 
 interface WalletTransferSuccessScreenProps {
   amount: number;
+  kind?: "transfer" | "deposit";
 }
 
-export function WalletTransferSuccessScreen({ amount }: WalletTransferSuccessScreenProps) {
+const CONTENT = {
+  transfer: {
+    title: (amount: string) => `Ou voye ${amount} nan MonCash ou`,
+    body: "Lajan an ap parèt sou kont MonCash ou nan kèk minit.",
+  },
+  deposit: {
+    title: (amount: string) => `Ou ajoute ${amount} nan wallet ou`,
+    body: "Balans wallet Sòlid ou fèk mete ajou.",
+  },
+};
+
+export function WalletTransferSuccessScreen({
+  amount,
+  kind = "transfer",
+}: WalletTransferSuccessScreenProps) {
   const router = useRouter();
+  const content = CONTENT[kind];
 
   return (
     <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-5 pt-4 pb-6">
@@ -26,7 +42,7 @@ export function WalletTransferSuccessScreen({ amount }: WalletTransferSuccessScr
       </div>
 
       <p className="text-[1.6rem] leading-tight font-bold text-ink">
-        Ou voye {formatHtg(amount)} nan MonCash ou
+        {content.title(formatHtg(amount))}
       </p>
 
       <div className="mt-auto flex flex-col gap-4 rounded-lg border border-border p-5">
@@ -38,9 +54,7 @@ export function WalletTransferSuccessScreen({ amount }: WalletTransferSuccessScr
             className="object-contain"
           />
         </div>
-        <p className="text-[0.95rem] text-ink-secondary">
-          Lajan an ap parèt sou kont MonCash ou nan kèk minit.
-        </p>
+        <p className="text-[0.95rem] text-ink-secondary">{content.body}</p>
       </div>
 
       <PillButton className="w-full" onClick={() => router.push("/payment-hub/wallet")}>

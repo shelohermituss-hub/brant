@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DollarSign, type LucideIcon } from "lucide-react";
+import { DollarSign, Landmark, Loader, Receipt, type LucideIcon } from "lucide-react";
 import { AssetIcon, type AssetIconName } from "@/components/ui/asset-icon";
 import { cn } from "@/lib/utils";
 
 const TABS: { href: string; icon: AssetIconName | LucideIcon }[] = [
-  { href: "/home", icon: "save" },
-  { href: "/card", icon: "card" },
-  { href: "/payment-hub", icon: DollarSign },
+  { href: "/home", icon: Landmark },
+  { href: "/card", icon: DollarSign },
+  { href: "/payment-hub", icon: Loader },
   { href: "/search", icon: "search" },
-  { href: "/activity", icon: "history" },
+  { href: "/activity", icon: Receipt },
 ];
 
 interface BottomTabBarProps {
