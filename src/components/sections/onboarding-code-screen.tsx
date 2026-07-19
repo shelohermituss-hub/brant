@@ -8,7 +8,7 @@ import { readOnboardingDraft } from "@/lib/onboarding-store";
 import { useClientSnapshot } from "@/lib/use-client-snapshot";
 import { cn } from "@/lib/utils";
 
-const CODE_LENGTH = 6;
+const CODE_LENGTH = 8;
 const RESEND_SECONDS = 60;
 
 function formatCountdown(seconds: number) {
@@ -117,12 +117,12 @@ export function OnboardingCodeScreen() {
         </p>
       </div>
 
-      <div className="flex justify-center gap-2 px-5 pt-8">
+      <div className="flex justify-center gap-1.5 px-3 pt-8">
         {Array.from({ length: CODE_LENGTH }).map((_, i) => (
           <div
             key={i}
             className={cn(
-              "flex h-14 w-11 items-center justify-center rounded-xl border text-xl font-bold text-ink",
+              "flex h-12 w-8 items-center justify-center rounded-lg border text-base font-bold text-ink",
               i < code.length ? "border-green bg-surface" : "border-border bg-surface-muted"
             )}
           >
