@@ -4,7 +4,7 @@ interface OnboardingFieldProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
-  type?: "text" | "email" | "tel";
+  type?: "text" | "email" | "tel" | "password";
   autoFocus?: boolean;
 }
 

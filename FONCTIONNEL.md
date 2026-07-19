@@ -272,3 +272,31 @@ créée.
   concept de session « dont on se souvient » distinct (Supabase persiste
   déjà la session via cookies), donc l'ajouter aurait été un contrôle
   décoratif sans effet réel.
+
+### Remplacement de l'OTP par email + mot de passe classique
+
+L'auth par code OTP a été abandonnée sur demande explicite (l'OTP ne
+plaisait pas). `/onboarding/code` et `onboarding-code-screen.tsx` sont
+supprimés. `onboarding-email-screen.tsx` (route `/onboarding/email`,
+juste après le splash) gère maintenant tout le flow en un seul écran à
+étapes :
+
+1. L'utilisateur tape son email → RPC `email_exists(p_email)`
+   (SECURITY DEFINER, interroge `auth.users`, accessible à `anon` — sans
+   ça impossible de savoir si un compte existe avant d'avoir une session).
+2. Si l'email existe déjà → champ modpas → `signInWithPassword()` →
+   `/home` directement (connexion).
+3. Si l'email n'existe pas → champs modpas + confirmation → `signUp()`
+   → suite normale de l'onboarding (`/onboarding/name` → `/onboarding/
+   zip` → `/onboarding/cashtag` → `/onboarding/verify-identity`, qui
+   écrit dans `public.users`).
+
+Vérifié en direct (le proxy sandbox bloque les appels réseau depuis un
+navigateur Playwright headless comme documenté plus haut, donc testé
+via `curl` sur les vraies routes Supabase) : `email_exists` correct
+avant/après création, `signUp` retourne une session immédiate (la
+confirmation email n'est pas activée sur ce projet), `signInWithPassword`
+réussit avec le bon mot de passe et échoue proprement avec un mauvais.
+`/auth/callback` est conservé (sert maintenant de cible au lien de
+confirmation d'email si ce réglage venait à être activé plus tard), mais
+n'est plus le chemin principal.
