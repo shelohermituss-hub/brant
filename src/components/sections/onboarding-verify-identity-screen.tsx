@@ -35,6 +35,7 @@ export function OnboardingVerifyIdentityScreen() {
         full_name: draft.fullName ?? "",
         phone: draft.phone ?? "",
         moncash_number: draft.phone ?? "",
+        username: draft.username ?? null,
         consent_signed_at: new Date().toISOString(),
       },
       { onConflict: "id" }
@@ -43,7 +44,11 @@ export function OnboardingVerifyIdentityScreen() {
     setIsSubmitting(false);
 
     if (insertError) {
-      setError("Nou pa kapab kreye kont ou. Tanpri eseye ankò.");
+      setError(
+        insertError.code === "23505"
+          ? "Non itilizatè a fèk pran. Tounen chwazi yon lòt."
+          : "Nou pa kapab kreye kont ou. Tanpri eseye ankò."
+      );
       return;
     }
 

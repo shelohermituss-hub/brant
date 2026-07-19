@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Plus } from "lucide-react";
 import { GroupCard } from "@/components/ui/group-card";
 import { CircleEmptyIcon } from "@/components/ui/circle-empty-icon";
@@ -36,7 +37,7 @@ function estimateAdminFees(monthlyAmount: number, totalMembers: number, tier: st
 }
 
 export function CardScreen() {
-  const { authUserId } = useCurrentAppUser();
+  const { authUserId, profile } = useCurrentAppUser();
   const [tab, setTab] = useState<"active" | "finished">("active");
   const [myGroups, setMyGroups] = useState<GroupCardData[] | null>(null);
   const [myGroupStates, setMyGroupStates] = useState<Record<string, string>>({});
@@ -162,8 +163,13 @@ export function CardScreen() {
           </Link>
           <Link
             href="/account"
-            className="h-11 w-11 shrink-0 rounded-full bg-ink-secondary/30"
-          />
+            aria-label="Kont ou"
+            className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-ink-secondary/30"
+          >
+            {profile?.avatar_url && (
+              <Image src={profile.avatar_url} alt="" fill className="object-cover" />
+            )}
+          </Link>
         </div>
       </header>
 

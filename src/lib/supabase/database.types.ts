@@ -422,6 +422,7 @@ export type Database = {
       }
       users: {
         Row: {
+          avatar_url: string | null
           consent_signed_at: string | null
           created_at: string
           full_name: string
@@ -434,8 +435,10 @@ export type Database = {
           role: Database["public"]["Enums"]["user_role"]
           trust_score: number
           updated_at: string
+          username: string | null
         }
         Insert: {
+          avatar_url?: string | null
           consent_signed_at?: string | null
           created_at?: string
           full_name: string
@@ -448,8 +451,10 @@ export type Database = {
           role?: Database["public"]["Enums"]["user_role"]
           trust_score?: number
           updated_at?: string
+          username?: string | null
         }
         Update: {
+          avatar_url?: string | null
           consent_signed_at?: string | null
           created_at?: string
           full_name?: string
@@ -462,6 +467,7 @@ export type Database = {
           role?: Database["public"]["Enums"]["user_role"]
           trust_score?: number
           updated_at?: string
+          username?: string | null
         }
         Relationships: []
       }
@@ -596,6 +602,7 @@ export type Database = {
         Returns: number
       }
       calculate_transfer_fee: { Args: { p_amount: number }; Returns: number }
+      is_username_available: { Args: { p_username: string }; Returns: boolean }
     }
     Enums: {
       contribution_state: "due" | "pending" | "paid" | "late" | "defaulted"

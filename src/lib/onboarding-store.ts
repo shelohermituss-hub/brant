@@ -6,6 +6,7 @@ interface OnboardingDraft {
   email?: string;
   fullName?: string;
   phone?: string;
+  username?: string;
 }
 
 export function readOnboardingDraft(): OnboardingDraft {

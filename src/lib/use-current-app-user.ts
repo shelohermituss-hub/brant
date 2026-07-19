@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import type { Tables } from "@/lib/supabase/database.types";
 
@@ -26,6 +26,7 @@ export function useCurrentAppUser() {
     authUserId: null,
     profile: null,
   });
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -60,7 +61,9 @@ export function useCurrentAppUser() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [refreshKey]);
 
-  return state;
+  const refresh = useCallback(() => setRefreshKey((k) => k + 1), []);
+
+  return { ...state, refresh };
 }
