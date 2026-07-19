@@ -44,11 +44,18 @@ export function OnboardingVerifyIdentityScreen() {
     setIsSubmitting(false);
 
     if (insertError) {
-      setError(
-        insertError.code === "23505"
-          ? "Non itilizatè a fèk pran. Tounen chwazi yon lòt."
-          : "Nou pa kapab kreye kont ou. Tanpri eseye ankò."
-      );
+      if (insertError.code === "23505" && insertError.message.includes("users_username")) {
+        setError("Non itilizatè a fèk pran. Tounen chwazi yon lòt.");
+      } else if (
+        insertError.code === "23505" &&
+        insertError.message.includes("users_moncash_number")
+      ) {
+        setError(
+          "Nimewo MonCash sa a deja itilize pa yon lòt kont. Si se kont ou, konekte avè l pito."
+        );
+      } else {
+        setError("Nou pa kapab kreye kont ou. Tanpri eseye ankò.");
+      }
       return;
     }
 
