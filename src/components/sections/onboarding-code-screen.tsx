@@ -2,50 +2,46 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { OnboardingField } from "@/components/ui/onboarding-field";
+import { Mail } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { createClient } from "@/lib/supabase/client";
 import { readOnboardingDraft } from "@/lib/onboarding-store";
+import { useClientSnapshot } from "@/lib/use-client-snapshot";
 
 export function OnboardingCodeScreen() {
   const router = useRouter();
-  const [email] = useState<string | null>(() => readOnboardingDraft().email ?? null);
-  const [code, setCode] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const email = useClientSnapshot(() => readOnboardingDraft().email ?? null, null);
+  const [isResending, setIsResending] = useState(false);
+  const [resent, setResent] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!email) {
+    if (!readOnboardingDraft().email) {
       router.replace("/onboarding/email");
     }
-  }, [email, router]);
+  }, [router]);
 
-  async function handleSubmit() {
+  async function handleResend() {
     if (!email) return;
-    setIsSubmitting(true);
+    setIsResending(true);
     setError(null);
+    setResent(false);
 
     const supabase = createClient();
-    const { data, error: verifyError } = await supabase.auth.verifyOtp({
+    const { error: otpError } = await supabase.auth.signInWithOtp({
       email,
-      token: code,
-      type: "email",
+      options: {
+        shouldCreateUser: true,
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
 
-    if (verifyError || !data.user) {
-      setIsSubmitting(false);
-      setError("Kòd la pa bon. Tanpri eseye ankò.");
+    setIsResending(false);
+    if (otpError) {
+      setError("Nou pa kapab voye lyen an. Tanpri eseye ankò.");
       return;
     }
-
-    const { data: existingProfile } = await supabase
-      .from("users")
-      .select("id")
-      .eq("id", data.user.id)
-      .maybeSingle();
-
-    setIsSubmitting(false);
-    router.push(existingProfile ? "/home" : "/onboarding/name");
+    setResent(true);
   }
 
   return (
@@ -56,28 +52,38 @@ export function OnboardingCodeScreen() {
         </button>
       </div>
 
+      <span className="mt-6 flex h-14 w-14 items-center justify-center rounded-full bg-surface-muted">
+        <Mail className="text-ink" size={26} />
+      </span>
+
       <h1 className="pt-6 text-[1.6rem] leading-tight font-bold text-ink">
-        {email ? `Antre kòd yo voye bay ${email}` : "Antre kòd la"}
+        Verifye imèl ou
       </h1>
+      <p className="pt-2 text-[0.95rem] text-ink-secondary">
+        Nou voye yon lyen bay {email ?? "imèl ou"}. Klike sou lyen an nan
+        imèl ou pou kontinye — ou ka fèmen paj sa a apre.
+      </p>
 
-      <div className="pt-8">
-        <OnboardingField
-          value={code}
-          onChange={setCode}
-          placeholder="Kòd konfirmasyon"
-          autoFocus
-        />
-      </div>
-
+      {resent && (
+        <p className="pt-3 text-[0.85rem] text-paid">Nou voye lyen an ankò.</p>
+      )}
       {error && <p className="pt-3 text-[0.85rem] text-late">{error}</p>}
 
-      <div className="mt-auto pt-6">
+      <div className="mt-auto flex flex-col gap-3 pt-6">
         <PillButton
+          variant="secondary"
           className="w-full"
-          disabled={!code || isSubmitting}
-          onClick={handleSubmit}
+          disabled={isResending}
+          onClick={handleResend}
         >
-          {isSubmitting ? "Verifikasyon..." : "Kontinye"}
+          {isResending ? "Voye..." : "Voye lyen an ankò"}
+        </PillButton>
+        <PillButton
+          variant="outline"
+          className="w-full"
+          onClick={() => router.push("/onboarding/email")}
+        >
+          Chanje imèl
         </PillButton>
       </div>
     </div>

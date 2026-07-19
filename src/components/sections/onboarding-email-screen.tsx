@@ -7,11 +7,17 @@ import { PillButton } from "@/components/ui/pill-button";
 import { createClient } from "@/lib/supabase/client";
 import { writeOnboardingDraft } from "@/lib/onboarding-store";
 
-export function OnboardingEmailScreen() {
+interface OnboardingEmailScreenProps {
+  linkError?: boolean;
+}
+
+export function OnboardingEmailScreen({ linkError = false }: OnboardingEmailScreenProps) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    linkError ? "Lyen an ekspire oswa li pa valid. Antre imèl ou ankò." : null
+  );
 
   async function handleSubmit() {
     setIsSubmitting(true);
@@ -20,12 +26,15 @@ export function OnboardingEmailScreen() {
     const supabase = createClient();
     const { error: otpError } = await supabase.auth.signInWithOtp({
       email,
-      options: { shouldCreateUser: true },
+      options: {
+        shouldCreateUser: true,
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
 
     if (otpError) {
       setIsSubmitting(false);
-      setError("Nou pa kapab voye kòd la. Tanpri verifye imèl ou eseye ankò.");
+      setError("Nou pa kapab voye lyen an. Tanpri verifye imèl ou eseye ankò.");
       return;
     }
 
