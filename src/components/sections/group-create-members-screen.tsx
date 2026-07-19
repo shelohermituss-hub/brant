@@ -12,7 +12,10 @@ import { useCurrentAppUser } from "@/lib/use-current-app-user";
 import { createClient } from "@/lib/supabase/client";
 import { readGroupCreateDraft, writeGroupCreateDraft } from "@/lib/group-create-store";
 
-export const MIN_MEMBERS = 5;
+// Temporairement à 1 (au lieu de 5) : pas encore d'autres utilisateurs
+// Sòlid pour tester, permet de créer un sik solo. À remettre à 5 une
+// fois qu'il y a de vrais utilisateurs à inviter.
+export const MIN_MEMBERS = 0;
 export const MAX_MEMBERS = 25;
 
 interface AppUser {

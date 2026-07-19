@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Wallet, Smartphone } from "lucide-react";
+import Image from "next/image";
 import { AssetIcon } from "@/components/ui/asset-icon";
 import { formatHtg } from "@/lib/utils";
 
@@ -18,8 +18,8 @@ export function ConnectedAccountsCard({
 }: ConnectedAccountsCardProps) {
   const walletRow = (
     <div className="flex items-center gap-4 border-b border-border px-5 py-4">
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green">
-        <Wallet className="text-white" size={20} />
+      <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-muted">
+        <Image src="/images/icon-wallet-solid.png" alt="" fill className="object-contain p-1.5" />
       </span>
       <div className="flex flex-1 flex-col">
         <span className="text-[0.95rem] font-bold text-ink">Wallet Sòlid</span>
@@ -34,8 +34,8 @@ export function ConnectedAccountsCard({
 
   const moncashRow = (
     <div className="flex items-center gap-4 px-5 py-4">
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue">
-        <Smartphone className="text-white" size={20} />
+      <span className="relative flex h-11 w-11 shrink-0 overflow-hidden rounded-full">
+        <Image src="/images/icon-moncash.png" alt="" fill className="object-cover" />
       </span>
       <div className="flex flex-1 flex-col">
         <span className="text-[0.95rem] font-bold text-ink">MonCash</span>

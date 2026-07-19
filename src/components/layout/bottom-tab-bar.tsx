@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 const TABS: { href: string; icon: AssetIconName | LucideIcon }[] = [
   { href: "/home", icon: Landmark },
   { href: "/card", icon: Loader },
-  { href: "/payment-hub", icon: DollarSign },
+  { href: "/payment-hub/wallet", icon: DollarSign },
   { href: "/search", icon: "search" },
-  { href: "/activity", icon: Receipt },
+  { href: "/payment-hub", icon: Receipt },
 ];
 
 interface BottomTabBarProps {

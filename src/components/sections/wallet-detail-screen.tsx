@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Wallet, ArrowDownToLine, Send, Lock, Info, ShieldCheck, History } from "lucide-react";
+import Image from "next/image";
+import { ArrowDownToLine, Send, Lock, Info, ShieldCheck, History } from "lucide-react";
 import { AssetIcon } from "@/components/ui/asset-icon";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
@@ -86,8 +87,8 @@ export function WalletDetailScreen() {
 
       <div className="px-4 pt-4 pb-2">
         <SurfaceCard className="flex flex-col items-center gap-1 py-6 text-center">
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-green">
-            <Wallet className="text-white" size={20} />
+          <span className="relative flex h-14 w-14 items-center justify-center">
+            <Image src="/images/icon-wallet-solid.png" alt="" fill className="object-contain" />
           </span>
           <span className="pt-2 text-[0.95rem] text-ink-secondary">Balans disponib</span>
           <span className="text-[2.1rem] font-bold text-ink">
