@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { NumericKeypad } from "@/components/ui/numeric-keypad";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
+import { useWalletLockGuard } from "@/lib/use-wallet-lock-guard";
 
 export function WalletDepositAmountScreen() {
   const router = useRouter();
   const { authUserId, profile } = useCurrentAppUser();
+  const unlocked = useWalletLockGuard(authUserId);
   const [amount, setAmount] = useState("0");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,6 +48,14 @@ export function WalletDepositAmountScreen() {
   }
 
   const canConfirm = numericAmount > 0 && !!profile?.moncash_number && !isSubmitting;
+
+  if (!unlocked) {
+    return (
+      <div className="flex flex-1 items-center justify-center bg-green-deep">
+        <p className="text-[0.9rem] text-white/70">Deverouye wallet la...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto bg-green-deep">

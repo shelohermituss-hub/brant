@@ -3,11 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SurfaceCard } from "@/components/ui/surface-card";
+import { PillButton } from "@/components/ui/pill-button";
 import { Sparkline } from "@/components/ui/sparkline";
 import { SavingsIcon } from "@/components/ui/savings-icon";
 import { AssetIcon } from "@/components/ui/asset-icon";
-import { ConnectedAccountsCard } from "@/components/ui/connected-accounts-card";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
+import { formatHtg } from "@/lib/utils";
 
 function CardTitle({ label }: { label: string }) {
   return (
@@ -37,17 +38,37 @@ export function HomeScreen() {
         </Link>
       </header>
 
-      <div className="px-1 pb-1">
-        <span className="text-xs font-semibold tracking-wide text-ink-secondary">
-          KONT KONEKTE
-        </span>
-      </div>
-      <ConnectedAccountsCard
-        walletBalance={profile?.wallets?.balance ?? null}
-        moncashNumber={profile?.moncash_number ?? null}
-        walletHref="/payment-hub/wallet"
-        moncashHref="/payment-hub/method"
-      />
+      <SurfaceCard className="flex flex-col gap-7">
+        <div className="flex items-start justify-between">
+          <span className="text-lg font-bold text-ink">Balans Wallet</span>
+          <Link
+            href="/payment-hub/wallet"
+            className="flex items-center gap-0.5 text-sm text-ink-secondary"
+          >
+            Detay
+            <AssetIcon name="chevron-right" size={14} />
+          </Link>
+        </div>
+        <p className="text-[2.75rem] leading-none font-bold text-ink">
+          {formatHtg(profile?.wallets?.balance ?? 0)}
+        </p>
+        <div className="flex gap-3">
+          <PillButton
+            variant="secondary"
+            href="/payment-hub/wallet/deposit"
+            className="h-12 flex-1 text-[0.95rem]"
+          >
+            Ajoute lajan
+          </PillButton>
+          <PillButton
+            variant="secondary"
+            href="/payment-hub/wallet/transfer"
+            className="h-12 flex-1 text-[0.95rem]"
+          >
+            Retire lajan
+          </PillButton>
+        </div>
+      </SurfaceCard>
 
       <div className="grid grid-cols-2 gap-3">
         <SurfaceCard className="flex flex-col gap-4">

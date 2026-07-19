@@ -603,6 +603,9 @@ export type Database = {
       }
       calculate_transfer_fee: { Args: { p_amount: number }; Returns: number }
       is_username_available: { Args: { p_username: string }; Returns: boolean }
+      set_wallet_pin: { Args: { p_pin: string }; Returns: undefined }
+      verify_wallet_pin: { Args: { p_pin: string }; Returns: boolean }
+      has_wallet_pin: { Args: Record<PropertyKey, never>; Returns: boolean }
     }
     Enums: {
       contribution_state: "due" | "pending" | "paid" | "late" | "defaulted"

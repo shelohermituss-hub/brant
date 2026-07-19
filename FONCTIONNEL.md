@@ -242,3 +242,33 @@ créée.
   `referrals` reste vide tant que cette étape n'est pas ajoutée.
 - **`notifications-screen.tsx`/`security-privacy-screen.tsx`** restent
   mockés (hors périmètre du plan validé pour cette tâche).
+
+### Ajouts — verrouillage wallet par PIN + refonte OTP/wallet
+
+- **`users.wallet_pin_hash`** + RPC `set_wallet_pin`/`verify_wallet_pin`/
+  `has_wallet_pin` (hash `pgcrypto`/`crypt`, jamais le PIN en clair).
+  `/pin/setup` crée/écrase le PIN (création + confirmation à deux
+  étapes) ; `/pin` (`confirm-pin-screen.tsx`) vérifie le PIN existant et
+  redirige vers `?redirect=`. `useWalletLockGuard` (dans
+  `src/lib/use-wallet-lock-guard.ts`) protège `/payment-hub/wallet`,
+  `/payment-hub/wallet/deposit` et `/payment-hub/wallet/transfer` :
+  si l'utilisateur a un PIN configuré et n'a pas déverrouillé le wallet
+  cette session (`sessionStorage`, `src/lib/wallet-lock.ts`), il est
+  redirigé vers `/pin`. Si aucun PIN n'existe encore, l'accès reste
+  libre (pas de blocage forcé à la création de compte).
+- **`wallet-detail-screen.tsx`** refondu selon la référence utilisateur
+  (carte solde + 3 actions rapides Ajoute/Voye/Kòd PIN + liste
+  "Paramèt Wallet" : Info, Sekirite/PIN, Istorik).
+- **`home-screen.tsx`** : la carte solde reste la carte "Cash Balance"
+  d'origine (titre + montant + deux boutons), simplement alimentée par
+  le vrai solde du wallet — le remplacement par `ConnectedAccountsCard`
+  fait dans une itération précédente a été annulé sur demande explicite.
+- **`onboarding-code-screen.tsx`** refondu : 6 cases de saisie
+  individuelles (longueur réelle d'un OTP email Supabase, pas 4 comme
+  dans la référence visuelle fournie — Supabase ne permet pas de
+  raccourcir ce code), clavier numérique à l'écran (plus de clavier
+  natif), minuteur de renvoi en compte à rebours. La case à cocher
+  « Remember Me » de la référence n'a pas été portée : l'app n'a pas de
+  concept de session « dont on se souvient » distinct (Supabase persiste
+  déjà la session via cookies), donc l'ajouter aurait été un contrôle
+  décoratif sans effet réel.

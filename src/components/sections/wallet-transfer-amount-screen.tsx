@@ -6,11 +6,13 @@ import { X } from "lucide-react";
 import { NumericKeypad } from "@/components/ui/numeric-keypad";
 import { PillButton } from "@/components/ui/pill-button";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
+import { useWalletLockGuard } from "@/lib/use-wallet-lock-guard";
 import { formatHtg } from "@/lib/utils";
 
 export function WalletTransferAmountScreen() {
   const router = useRouter();
   const { authUserId, profile } = useCurrentAppUser();
+  const unlocked = useWalletLockGuard(authUserId);
   const [amount, setAmount] = useState("0");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +52,14 @@ export function WalletTransferAmountScreen() {
 
   const canConfirm =
     numericAmount > 0 && numericAmount <= balance && !!profile?.moncash_number && !isSubmitting;
+
+  if (!unlocked) {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <p className="text-[0.9rem] text-ink-secondary">Deverouye wallet la...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto">
