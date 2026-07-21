@@ -321,6 +321,18 @@
 }
 
 /*
+ * ANIMATIONS-AUDIT.md MEDIUM-5 — le sheet/drawer garde son fade
+ * d'opacité en reduced-motion mais perd son déplacement (slide).
+ * Ciblé via data-slot plutôt qu'en empilant des variants Tailwind
+ * motion-reduce sur 3 niveaux (data-side + data-état), plus fiable.
+ */
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="sheet-content"] {
+    transform: none !important;
+  }
+}
+
+/*
  * Reveal radial étagé pour SoleyBurst (ANIMATIONS-AUDIT.md HIGH-6) —
  * même mécanique que .stagger-item (--stagger-index posé par le
  * composant appelant) mais en scale depuis le centre plutôt qu'en
