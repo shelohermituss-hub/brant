@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import { Copy, Check } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
@@ -107,7 +107,8 @@ export function ReferScreen() {
               invites.map((invite, i) => (
                 <div
                   key={`${invite.name}-${i}`}
-                  className="flex items-center justify-between border-b border-border px-4 py-3 last:border-b-0"
+                  className="stagger-item flex items-center justify-between border-b border-border px-4 py-3 last:border-b-0"
+                  style={{ "--stagger-index": i } as CSSProperties}
                 >
                   <span className="text-[0.95rem] text-ink">{invite.name}</span>
                   <span className="text-sm text-ink-secondary">{invite.status}</span>

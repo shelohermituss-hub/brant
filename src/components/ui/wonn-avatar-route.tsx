@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 
 export interface AvatarMember {
@@ -39,12 +39,13 @@ export function WonnAvatarRoute({ members, currentPosition }: WonnAvatarRoutePro
             <div
               key={member.position}
               ref={isCurrent ? currentRef : undefined}
-              className="flex shrink-0 items-center"
+              className="stagger-item flex shrink-0 items-center"
+              style={{ "--stagger-index": i } as CSSProperties}
             >
               <div className="flex w-14 shrink-0 flex-col items-center gap-1">
                 <span
                   className={cn(
-                    "flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-base font-bold text-white",
+                    "flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-base font-bold text-white transition-[opacity,filter] duration-[var(--duration-ui)] ease-[var(--ease-out)]",
                     !isCurrent && "grayscale opacity-40"
                   )}
                   style={{ backgroundColor: member.color }}

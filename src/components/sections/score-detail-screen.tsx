@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import { ShieldCheck } from "lucide-react";
 import { AssetIcon } from "@/components/ui/asset-icon";
@@ -153,8 +153,12 @@ export function ScoreDetailScreen() {
       )}
 
       <div className="flex flex-col gap-4 px-5 pt-4 pb-8">
-        {infoRows.map((row) => (
-          <div key={row.label} className="flex items-center justify-between">
+        {infoRows.map((row, i) => (
+          <div
+            key={row.label}
+            className="stagger-item flex items-center justify-between"
+            style={{ "--stagger-index": i } as CSSProperties}
+          >
             <span className="text-[0.95rem] text-ink-secondary">{row.label}</span>
             <span className="text-[0.95rem] font-bold text-ink">{row.value}</span>
           </div>

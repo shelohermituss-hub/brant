@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import { UserCheck, UserRoundX } from "lucide-react";
 import { WonnPath, type WonnMember } from "@/components/ui/wonn-path";
@@ -135,14 +135,15 @@ export function GroupFormingScreen({ groupId }: GroupFormingScreenProps) {
           </p>
         ) : (
           invitees.map((invitee, i) => (
-            <SettingsListRow
-              key={`${invitee.name}-${i}`}
-              icon={invitee.confirmed ? UserCheck : UserRoundX}
-              label={invitee.name}
-              badge={invitee.confirmed ? "Konfime" : "An atant"}
-              badgeTone={invitee.confirmed ? "paid" : "wait"}
-              showChevron={false}
-            />
+            <div key={`${invitee.name}-${i}`} className="stagger-item" style={{ "--stagger-index": i } as CSSProperties}>
+              <SettingsListRow
+                icon={invitee.confirmed ? UserCheck : UserRoundX}
+                label={invitee.name}
+                badge={invitee.confirmed ? "Konfime" : "An atant"}
+                badgeTone={invitee.confirmed ? "paid" : "wait"}
+                showChevron={false}
+              />
+            </div>
           ))
         )}
       </div>

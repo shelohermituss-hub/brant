@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import { PillButton } from "@/components/ui/pill-button";
 import { AssetIcon } from "@/components/ui/asset-icon";
@@ -124,8 +124,12 @@ export function CyclePaymentReviewScreen({ groupId }: CyclePaymentReviewScreenPr
       </div>
 
       <div className="flex flex-col gap-4">
-        {rows.map((row) => (
-          <div key={row.label} className="flex items-center justify-between">
+        {rows.map((row, i) => (
+          <div
+            key={row.label}
+            className="stagger-item flex items-center justify-between"
+            style={{ "--stagger-index": i } as CSSProperties}
+          >
             <span className="text-[0.95rem] text-ink-secondary">{row.label}</span>
             <span className="text-[0.95rem] text-ink-secondary">{row.value}</span>
           </div>
@@ -133,8 +137,12 @@ export function CyclePaymentReviewScreen({ groupId }: CyclePaymentReviewScreenPr
       </div>
 
       <div className="flex flex-col gap-4">
-        {totalRows.map((row) => (
-          <div key={row.label} className="flex items-center justify-between">
+        {totalRows.map((row, i) => (
+          <div
+            key={row.label}
+            className="stagger-item flex items-center justify-between"
+            style={{ "--stagger-index": rows.length + i } as CSSProperties}
+          >
             <span className="text-[0.95rem] text-ink-secondary">{row.label}</span>
             <span className="text-[0.95rem] text-ink-secondary">{row.value}</span>
           </div>
