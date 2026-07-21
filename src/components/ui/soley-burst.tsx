@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 const round = (n: number) => Math.round(n * 100) / 100;
 
 export function SoleyBurst({ size = 120 }: { size?: number }) {
@@ -19,10 +21,19 @@ export function SoleyBurst({ size = 120 }: { size?: number }) {
             stroke="var(--color-soley)"
             strokeWidth={4}
             strokeLinecap="round"
+            className="burst-ray"
+            style={{ "--stagger-index": i } as CSSProperties}
           />
         );
       })}
-      <circle cx="60" cy="60" r="34" fill="var(--color-soley)" />
+      <circle
+        cx="60"
+        cy="60"
+        r="34"
+        fill="var(--color-soley)"
+        className="success-pop"
+        style={{ animationDelay: "300ms" }}
+      />
     </svg>
   );
 }

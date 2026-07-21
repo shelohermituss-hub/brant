@@ -197,7 +197,7 @@ export function CardScreen() {
         </button>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div key={tab} className="content-fade-in flex flex-col gap-3">
         <h2 className="text-[1.05rem] font-bold text-ink">Sik ou yo</h2>
 
         {!authUserId ? (

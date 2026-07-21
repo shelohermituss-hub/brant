@@ -28,13 +28,20 @@ export function BottomTabBar({ tone = "light" }: BottomTabBarProps) {
         {TABS.map(({ href, icon }) => {
           const active = pathname === href;
           return (
-            <Link key={href} href={href} className="p-2">
+            <Link
+              key={href}
+              href={href}
+              className="p-2 transition-transform duration-[var(--duration-tap)] ease-[var(--ease-out)] active:scale-[0.9] motion-reduce:active:scale-100"
+            >
               {typeof icon === "string" ? (
                 <AssetIcon
                   name={icon}
                   size={26}
                   tone={isDark ? "white" : "dark"}
-                  className={cn(!active && "opacity-50")}
+                  className={cn(
+                    "transition-opacity duration-[var(--duration-tap)]",
+                    !active && "opacity-50"
+                  )}
                 />
               ) : (
                 (() => {
@@ -43,7 +50,11 @@ export function BottomTabBar({ tone = "light" }: BottomTabBarProps) {
                     <Icon
                       size={26}
                       strokeWidth={2.5}
-                      className={cn(isDark ? "text-white" : "text-ink", !active && "opacity-50")}
+                      className={cn(
+                        "transition-opacity duration-[var(--duration-tap)]",
+                        isDark ? "text-white" : "text-ink",
+                        !active && "opacity-50"
+                      )}
                     />
                   );
                 })()
