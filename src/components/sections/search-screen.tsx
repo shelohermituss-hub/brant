@@ -21,7 +21,7 @@ function formatHtg(n: number) {
 }
 
 export function SearchScreen() {
-  const { authUserId } = useCurrentAppUser();
+  const { authUserId, profile } = useCurrentAppUser();
   const [query, setQuery] = useState("");
   const [groups, setGroups] = useState<GroupResult[] | null>(null);
   const [requested, setRequested] = useState<string[]>([]);
@@ -123,6 +123,7 @@ export function SearchScreen() {
                 startDate=""
                 endDate=""
                 adminFees="—"
+                yourAvatarUrl={profile?.avatar_url ?? null}
                 joined={false}
                 requested={requested.includes(group.id)}
                 onJoin={() => handleJoin(group.id)}

@@ -109,7 +109,6 @@ export function GroupDetailScreen({ groupId }: GroupDetailScreenProps) {
           (m): TrainStation => ({
             position: m.position,
             status: m.position < currentCycle ? "done" : m.position === currentCycle ? "now" : "todo",
-            label: m.position === currentCycle ? (m.users?.full_name ?? "Manm").split(" ")[0] : String(m.position),
             avatarUrl: m.users?.avatar_url ?? null,
             initial: initialFor(m.users?.full_name ?? "?"),
             color: avatarColorFor(m.user_id),

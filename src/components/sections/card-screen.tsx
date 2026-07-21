@@ -224,6 +224,7 @@ export function CardScreen() {
                   startDate={circle.startDate}
                   endDate={circle.endDate}
                   adminFees={formatHtg(circle.adminFees)}
+                  yourAvatarUrl={profile?.avatar_url ?? null}
                   joined
                 />
               </Link>
@@ -256,6 +257,7 @@ export function CardScreen() {
                   startDate={circle.startDate}
                   endDate={circle.endDate}
                   adminFees={formatHtg(circle.adminFees)}
+                  yourAvatarUrl={profile?.avatar_url ?? null}
                   joined={false}
                   requested={requested.includes(id)}
                   onJoin={() => handleJoin(id)}

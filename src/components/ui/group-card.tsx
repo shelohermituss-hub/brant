@@ -12,6 +12,7 @@ interface GroupCardProps {
   adminFees: string;
   joined: boolean;
   requested?: boolean;
+  yourAvatarUrl?: string | null;
   onJoin?: () => void;
 }
 
@@ -25,10 +26,9 @@ export function GroupCard({
   adminFees,
   joined,
   requested = false,
+  yourAvatarUrl,
   onJoin,
 }: GroupCardProps) {
-  const tooltipLeft = ((yourPosition - 0.5) / memberCount) * 100;
-
   return (
     <div className="flex w-full flex-col gap-4 rounded-lg bg-surface p-5 text-left">
       <div className="flex items-start justify-between gap-3">
@@ -54,23 +54,15 @@ export function GroupCard({
       </p>
 
       <div className="relative rounded-md border border-dashed border-border-strong px-4 pt-8 pb-3">
-        <div
-          className="absolute top-2 flex -translate-x-1/2 flex-col items-center"
-          style={{ left: `${tooltipLeft}%` }}
-        >
-          <span className="rounded-md bg-green px-2 py-1 text-xs font-bold whitespace-nowrap text-white">
-            Tou pa w
-          </span>
-          <span className="h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-green" />
-        </div>
-
         <TrainTrack
           variant="compact"
+          nowTooltip="Tou pa w"
           stations={Array.from(
             { length: memberCount },
             (_, i): TrainStation => ({
               position: i + 1,
               status: i + 1 === yourPosition ? "now" : "todo",
+              avatarUrl: i + 1 === yourPosition ? yourAvatarUrl : null,
             })
           )}
         />

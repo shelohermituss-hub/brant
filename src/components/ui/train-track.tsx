@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -9,7 +9,6 @@ export type TrainStationStatus = "done" | "now" | "todo";
 export interface TrainStation {
   position: number;
   status: TrainStationStatus;
-  label?: string;
   avatarUrl?: string | null;
   initial?: string;
   color?: string;
@@ -17,111 +16,122 @@ export interface TrainStation {
 
 interface TrainTrackProps {
   stations: TrainStation[];
-  /** compact = piste fine pour GroupCard (pas d'avatar) ; detailed = route d'avatars scrollable (group-detail). */
+  /** compact = piste fine pour GroupCard ; detailed = route scrollable pour group-detail-screen. */
   variant?: "compact" | "detailed";
+  /** Bulle affichée au-dessus de la station "now", uniquement en variant compact (ex. "Tou pa w"). */
+  nowTooltip?: string;
   className?: string;
 }
 
+interface Point {
+  x: number;
+  y: number;
+}
+
+/** Tracé courbe (modèle 07 "Tren" de cycle_concepts_10.html) — jamais une ligne droite. */
+const TRACK_D = "M10 120 C 60 50, 110 150, 170 80 C 210 40, 250 130, 300 20";
+const VIEW_W = 310;
+const VIEW_H = 160;
+
 /**
  * Piste de train (modèle 07 du moodboard cycle_concepts_10.html) :
- * chaque station = un mois/membre, un wagon 🚂 marque la station
- * "en cours". Remplace les petits traits de GroupCard (variant
- * compact) et WonnAvatarRoute (variant detailed, avatars réels).
+ * courbe en pointillés, stations réparties le long du tracé via
+ * SVGPathElement.getPointAtLength (comme le moodboard original), pas
+ * alignées en ligne droite. La station "en cours" affiche une vraie
+ * photo de profil — aucune icône de locomotive.
  */
-export function TrainTrack({ stations, variant = "detailed", className }: TrainTrackProps) {
+export function TrainTrack({ stations, variant = "detailed", nowTooltip, className }: TrainTrackProps) {
   const isCompact = variant === "compact";
-  const nowRef = useRef<HTMLDivElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
+  const [points, setPoints] = useState<Point[]>([]);
 
   useEffect(() => {
-    if (!isCompact) {
-      nowRef.current?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-    }
-  }, [isCompact, stations]);
-
-  if (isCompact) {
-    return (
-      <div className={cn("flex w-full gap-1", className)}>
-        {stations.map((station) => (
-          <div key={station.position} className="relative h-3 flex-1">
-            <span
-              className={cn(
-                "absolute inset-x-0 top-1/2 h-0 -translate-y-1/2 border-t-2 border-dashed",
-                station.status === "done" ? "border-green" : "border-border-strong"
-              )}
-            />
-            {station.status === "now" && (
-              <span className="absolute left-1/2 top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-green-bright/60 motion-reduce:hidden" />
-            )}
-            <span
-              className={cn(
-                "absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-surface",
-                station.status === "done" && "bg-green",
-                station.status === "now" && "bg-green-bright",
-                station.status === "todo" && "bg-border-strong"
-              )}
-            />
-          </div>
-        ))}
-      </div>
+    const path = pathRef.current;
+    if (!path || stations.length === 0) return;
+    const len = path.getTotalLength();
+    const n = stations.length;
+    setPoints(
+      stations.map((_, i) => {
+        const p = path.getPointAtLength(n === 1 ? len / 2 : (i / (n - 1)) * len);
+        return { x: p.x, y: p.y };
+      })
     );
-  }
+  }, [stations]);
 
   return (
-    <div className={cn("flex items-center overflow-x-auto px-4 pt-3 pb-1", className)}>
-      {stations.map((station, i) => {
+    <div className={cn("relative w-full", isCompact ? "h-[68px]" : "h-[150px]", className)}>
+      <svg
+        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        preserveAspectRatio="none"
+        className="absolute inset-0 h-full w-full"
+        aria-hidden="true"
+      >
+        <path
+          ref={pathRef}
+          d={TRACK_D}
+          fill="none"
+          stroke="var(--color-border-strong)"
+          strokeWidth={isCompact ? 3 : 4}
+          strokeDasharray="2 9"
+          strokeLinecap="round"
+        />
+      </svg>
+
+      {points.map((point, i) => {
+        const station = stations[i];
         const isNow = station.status === "now";
+        const size = isCompact ? (isNow ? 28 : 10) : isNow ? 52 : 40;
 
         return (
           <div
             key={station.position}
-            ref={isNow ? nowRef : undefined}
-            className="stagger-item flex shrink-0 items-center"
-            style={{ "--stagger-index": i } as CSSProperties}
+            className="absolute -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `${(point.x / VIEW_W) * 100}%`, top: `${(point.y / VIEW_H) * 100}%` }}
           >
-            <div className="flex w-14 shrink-0 flex-col items-center gap-1">
-              <div className="relative">
-                {isNow && (
-                  <>
-                    <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-green-bright/50 motion-reduce:hidden" />
-                    <span
-                      aria-hidden="true"
-                      className="train-bob motion-reduce:animate-none absolute -top-3 left-1/2 -translate-x-1/2 text-base leading-none select-none"
-                    >
-                      🚂
-                    </span>
-                  </>
-                )}
-                <span
-                  className={cn(
-                    "relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full text-base font-bold text-white transition-[opacity,filter] duration-[var(--duration-ui)] ease-[var(--ease-out)]",
-                    isNow ? "ring-2 ring-green-bright ring-offset-2 ring-offset-surface" : "grayscale opacity-40"
-                  )}
-                  style={!station.avatarUrl ? { backgroundColor: station.color ?? "var(--color-ink-secondary)" } : undefined}
-                >
-                  {station.avatarUrl ? (
-                    <Image src={station.avatarUrl} alt="" fill className="object-cover" />
-                  ) : (
-                    station.initial
-                  )}
+            {isNow && (
+              <span
+                className="absolute inset-0 -z-10 animate-ping rounded-full bg-green-bright/50 motion-reduce:hidden"
+                style={{ width: size, height: size }}
+              />
+            )}
+
+            {isCompact && isNow && nowTooltip && (
+              <span className="absolute bottom-full left-1/2 mb-2 flex -translate-x-1/2 flex-col items-center">
+                <span className="rounded-md bg-green px-2 py-1 text-xs font-bold whitespace-nowrap text-white">
+                  {nowTooltip}
                 </span>
-              </div>
+                <span className="h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-green" />
+              </span>
+            )}
+
+            {station.avatarUrl ? (
               <span
                 className={cn(
-                  "max-w-[56px] truncate text-center text-[0.65rem]",
-                  isNow ? "font-bold text-ink" : "text-ink-secondary"
+                  "relative block overflow-hidden rounded-full transition-[opacity,filter] duration-[var(--duration-ui)] ease-[var(--ease-out)]",
+                  isNow ? "ring-2 ring-green-bright ring-offset-2 ring-offset-surface" : "opacity-40 grayscale"
                 )}
+                style={{ width: size, height: size }}
               >
-                {station.label}
+                <Image src={station.avatarUrl} alt="" fill className="object-cover" />
               </span>
-            </div>
-
-            {i < stations.length - 1 && (
-              <div
+            ) : isCompact ? (
+              <span
                 className={cn(
-                  "mx-1 h-0 w-6 shrink-0 border-t-2 border-dashed",
-                  station.status === "done" ? "border-green" : "border-border-strong"
+                  "block rounded-full",
+                  isNow ? "bg-green-bright" : station.status === "done" ? "bg-green" : "bg-border-strong"
                 )}
+                style={{ width: size, height: size }}
               />
+            ) : (
+              <span
+                className={cn(
+                  "flex items-center justify-center rounded-full text-xs font-bold text-white transition-[opacity,filter] duration-[var(--duration-ui)] ease-[var(--ease-out)]",
+                  isNow ? "ring-2 ring-green-bright ring-offset-2 ring-offset-surface" : "opacity-40 grayscale"
+                )}
+                style={{ width: size, height: size, backgroundColor: station.color ?? "var(--color-ink-secondary)" }}
+              >
+                {station.initial}
+              </span>
             )}
           </div>
         );
