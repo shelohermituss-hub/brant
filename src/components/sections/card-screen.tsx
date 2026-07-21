@@ -158,14 +158,14 @@ export function CardScreen() {
           <Link
             href="/group/create/amount"
             aria-label="Kreye yon sòl"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green transition-transform duration-[var(--duration-tap)] ease-[var(--ease-out)] active:scale-[0.97] motion-reduce:active:scale-100"
           >
             <CopyPlus className="text-white" size={22} strokeWidth={2.5} />
           </Link>
           <Link
             href="/account"
             aria-label="Kont ou"
-            className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-ink-secondary/30"
+            className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-ink-secondary/30 transition-transform duration-[var(--duration-tap)] ease-[var(--ease-out)] active:scale-[0.97] motion-reduce:active:scale-100"
           >
             {profile?.avatar_url && (
               <Image src={profile.avatar_url} alt="" fill className="object-cover" />
@@ -213,7 +213,7 @@ export function CardScreen() {
               <Link
                 key={id}
                 href={myGroupStates[id] === "forming" ? `/group/forming?id=${id}` : `/group?id=${id}`}
-                className="stagger-item"
+                className="stagger-item block transition-transform duration-[var(--duration-tap)] ease-[var(--ease-out)] active:scale-[0.98] motion-reduce:active:scale-100"
                 style={{ "--stagger-index": index } as CSSProperties}
               >
                 <GroupCard

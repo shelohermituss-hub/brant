@@ -56,7 +56,10 @@ export function PaymentCountdown({ targetDate }: PaymentCountdownProps) {
           key={key}
           className="flex flex-1 flex-col items-center gap-1 rounded-md bg-surface-muted py-2"
         >
-          <span className="text-lg font-bold text-ink">
+          <span
+            key={remaining ? remaining[key] : "idle"}
+            className="countdown-tick text-lg font-bold text-ink"
+          >
             {remaining ? String(remaining[key]).padStart(2, "0") : "--"}
           </span>
           <span className="text-[0.65rem] text-ink-secondary">{label}</span>

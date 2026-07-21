@@ -364,6 +364,32 @@
 }
 
 /*
+ * Changement de chiffre du compte à rebours (ANIMATIONS-AUDIT.md
+ * MEDIUM-9) — action à très haute fréquence (chaque seconde), donc
+ * volontairement très courte et discrète (80-100ms, jamais de
+ * mouvement) plutôt que de réutiliser une des transitions plus
+ * longues déjà définies plus haut.
+ */
+@keyframes countdown-tick {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.countdown-tick {
+  animation: countdown-tick 90ms var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown-tick {
+    animation-duration: 1ms;
+  }
+}
+
+/*
  * Curseur de montant (AmountSlider) — input[type=range] natif, pas de
  * librairie externe. Le remplissage vert utilise la variable --slider-fill
  * (0-100, posée en inline style par le composant) via un gradient linéaire.
