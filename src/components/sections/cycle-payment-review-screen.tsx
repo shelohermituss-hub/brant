@@ -24,6 +24,7 @@ export function CyclePaymentReviewScreen({ groupId }: CyclePaymentReviewScreenPr
   const router = useRouter();
   const { authUserId, profile } = useCurrentAppUser();
   const [data, setData] = useState<ReviewData | null>(null);
+  const [feeError, setFeeError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,12 +41,13 @@ export function CyclePaymentReviewScreen({ groupId }: CyclePaymentReviewScreenPr
         .maybeSingle();
       if (!group) return;
 
-      const { data: fee } = await supabase.rpc("calculate_collection_fee", {
+      const { data: fee, error: feeErr } = await supabase.rpc("calculate_collection_fee", {
         p_amount: group.monthly_amount,
         p_tier: group.organizer?.merchant_tier ?? "bronze",
       });
 
       if (!cancelled) {
+        setFeeError(!!feeErr || typeof fee !== "number");
         setData({
           monthlyAmount: group.monthly_amount,
           currentCycle: group.current_cycle,
@@ -149,6 +151,12 @@ export function CyclePaymentReviewScreen({ groupId }: CyclePaymentReviewScreenPr
         ))}
       </div>
 
+      {feeError && (
+        <p className="text-center text-[0.85rem] text-late">
+          Nou pa kapab kalkile frè kolèkt la kounye a. Tanpri eseye ankò.
+        </p>
+      )}
+
       {error && <p className="text-center text-[0.85rem] text-late">{error}</p>}
 
       <p className="mt-auto text-center text-sm text-ink-secondary">
@@ -158,7 +166,7 @@ export function CyclePaymentReviewScreen({ groupId }: CyclePaymentReviewScreenPr
       <PillButton
         variant="primary"
         className="w-full"
-        disabled={isSubmitting || !profile?.moncash_number}
+        disabled={isSubmitting || !profile?.moncash_number || feeError}
         onClick={handleConfirm}
       >
         {isSubmitting ? "Konfimasyon..." : "Konfime"}

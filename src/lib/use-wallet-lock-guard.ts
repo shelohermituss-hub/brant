@@ -18,9 +18,9 @@ export function useWalletLockGuard(authUserId: string | null): boolean {
 
     createClient()
       .rpc("has_wallet_pin")
-      .then(({ data }) => {
+      .then(({ data, error }) => {
         if (cancelled) return;
-        if (data) {
+        if (error || data) {
           router.replace(`/pin?redirect=${encodeURIComponent(pathname)}`);
         } else {
           setNoPinConfirmed(true);

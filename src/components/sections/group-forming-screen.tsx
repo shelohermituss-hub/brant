@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type CSSProperties } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { UserCheck, UserRoundX } from "lucide-react";
 import { WonnPath, type WonnMember } from "@/components/ui/wonn-path";
 import { SettingsListRow } from "@/components/ui/settings-list-row";
@@ -27,6 +27,8 @@ interface InviteeRow {
 
 export function GroupFormingScreen({ groupId }: GroupFormingScreenProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const inviteWarning = searchParams.get("inviteWarning");
   const { loading: userLoading, authUserId } = useCurrentAppUser();
   const [group, setGroup] = useState<GroupRow | null | undefined>(undefined);
   const [invitees, setInvitees] = useState<InviteeRow[]>([]);
@@ -115,6 +117,10 @@ export function GroupFormingScreen({ groupId }: GroupFormingScreenProps) {
         <span className="text-lg font-bold text-ink">{group.name}</span>
         <span className="w-[22px]" />
       </div>
+
+      {inviteWarning && (
+        <p className="px-5 pt-2 text-center text-[0.85rem] text-late">{inviteWarning}</p>
+      )}
 
       <WonnPath
         members={members}

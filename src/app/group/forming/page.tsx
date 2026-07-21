@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { GroupFormingScreen } from "@/components/sections/group-forming-screen";
 
 interface PageProps {
@@ -7,5 +8,9 @@ interface PageProps {
 export default async function Page({ searchParams }: PageProps) {
   const { id } = await searchParams;
 
-  return <GroupFormingScreen groupId={id} />;
+  return (
+    <Suspense fallback={null}>
+      <GroupFormingScreen groupId={id} />
+    </Suspense>
+  );
 }

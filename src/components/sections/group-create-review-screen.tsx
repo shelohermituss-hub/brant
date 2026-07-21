@@ -94,25 +94,37 @@ export function GroupCreateReviewScreen() {
       return;
     }
 
-    await supabase.from("memberships").insert({
+    const { error: membershipError } = await supabase.from("memberships").insert({
       group_id: group.id,
       user_id: authUserId,
       position,
     });
 
+    if (membershipError) {
+      setIsSubmitting(false);
+      setError("Nou pa kapab ajoute ou nan gwoup la. Tanpri eseye ankò.");
+      return;
+    }
+
+    let inviteWarning: string | null = null;
     if (invitedUserIds.length > 0) {
-      await supabase.from("membership_requests").insert(
+      const { error: requestsError } = await supabase.from("membership_requests").insert(
         invitedUserIds.map((userId) => ({
           group_id: group.id,
           user_id: userId,
           status: "pending",
         }))
       );
+      if (requestsError) {
+        inviteWarning = "Gwoup la kreye, men nou pa kapab voye envitasyon yo. Eseye envite manm yo ankò pita.";
+      }
     }
 
     clearGroupCreateDraft();
     setIsSubmitting(false);
-    router.push(`/group/forming?id=${group.id}`);
+    router.push(
+      `/group/forming?id=${group.id}${inviteWarning ? `&inviteWarning=${encodeURIComponent(inviteWarning)}` : ""}`
+    );
   }
 
   const rows = [
