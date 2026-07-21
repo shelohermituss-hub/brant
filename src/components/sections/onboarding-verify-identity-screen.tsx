@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Shield } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
-import { AssetIcon } from "@/components/ui/asset-icon";
 import { createClient } from "@/lib/supabase/client";
 import { clearOnboardingDraft, readOnboardingDraft } from "@/lib/onboarding-store";
 
@@ -65,16 +64,6 @@ export function OnboardingVerifyIdentityScreen() {
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
-      <div className="flex justify-end">
-        <button
-          type="button"
-          onClick={() => router.push("/home")}
-          aria-label="Fermer"
-        >
-          <AssetIcon name="cross" className="text-ink" size={22} />
-        </button>
-      </div>
-
       <span className="mt-6 flex h-14 w-14 items-center justify-center rounded-md bg-green">
         <Shield className="text-white" size={26} />
       </span>

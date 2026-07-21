@@ -112,7 +112,7 @@ export function GroupCreateReviewScreen() {
 
     clearGroupCreateDraft();
     setIsSubmitting(false);
-    router.push("/group/forming");
+    router.push(`/group/forming?id=${group.id}`);
   }
 
   const rows = [

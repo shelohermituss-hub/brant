@@ -53,18 +53,20 @@ const CONTENT: Record<
 export function PaymentStatusScreen({ status: fallbackStatus, contributionId }: PaymentStatusScreenProps) {
   const router = useRouter();
   const [status, setStatus] = useState(fallbackStatus);
+  const [groupId, setGroupId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!contributionId) return;
     let cancelled = false;
     createClient()
       .from("contributions")
-      .select("state")
+      .select("state, group_id")
       .eq("id", contributionId)
       .maybeSingle()
       .then(({ data }) => {
         if (!cancelled && data) {
           setStatus(CONTRIBUTION_STATE_TO_STATUS[data.state] ?? "wait");
+          setGroupId(data.group_id);
         }
       });
     return () => {
@@ -95,8 +97,11 @@ export function PaymentStatusScreen({ status: fallbackStatus, contributionId }: 
       <PillButton
         variant="primary"
         className="w-full"
+        disabled={status === "late" && !groupId}
         onClick={() =>
-          router.push(status === "late" ? "/stocks/cycle/buy" : "/payment-hub/history")
+          router.push(
+            status === "late" ? `/stocks/cycle/buy?groupId=${groupId}` : "/payment-hub/history"
+          )
         }
       >
         {cta}
