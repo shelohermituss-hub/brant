@@ -20,7 +20,7 @@ export function LiquidGauge({ paid, total, label, className }: LiquidGaugeProps)
   return (
     <div
       className={cn(
-        "relative mx-auto h-[150px] w-[130px] overflow-hidden rounded-[24px] border-[2.5px] border-ink bg-surface",
+        "relative mx-auto h-[150px] w-[130px] overflow-hidden rounded-lg bg-surface",
         className
       )}
     >

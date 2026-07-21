@@ -182,8 +182,10 @@ export function GroupDetailScreen({ groupId }: GroupDetailScreenProps) {
         <span className="w-[22px]" />
       </div>
 
-      <div className="flex flex-col gap-3 bg-surface pb-4">
-        <TrainTrack variant="detailed" stations={stations} />
+      <div className="flex flex-col gap-3 bg-surface px-4 pb-4">
+        <div className="rounded-md border border-dashed border-border-strong px-3 pt-6 pb-3">
+          <TrainTrack variant="detailed" stations={stations} />
+        </div>
         {currentMemberName && (
           <p className="text-center text-[0.9rem] text-ink-secondary">
             <span className="font-bold text-ink">{currentMemberName}</span> ap resevwa pot la mwa sa a
