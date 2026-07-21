@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { AssetIcon } from "@/components/ui/asset-icon";
 import { OnboardingField } from "@/components/ui/onboarding-field";
 import { PillButton } from "@/components/ui/pill-button";
@@ -33,6 +34,18 @@ export function OnboardingZipScreen() {
       <p className="pt-2 text-[0.95rem] text-ink-secondary">
         Se nimewo sa a n ap itilize pou peman ak vèsman ou yo.
       </p>
+
+      <div className="mt-6 flex items-center gap-3 rounded-lg bg-surface-muted p-4">
+        <span className="relative flex h-11 w-11 shrink-0 overflow-hidden rounded-full">
+          <Image src="/images/icon-moncash.png" alt="" fill className="object-cover" />
+        </span>
+        <div className="flex flex-col">
+          <span className="text-[0.95rem] font-bold text-ink">Poukisa MonCash?</span>
+          <span className="text-sm text-ink-secondary">
+            Se sèvis peman mobil ki pi popilè an Ayiti — li asire kotizasyon ak vèsman ou yo rive vit.
+          </span>
+        </div>
+      </div>
 
       <div className="pt-8">
         <OnboardingField
