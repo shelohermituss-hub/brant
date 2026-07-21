@@ -1,6 +1,6 @@
 import { FileText, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { PillButton } from "@/components/ui/pill-button";
+import { TrainTrack, type TrainStation } from "@/components/ui/train-track";
 
 interface GroupCardProps {
   potAmount: string;
@@ -64,17 +64,16 @@ export function GroupCard({
           <span className="h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-green" />
         </div>
 
-        <div className="flex gap-1">
-          {Array.from({ length: memberCount }, (_, i) => (
-            <span
-              key={i}
-              className={cn(
-                "h-1.5 flex-1 rounded-full",
-                i + 1 === yourPosition ? "bg-green" : "bg-border-strong"
-              )}
-            />
-          ))}
-        </div>
+        <TrainTrack
+          variant="compact"
+          stations={Array.from(
+            { length: memberCount },
+            (_, i): TrainStation => ({
+              position: i + 1,
+              status: i + 1 === yourPosition ? "now" : "todo",
+            })
+          )}
+        />
 
         <div className="flex items-center justify-between pt-3 text-[0.85rem]">
           <span className="text-ink-secondary">{startDate}</span>

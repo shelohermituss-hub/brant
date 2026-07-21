@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { WonnAvatarRoute, type AvatarMember } from "@/components/ui/wonn-avatar-route";
+import { TrainTrack, type TrainStation } from "@/components/ui/train-track";
+import { LiquidGauge } from "@/components/ui/liquid-gauge";
 import { PaymentCountdown } from "@/components/ui/payment-countdown";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { PillButton } from "@/components/ui/pill-button";
@@ -45,7 +46,9 @@ export function GroupDetailScreen({ groupId }: GroupDetailScreenProps) {
   const router = useRouter();
   const { loading: userLoading, authUserId, profile } = useCurrentAppUser();
   const [group, setGroup] = useState<GroupRow | null | undefined>(undefined);
-  const [members, setMembers] = useState<AvatarMember[]>([]);
+  const [stations, setStations] = useState<TrainStation[]>([]);
+  const [currentMemberName, setCurrentMemberName] = useState<string | null>(null);
+  const [potProgress, setPotProgress] = useState<number | null>(null);
   const [myDue, setMyDue] = useState<{ amount: number; state: string } | null>(null);
 
   useEffect(() => {
@@ -62,7 +65,7 @@ export function GroupDetailScreen({ groupId }: GroupDetailScreenProps) {
 
       const { data: membershipRows } = await supabase
         .from("memberships")
-        .select("position, user_id, users(full_name)")
+        .select("position, user_id, users(full_name, avatar_url)")
         .eq("group_id", gid)
         .order("position");
 
@@ -74,27 +77,47 @@ export function GroupDetailScreen({ groupId }: GroupDetailScreenProps) {
         .maybeSingle();
 
       let due: { amount: number; state: string } | null = null;
-      if (myMembership && groupRow) {
-        const { data: contribution } = await supabase
-          .from("contributions")
-          .select("amount, state")
-          .eq("membership_id", myMembership.id)
-          .eq("cycle_number", groupRow.current_cycle)
-          .maybeSingle();
-        due = contribution;
+      let paidCount: number | null = null;
+      if (groupRow) {
+        if (myMembership) {
+          const { data: contribution } = await supabase
+            .from("contributions")
+            .select("amount, state")
+            .eq("membership_id", myMembership.id)
+            .eq("cycle_number", groupRow.current_cycle)
+            .maybeSingle();
+          due = contribution;
+        }
+
+        if (groupRow.state !== "forming") {
+          const { data: cycleContributions } = await supabase
+            .from("contributions")
+            .select("state")
+            .eq("group_id", gid)
+            .eq("cycle_number", groupRow.current_cycle);
+          paidCount = (cycleContributions ?? []).filter((c) => c.state === "paid").length;
+        }
       }
 
       if (cancelled) return;
       setGroup(groupRow ?? null);
-      setMembers(
-        (membershipRows ?? []).map((m) => ({
-          position: m.position,
-          name: m.users?.full_name ?? "Manm",
-          initial: initialFor(m.users?.full_name ?? "?"),
-          color: avatarColorFor(m.user_id),
-        }))
+      const currentCycle = groupRow?.current_cycle ?? 0;
+      const current = (membershipRows ?? []).find((m) => m.position === currentCycle);
+      setCurrentMemberName(current?.users?.full_name ?? null);
+      setStations(
+        (membershipRows ?? []).map(
+          (m): TrainStation => ({
+            position: m.position,
+            status: m.position < currentCycle ? "done" : m.position === currentCycle ? "now" : "todo",
+            label: m.position === currentCycle ? (m.users?.full_name ?? "Manm").split(" ")[0] : String(m.position),
+            avatarUrl: m.users?.avatar_url ?? null,
+            initial: initialFor(m.users?.full_name ?? "?"),
+            color: avatarColorFor(m.user_id),
+          })
+        )
       );
       setMyDue(due);
+      setPotProgress(paidCount);
     }
 
     load(groupId, authUserId);
@@ -160,8 +183,16 @@ export function GroupDetailScreen({ groupId }: GroupDetailScreenProps) {
         <span className="w-[22px]" />
       </div>
 
-      <div className="bg-surface pb-4">
-        <WonnAvatarRoute members={members} currentPosition={group.current_cycle} />
+      <div className="flex flex-col gap-3 bg-surface pb-4">
+        <TrainTrack variant="detailed" stations={stations} />
+        {currentMemberName && (
+          <p className="text-center text-[0.9rem] text-ink-secondary">
+            <span className="font-bold text-ink">{currentMemberName}</span> ap resevwa pot la mwa sa a
+          </p>
+        )}
+        {!isForming && potProgress !== null && (
+          <LiquidGauge paid={potProgress} total={group.total_members} label="Kotizasyon mwa sa a" className="mt-1" />
+        )}
       </div>
 
       <div className="flex flex-col gap-1 px-5 pt-5 pb-3">

@@ -392,6 +392,56 @@
 }
 
 /*
+ * Bob vertical du wagon 🚂 sur la station "en cours" de TrainTrack
+ * (concept "Tren" du moodboard cycle_concepts_10.html) — mouvement
+ * continu mais très subtil (2px), simple repère ambiant de position,
+ * jamais utilisé sur une action à haute fréquence.
+ */
+@keyframes train-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.train-bob {
+  animation: train-bob 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .train-bob {
+    animation: none;
+  }
+}
+
+/*
+ * Vague de LiquidGauge (concept "Balans Vivan" du moodboard) —
+ * translateX en boucle sur un motif dupliqué à l'identique (200% de
+ * large, décalage de 50% = un cycle parfait, sans saut visible).
+ */
+@keyframes liquid-wave-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.liquid-wave-svg {
+  animation: liquid-wave-scroll 3.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-wave-svg {
+    animation: none;
+  }
+}
+
+/*
  * Curseur de montant (AmountSlider) — input[type=range] natif, pas de
  * librairie externe. Le remplissage vert utilise la variable --slider-fill
  * (0-100, posée en inline style par le composant) via un gradient linéaire.
