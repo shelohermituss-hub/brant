@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 import { PageTransition } from "@/components/layout/page-transition";
 import "./globals.css";
@@ -14,6 +14,12 @@ export const metadata: Metadata = {
   description: "Sòlid — tontine digitale haïtienne",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,8 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${dmSans.variable} h-full antialiased`}>
-      <body className="h-dvh overflow-hidden flex flex-col items-center bg-neutral-200">
-        <div className="w-full max-w-[430px] h-dvh bg-surface flex flex-col relative overflow-hidden">
+      <body className="h-svh overflow-hidden flex flex-col items-center bg-neutral-200">
+        <div className="w-full max-w-[430px] h-svh bg-surface flex flex-col relative overflow-hidden">
           <PageTransition>{children}</PageTransition>
         </div>
       </body>
