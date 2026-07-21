@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { PillButton } from "@/components/ui/pill-button";
-import { Sparkline } from "@/components/ui/sparkline";
 import { SavingsIcon } from "@/components/ui/savings-icon";
 import { AssetIcon } from "@/components/ui/asset-icon";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
@@ -20,8 +19,7 @@ function CardTitle({ label, interactive = false }: { label: string; interactive?
 }
 
 export function HomeScreen() {
-  const { authUserId, profile } = useCurrentAppUser();
-  const populated = !!authUserId;
+  const { profile } = useCurrentAppUser();
 
   return (
     <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-surface-muted px-4 pt-4 pb-6">
@@ -81,59 +79,27 @@ export function HomeScreen() {
         </SurfaceCard>
 
         <SurfaceCard className="flex flex-col gap-4">
-          <CardTitle label={populated ? "Bitcoin" : "Buy bitcoin"} />
-          {populated ? (
-            <>
-              <Sparkline
-                color="var(--color-cyan)"
-                path="M2,28 L14,26 L26,27 L38,18 L50,20 L62,10 L74,13 L86,4 L98,7"
-              />
-              <div>
-                <p className="text-xl font-bold text-ink">$92.05</p>
-                <p className="flex items-center gap-1 text-sm text-ink-secondary">
-                  <AssetIcon name="arrow" size={10} className="rotate-180" />
-                  0.50% today
-                </p>
-              </div>
-            </>
-          ) : (
-            <div className="relative -mx-1 -mb-1 aspect-square overflow-hidden rounded-md">
-              <Image
-                src="/images/illustration-bitcoin.png"
-                alt="Buy bitcoin"
-                fill
-                className="object-cover"
-              />
-            </div>
-          )}
+          <CardTitle label="Buy bitcoin" />
+          <div className="relative -mx-1 -mb-1 aspect-square overflow-hidden rounded-md">
+            <Image
+              src="/images/illustration-bitcoin.png"
+              alt="Buy bitcoin"
+              fill
+              className="object-cover"
+            />
+          </div>
         </SurfaceCard>
 
         <SurfaceCard as={Link} href="/stocks" className="flex flex-col gap-4">
-          <CardTitle label={populated ? "Stocks" : "Invest in stocks"} interactive />
-          {populated ? (
-            <>
-              <Sparkline
-                color="var(--color-purple)"
-                path="M2,6 L10,10 L18,28 L26,24 L34,14 L42,18 L50,26 L58,20 L66,24 L74,17 L82,22 L90,18 L98,21"
-              />
-              <div>
-                <p className="text-xl font-bold text-ink">$2,995.85</p>
-                <p className="flex items-center gap-1 text-sm text-ink-secondary">
-                  <AssetIcon name="arrow" size={10} />
-                  0.80% today
-                </p>
-              </div>
-            </>
-          ) : (
-            <div className="relative -mx-1 -mb-1 aspect-square overflow-hidden rounded-md">
-              <Image
-                src="/images/illustration-stocks.png"
-                alt="Invest in stocks"
-                fill
-                className="object-cover"
-              />
-            </div>
-          )}
+          <CardTitle label="Invest in stocks" interactive />
+          <div className="relative -mx-1 -mb-1 aspect-square overflow-hidden rounded-md">
+            <Image
+              src="/images/illustration-stocks.png"
+              alt="Invest in stocks"
+              fill
+              className="object-cover"
+            />
+          </div>
         </SurfaceCard>
 
         <SurfaceCard className="flex flex-col gap-4">
