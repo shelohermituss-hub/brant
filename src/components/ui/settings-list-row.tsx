@@ -42,7 +42,7 @@ export function SettingsListRow({
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-4 border-b border-border px-5 py-4 text-left last:border-b-0 transition-transform duration-150 ease-[var(--ease-out)] active:scale-[0.99]"
+      className="flex w-full items-center gap-4 border-b border-border px-5 py-4 text-left last:border-b-0 transition-transform duration-[var(--duration-tap)] ease-[var(--ease-out)] active:scale-[0.97] motion-reduce:active:scale-100"
     >
       {iconStyle === "badge" ? (
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-ink text-white">

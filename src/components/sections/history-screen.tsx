@@ -43,7 +43,7 @@ function HistoryRow({ id, date, amount, status, ref, index }: HistoryEntry & { i
       onKeyDown={(e) => {
         if (e.key === "Enter") router.push(`/payment-status?contributionId=${id}`);
       }}
-      className="stagger-item flex w-full items-center justify-between border-b border-border px-5 py-4 text-left last:border-b-0 transition-transform duration-150 ease-[var(--ease-out)] active:scale-[0.99]"
+      className="stagger-item flex w-full items-center justify-between border-b border-border px-5 py-4 text-left last:border-b-0 transition-transform duration-[var(--duration-tap)] ease-[var(--ease-out)] active:scale-[0.97] motion-reduce:active:scale-100"
       style={{ "--stagger-index": index } as CSSProperties}
     >
       <div className="flex flex-col">

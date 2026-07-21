@@ -28,7 +28,7 @@ export function CheckboxRow({ label, checked, onToggle, trailing, readOnly = fal
   return (
     <div className="flex items-center gap-4 border-b border-border px-5 py-4 last:border-b-0">
       {readOnly ? indicator : (
-        <button type="button" onClick={onToggle} className="active:scale-[0.9] transition-transform duration-150 ease-[var(--ease-out)]">
+        <button type="button" onClick={onToggle} className="active:scale-[0.95] transition-transform duration-[var(--duration-tap)] ease-[var(--ease-out)] motion-reduce:active:scale-100">
           {indicator}
         </button>
       )}

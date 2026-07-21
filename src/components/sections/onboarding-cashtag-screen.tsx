@@ -91,9 +91,11 @@ export function OnboardingCashtagScreen() {
         {status === "checking" && (
           <Loader2 className="shrink-0 animate-spin text-ink-secondary" size={20} />
         )}
-        {status === "available" && <Check className="shrink-0 text-paid" size={20} strokeWidth={3} />}
+        {status === "available" && (
+          <Check key={status} className="success-pop shrink-0 text-paid" size={20} strokeWidth={3} />
+        )}
         {(status === "taken" || status === "invalid") && (
-          <X className="shrink-0 text-late" size={20} strokeWidth={3} />
+          <X key={status} className="success-pop shrink-0 text-late" size={20} strokeWidth={3} />
         )}
       </div>
 
