@@ -7,6 +7,27 @@ tactile/physicalité/performance, transitions de page/listes/cohésion,
 loading states/toasts/accessibilité), puis vétting par relecture directe
 du code cité pour chaque finding à sévérité HIGH.
 
+## Statut d'implémentation : ✅ tout traité
+
+Les 4 fondations (F1-F4) et les 21 findings (7 HIGH, 9 MEDIUM, 5 LOW)
+ont tous été implémentés, sur `claude/install-ce-skills-jiyxal` :
+
+- `34a269d` — F1-F4 : tokens de durée, transition de page, skeletons,
+  nettoyage transition-all
+- `c37f6f9` — HIGH-4/5/6/7, MEDIUM-6 : feedback tactile keypad/tab bar,
+  célébration animée, crossfade d'onglet
+- `527866a` — MEDIUM-3 : stagger sur les listes restantes
+- `8457740` — MEDIUM-4/5/8 : sheet (durée, easing, vrai slide, reduced-motion)
+- `d404080` — MEDIUM-7/9 : feedback tactile card-screen, tick countdown
+- `16c45a9` — LOW-1/2/5 : échelles de press-feedback, icône cashtag
+
+LOW-4 (gating `@media (hover: hover)`) ne demandait aucune action
+immédiate (voir la ligne correspondante ci-dessous) — à surveiller si un
+futur `hover:scale`/`hover:translate` est introduit.
+
+Build et lint vérifiés verts après chaque commit ; le sheet et le
+carrousel d'onboarding ont en plus été vérifiés visuellement (Playwright).
+
 ## Résumé
 
 L'infrastructure de base existe et fonctionne bien là où elle est
