@@ -62,7 +62,11 @@ export function SecurityPrivacyScreen() {
         />
 
         <div className="py-5 text-center">
-          <button type="button" className="text-[1.05rem] font-bold text-green">
+          <button
+            type="button"
+            onClick={() => router.push("/pin/setup")}
+            className="text-[1.05rem] font-bold text-green"
+          >
             Chanje kòd PIN
           </button>
         </div>
@@ -93,13 +97,6 @@ export function SecurityPrivacyScreen() {
             </span>
           </div>
         </div>
-
-        <button
-          type="button"
-          className="pt-1 text-center text-[0.95rem] font-bold text-green"
-        >
-          View all
-        </button>
       </div>
     </div>
   );

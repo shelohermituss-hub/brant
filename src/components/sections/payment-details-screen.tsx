@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { AssetIcon } from "@/components/ui/asset-icon";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
 
 export function PaymentDetailsScreen() {
@@ -57,8 +56,6 @@ export function PaymentDetailsScreen() {
             <span className="text-[0.95rem] font-bold text-ink">MonCash</span>
             <span className="text-sm text-ink-secondary">{profile.moncash_number}</span>
           </span>
-
-          <AssetIcon name="chevron-right" className="text-ink-secondary" size={16} />
         </div>
       )}
     </div>

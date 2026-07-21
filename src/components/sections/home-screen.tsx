@@ -10,11 +10,11 @@ import { AssetIcon } from "@/components/ui/asset-icon";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
 import { formatHtg } from "@/lib/utils";
 
-function CardTitle({ label }: { label: string }) {
+function CardTitle({ label, interactive = false }: { label: string; interactive?: boolean }) {
   return (
     <div className="flex items-center justify-between">
       <span className="text-[1.05rem] font-bold text-ink">{label}</span>
-      <AssetIcon name="chevron-right" size={16} className="text-ink-secondary" />
+      {interactive && <AssetIcon name="chevron-right" size={16} className="text-ink-secondary" />}
     </div>
   );
 }
@@ -109,7 +109,7 @@ export function HomeScreen() {
         </SurfaceCard>
 
         <SurfaceCard as={Link} href="/stocks" className="flex flex-col gap-4">
-          <CardTitle label={populated ? "Stocks" : "Invest in stocks"} />
+          <CardTitle label={populated ? "Stocks" : "Invest in stocks"} interactive />
           {populated ? (
             <>
               <Sparkline

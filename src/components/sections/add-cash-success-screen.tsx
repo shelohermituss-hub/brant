@@ -57,7 +57,7 @@ export function AddCashSuccessScreen({ variant = "deposit" }: AddCashSuccessScre
         <PillButton
           variant="secondary"
           className="h-12 w-full text-[0.95rem]"
-          onClick={isCycleComplete ? () => router.push("/stocks/score") : undefined}
+          onClick={() => router.push(isCycleComplete ? "/stocks/score" : "/payment-hub/wallet")}
         >
           {isCycleComplete ? "Wè Kredi/Skò" : "Wè detay yo"}
         </PillButton>
