@@ -52,7 +52,7 @@ export function NumericKeypad({
               onDigit?.(key);
             }}
             className={cn(
-              "flex h-14 items-center justify-center text-[1.75rem] font-medium tabular-nums transition-transform duration-100 ease-[var(--ease-out)] active:scale-[0.95] motion-reduce:active:scale-100",
+              "flex h-14 items-center justify-center rounded-md text-[1.75rem] font-medium tabular-nums outline-none transition-transform duration-100 ease-[var(--ease-out)] active:scale-[0.95] motion-reduce:active:scale-100 focus-visible:ring-2 focus-visible:ring-ring/50",
               isBoxed && "m-1 rounded-md bg-surface",
               isGreen ? "text-white" : "text-ink"
             )}

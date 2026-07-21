@@ -29,7 +29,7 @@ export function Chip({
     <button
       type="button"
       className={cn(
-        "inline-flex h-10 shrink-0 items-center gap-1 rounded-full px-4 text-[0.95rem] font-bold",
+        "inline-flex h-10 shrink-0 items-center gap-1 rounded-full px-4 text-[0.95rem] font-bold outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50",
         classesByVariant[variant],
         className
       )}
