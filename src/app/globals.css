@@ -27,6 +27,7 @@
   --color-border: var(--color-gray-200);
   --color-border-strong: var(--color-gray-300);
   --color-placeholder: var(--color-gray-400);
+  --color-overlay-scrim: rgb(0 0 0 / 40%); /* fond assombri derrière sheet/modal */
 
   /* Marque — 3 verts distincts confirmés par la rampe Figma */
   --color-green: #01c248; /* Button.png — CTA pleins (Add Cash, Continue, Next...) */
@@ -120,6 +121,7 @@
   --color-surface-muted: var(--color-surface-muted);
   --color-border-strong: var(--color-border-strong);
   --color-placeholder: var(--color-placeholder);
+  --color-overlay-scrim: var(--color-overlay-scrim);
 
   --color-green: var(--color-green);
   --color-green-bright: var(--color-green-bright);
