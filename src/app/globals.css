@@ -416,6 +416,31 @@
 }
 
 /*
+ * Arc de ScoreGauge (modèle 03 "Woulèt" du moodboard) — se remplit une
+ * seule fois au chargement jusqu'à --gauge-offset (posé en style
+ * inline par le composant à partir du score réel), jamais de boucle.
+ */
+@keyframes score-gauge-fill {
+  from {
+    stroke-dashoffset: var(--gauge-length);
+  }
+  to {
+    stroke-dashoffset: var(--gauge-offset);
+  }
+}
+
+.score-gauge-arc {
+  stroke-dashoffset: var(--gauge-offset);
+  animation: score-gauge-fill 1.1s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .score-gauge-arc {
+    animation-duration: 1ms;
+  }
+}
+
+/*
  * Curseur de montant (AmountSlider) — input[type=range] natif, pas de
  * librairie externe. Le remplissage vert utilise la variable --slider-fill
  * (0-100, posée en inline style par le composant) via un gradient linéaire.

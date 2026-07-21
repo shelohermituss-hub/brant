@@ -1,9 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ShieldCheck, Clock, HelpCircle } from "lucide-react";
 import { SettingsListRow } from "@/components/ui/settings-list-row";
 import { SurfaceCard } from "@/components/ui/surface-card";
+import { ScoreGauge } from "@/components/ui/score-gauge";
+import { AssetIcon } from "@/components/ui/asset-icon";
 import { ConnectedAccountsCard } from "@/components/ui/connected-accounts-card";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
 
@@ -18,9 +21,12 @@ export function PaymentHubScreen() {
       </div>
 
       <div className="px-4 pb-4">
-        <SurfaceCard className="flex flex-col items-center gap-1 text-center">
-          <span className="text-[0.95rem] text-ink-secondary">Mwa sa a</span>
-          <span className="text-lg font-bold text-ink">Ou pa dwe anyen</span>
+        <SurfaceCard as={Link} href="/stocks/score" className="flex flex-col items-center gap-2 text-center">
+          <ScoreGauge score={profile?.trust_score ?? 0} label="Skò fyabilite" />
+          <span className="flex items-center gap-0.5 text-sm text-ink-secondary">
+            Wè detay
+            <AssetIcon name="chevron-right" size={14} />
+          </span>
         </SurfaceCard>
       </div>
 
