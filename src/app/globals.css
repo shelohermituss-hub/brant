@@ -61,6 +61,13 @@
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
+  /* Durées nommées (ANIMATIONS-AUDIT.md, fondation F1) — remplacent les
+     duration-150/duration-200 hardcodés au cas par cas dans les
+     composants, pour une seule source de vérité par type d'interaction. */
+  --duration-tap: 150ms; /* feedback de pression : boutons, lignes, onglets */
+  --duration-ui: 200ms; /* transitions d'interface courtes : fade, dots, skeleton */
+  --duration-modal: 250ms; /* ouverture/fermeture de sheet/modal */
+
   /*
    * Échelle typographique — reprend la nomenclature Apple HIG trouvée
    * telle quelle dans le kit Figma (container.png : Large Title, Title 1,
@@ -202,6 +209,142 @@
 
 @media (prefers-reduced-motion: reduce) {
   .stagger-item {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+    transform: none;
+  }
+}
+
+/*
+ * Transition de page (skill emil-design-eng, ANIMATIONS-AUDIT.md F2/HIGH-1) —
+ * appliquée par PageTransition (src/components/layout/page-transition.tsx)
+ * qui remonte un wrapper à chaque changement de route. Fade + léger
+ * déplacement vertical, jamais bloquant pour l'interaction.
+ */
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition {
+  animation: page-fade-in var(--duration-ui) var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation-duration: 1ms;
+    transform: none;
+  }
+}
+
+/*
+ * Skeleton de chargement (ANIMATIONS-AUDIT.md F3/HIGH-2) — remplace le
+ * texte brut "Chajman..." par des silhouettes qui pulsent doucement.
+ * Mouvement continu (catégorie "constant motion") : easing linéaire,
+ * jamais totalement coupé en reduced-motion (juste ralenti/adouci).
+ */
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton-block {
+  border-radius: var(--radius-sm);
+  background-color: var(--color-border);
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-block {
+    animation-duration: 2.8s;
+  }
+}
+
+/*
+ * Fade du switch chargement -> contenu réel (ANIMATIONS-AUDIT.md HIGH-2) —
+ * enveloppe le contenu résolu pour éviter le hard-cut après un skeleton.
+ */
+@keyframes content-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.content-fade-in {
+  animation: content-fade-in var(--duration-ui) var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content-fade-in {
+    animation-duration: 1ms;
+  }
+}
+
+/*
+ * Pop d'entrée pour les badges de succès (ANIMATIONS-AUDIT.md MEDIUM-6) —
+ * jamais scale(0), on part de 0.9 pour rester physique.
+ */
+@keyframes success-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.success-pop {
+  animation: success-pop var(--duration-ui) var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .success-pop {
+    animation-duration: 1ms;
+    transform: none;
+  }
+}
+
+/*
+ * Reveal radial étagé pour SoleyBurst (ANIMATIONS-AUDIT.md HIGH-6) —
+ * même mécanique que .stagger-item (--stagger-index posé par le
+ * composant appelant) mais en scale depuis le centre plutôt qu'en
+ * translateY, adapté à des rayons qui partent d'un point.
+ */
+@keyframes burst-ray-in {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.burst-ray {
+  transform-origin: 60px 60px;
+  animation: burst-ray-in 260ms var(--ease-out) backwards;
+  animation-delay: calc(var(--stagger-index, 0) * 30ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .burst-ray {
     animation-duration: 1ms;
     animation-delay: 0ms;
     transform: none;

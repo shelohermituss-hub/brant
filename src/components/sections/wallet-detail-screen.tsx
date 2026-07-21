@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ArrowDownToLine, Send, Lock, Info, ShieldCheck, History } from "lucide-react";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { ListSkeleton } from "@/components/ui/list-skeleton";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
 import { useWalletLockGuard } from "@/lib/use-wallet-lock-guard";
@@ -147,16 +148,17 @@ export function WalletDetailScreen() {
             Konekte pou wè tranzaksyon wallet ou.
           </p>
         ) : transactions === null ? (
-          <p className="px-5 py-6 text-center text-[0.9rem] text-ink-secondary">Chajman...</p>
+          <ListSkeleton rows={3} />
         ) : transactions.length === 0 ? (
           <p className="px-5 py-6 text-center text-[0.9rem] text-ink-secondary">
             Ou poko gen okenn tranzaksyon.
           </p>
         ) : (
-          transactions.map((txn) => (
+          transactions.map((txn, index) => (
             <div
               key={txn.id}
-              className="flex items-center justify-between border-b border-border px-5 py-4 last:border-b-0"
+              className="stagger-item flex items-center justify-between border-b border-border px-5 py-4 last:border-b-0"
+              style={{ "--stagger-index": index } as CSSProperties}
             >
               <div className="flex flex-col">
                 <span className="text-[0.95rem] font-bold text-ink">

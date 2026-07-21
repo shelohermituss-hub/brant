@@ -74,11 +74,15 @@ export function OnboardingSplashScreen() {
             type="button"
             aria-label={`Ale nan slide ${i + 1}`}
             onClick={() => goToSlide(i)}
-            className={cn(
-              "h-2 rounded-full transition-all duration-200 ease-[var(--ease-out)]",
-              i === activeIndex ? "w-6 bg-green" : "w-2 bg-border-strong"
-            )}
-          />
+            className="relative h-2 w-6"
+          >
+            <span
+              className={cn(
+                "absolute inset-0 origin-left rounded-full transition-[transform,background-color] duration-[var(--duration-ui)] ease-[var(--ease-out)] motion-reduce:transition-colors",
+                i === activeIndex ? "scale-x-100 bg-green" : "scale-x-[0.333] bg-border-strong"
+              )}
+            />
+          </button>
         ))}
       </div>
 

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Chip } from "@/components/ui/chip";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { ListSkeleton } from "@/components/ui/list-skeleton";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
 import { createClient } from "@/lib/supabase/client";
 import { formatHtg } from "@/lib/utils";
@@ -158,7 +159,7 @@ export function HistoryScreen() {
           </div>
           <div className="bg-surface">
             {contributions === null ? (
-              <p className="px-5 py-6 text-center text-[0.9rem] text-ink-secondary">Chajman...</p>
+              <ListSkeleton rows={2} />
             ) : contributions.length === 0 ? (
               <p className="px-5 py-6 text-center text-[0.9rem] text-ink-secondary">
                 Ou poko gen okenn kotizasyon.
@@ -175,7 +176,7 @@ export function HistoryScreen() {
           </div>
           <div className="bg-surface">
             {payouts === null ? (
-              <p className="px-5 py-6 text-center text-[0.9rem] text-ink-secondary">Chajman...</p>
+              <ListSkeleton rows={2} />
             ) : payouts.length === 0 ? (
               <p className="px-5 py-6 text-center text-[0.9rem] text-ink-secondary">
                 Ou poko resevwa okenn pot.

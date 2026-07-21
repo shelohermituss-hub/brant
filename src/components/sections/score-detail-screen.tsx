@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ShieldCheck } from "lucide-react";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { ListSkeleton } from "@/components/ui/list-skeleton";
 import { cn } from "@/lib/utils";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
 import { createClient } from "@/lib/supabase/client";
@@ -127,13 +128,13 @@ export function ScoreDetailScreen() {
       </div>
 
       {history === null ? (
-        <p className="px-5 py-8 text-center text-[0.9rem] text-ink-secondary">Chajman...</p>
+        <ListSkeleton rows={1} />
       ) : history.length === 0 ? (
         <p className="px-5 py-8 text-center text-[0.9rem] text-ink-secondary">
           Ou poko gen istwa sik.
         </p>
       ) : (
-        <>
+        <div className="content-fade-in">
           <div className="flex h-28 items-end gap-2 px-5 pt-6">
             {history.map(({ sik, status }) => (
               <div key={sik} className="flex h-full flex-1 items-end">
@@ -148,7 +149,7 @@ export function ScoreDetailScreen() {
               </span>
             ))}
           </div>
-        </>
+        </div>
       )}
 
       <div className="flex flex-col gap-4 px-5 pt-4 pb-8">

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Users } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn, formatHtg } from "@/lib/utils";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
 import { createClient } from "@/lib/supabase/client";
@@ -79,8 +80,9 @@ export function CycleDetailScreen({ groupId }: CycleDetailScreenProps) {
 
   if (cycle === undefined) {
     return (
-      <div className="flex flex-1 items-center justify-center">
-        <p className="text-[0.95rem] text-ink-secondary">Chajman...</p>
+      <div className="flex flex-1 flex-col items-center justify-center gap-3">
+        <Skeleton className="h-4 w-40" />
+        <Skeleton className="h-4 w-24" />
       </div>
     );
   }

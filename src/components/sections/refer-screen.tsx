@@ -6,6 +6,7 @@ import { Copy, Check } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { ListSkeleton } from "@/components/ui/list-skeleton";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
 import { createClient } from "@/lib/supabase/client";
 
@@ -97,7 +98,7 @@ export function ReferScreen() {
           </div>
           <div className="flex flex-col rounded-lg bg-surface-muted">
             {invites === null ? (
-              <p className="px-4 py-6 text-center text-[0.9rem] text-ink-secondary">Chajman...</p>
+              <ListSkeleton rows={2} />
             ) : invites.length === 0 ? (
               <p className="px-4 py-6 text-center text-[0.9rem] text-ink-secondary">
                 Ou poko envite pèsonn.

@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import { Check, Plus } from "lucide-react";
 import { AssetIcon } from "@/components/ui/asset-icon";
+import { ListSkeleton } from "@/components/ui/list-skeleton";
 import { StepProgressBar } from "@/components/ui/step-progress-bar";
 import { PillButton } from "@/components/ui/pill-button";
 import { cn } from "@/lib/utils";
@@ -88,18 +89,19 @@ export function GroupCreateMembersScreen() {
             Konekte pou envite manm.
           </p>
         ) : candidates === null ? (
-          <p className="py-6 text-center text-[0.9rem] text-ink-secondary">Chajman...</p>
+          <ListSkeleton rows={3} />
         ) : candidates.length === 0 ? (
           <p className="py-6 text-center text-[0.9rem] text-ink-secondary">
             Pa gen lòt itilizatè Sòlid pou envite kounye a.
           </p>
         ) : (
-          candidates.map((contact) => {
+          candidates.map((contact, index) => {
             const isInvited = invited.includes(contact.id);
             return (
               <div
                 key={contact.id}
-                className="flex items-center gap-3 border-b border-border py-3 last:border-b-0"
+                className="stagger-item flex items-center gap-3 border-b border-border py-3 last:border-b-0"
+                style={{ "--stagger-index": index } as CSSProperties}
               >
                 <span
                   className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-base font-bold text-white"

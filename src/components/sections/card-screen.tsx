@@ -6,6 +6,7 @@ import Image from "next/image";
 import { CopyPlus } from "lucide-react";
 import { GroupCard } from "@/components/ui/group-card";
 import { CircleEmptyIcon } from "@/components/ui/circle-empty-icon";
+import { ListSkeleton } from "@/components/ui/list-skeleton";
 import { cn, formatHtg } from "@/lib/utils";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
 import { createClient } from "@/lib/supabase/client";
@@ -205,7 +206,7 @@ export function CardScreen() {
             <p className="text-[0.95rem] text-ink-secondary">Konekte pou wè sik ou yo.</p>
           </div>
         ) : myGroups === null ? (
-          <p className="py-8 text-center text-[0.95rem] text-ink-secondary">Chajman...</p>
+          <ListSkeleton rows={2} />
         ) : list.length > 0 ? (
           <div className="flex flex-col gap-3">
             {list.map(({ id, ...circle }, index) => (
@@ -243,6 +244,7 @@ export function CardScreen() {
       {tab === "active" && authUserId && (recommended === null || recommended.length > 0) && (
         <div className="flex flex-col gap-3">
           <h2 className="text-[1.05rem] font-bold text-ink">Rekòmande pou ou</h2>
+          {recommended === null && <ListSkeleton rows={2} />}
           <div className="flex flex-col gap-3">
             {(recommended ?? []).map(({ id, ...circle }, index) => (
               <div key={id} className="stagger-item" style={{ "--stagger-index": index } as CSSProperties}>
