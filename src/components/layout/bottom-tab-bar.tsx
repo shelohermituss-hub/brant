@@ -63,9 +63,7 @@ export function BottomTabBar({ tone = "light" }: BottomTabBarProps) {
           );
         })}
       </div>
-      <div className="flex justify-center pb-[max(0.5rem,env(safe-area-inset-bottom))]">
-        <div className={cn("h-[5px] w-32 rounded-full", isDark ? "bg-white" : "bg-ink")} />
-      </div>
+      <div className="pb-[max(0.5rem,env(safe-area-inset-bottom))]" />
     </nav>
   );
 }
