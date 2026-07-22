@@ -36,7 +36,7 @@ export function AddCashSuccessScreen({ variant = "deposit" }: AddCashSuccessScre
           : "Ou mete 5 000 HTG nan Sòlid ou"}
       </p>
 
-      <div className="mt-auto flex flex-col gap-4 rounded-lg border border-border p-5">
+      <div className="mt-auto flex flex-col gap-4 rounded-lg border border-border bg-white p-5">
         <div className="relative mx-auto flex aspect-[16/9] w-full max-w-[220px] items-center justify-center">
           {isCycleComplete ? (
             <SoleyBurst />

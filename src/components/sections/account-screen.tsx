@@ -13,6 +13,7 @@ import {
   Globe,
   Gift,
   BadgeCheck,
+  SunMoon,
 } from "lucide-react";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { PillButton } from "@/components/ui/pill-button";
@@ -202,6 +203,11 @@ export function AccountScreen() {
           icon={ArrowDownToLine}
           label="Limit kont"
           onClick={() => router.push("/account/limits")}
+        />
+        <SettingsListRow
+          icon={SunMoon}
+          label="Aparans"
+          onClick={() => router.push("/account/appearance")}
         />
         <SettingsListRow
           icon="notifications"

@@ -137,7 +137,7 @@ export function HistoryScreen() {
         </p>
       ) : contributions !== null && payouts !== null && contributions.length === 0 && payouts.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-4 px-8 pb-12 text-center">
-          <div className="relative aspect-[16/9] w-full max-w-[280px]">
+          <div className="relative aspect-[16/9] w-full max-w-[280px] rounded-lg bg-white">
             <Image
               src="/images/illustration-empty-history.png"
               alt=""

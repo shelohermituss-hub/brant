@@ -45,7 +45,7 @@ export function WalletTransferSuccessScreen({
         {content.title(formatHtg(amount))}
       </p>
 
-      <div className="mt-auto flex flex-col gap-4 rounded-lg border border-border p-5">
+      <div className="mt-auto flex flex-col gap-4 rounded-lg border border-border bg-white p-5">
         <div className="relative mx-auto flex aspect-[16/9] w-full max-w-[220px] items-center justify-center">
           <Image
             src="/images/illustration-wallet-transfer-success.png"

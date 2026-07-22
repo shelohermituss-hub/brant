@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import { PageTransition } from "@/components/layout/page-transition";
 import "./globals.css";
 
@@ -26,11 +27,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${dmSans.variable} h-full antialiased`}>
+    <html lang="fr" className={`${dmSans.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="h-svh overflow-hidden flex flex-col items-center bg-neutral-200">
-        <div className="w-full max-w-[430px] h-svh bg-surface flex flex-col relative overflow-hidden">
-          <PageTransition>{children}</PageTransition>
-        </div>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <div className="w-full max-w-[430px] h-svh bg-surface flex flex-col relative overflow-hidden">
+            <PageTransition>{children}</PageTransition>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

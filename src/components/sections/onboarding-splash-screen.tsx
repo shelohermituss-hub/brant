@@ -61,7 +61,7 @@ export function OnboardingSplashScreen() {
             key={slide.title}
             className="flex w-full shrink-0 snap-center flex-col items-center justify-center gap-6 px-8"
           >
-            <div className="relative h-56 w-56">
+            <div className="relative h-56 w-56 rounded-full bg-white">
               <Image src={slide.image} alt="" fill className="object-contain" priority />
             </div>
             <div className="flex flex-col items-center gap-2 text-center">

@@ -90,7 +90,7 @@ export function HomeScreen() {
 
         <SurfaceCard className="flex flex-col gap-4">
           <CardTitle label="Buy bitcoin" />
-          <div className="relative -mx-1 -mb-1 aspect-square overflow-hidden rounded-md">
+          <div className="relative -mx-1 -mb-1 aspect-square overflow-hidden rounded-md bg-white">
             <Image
               src="/images/illustration-bitcoin.png"
               alt="Buy bitcoin"
@@ -102,7 +102,7 @@ export function HomeScreen() {
 
         <SurfaceCard as={Link} href="/stocks" className="flex flex-col gap-4">
           <CardTitle label="Invest in stocks" interactive />
-          <div className="relative -mx-1 -mb-1 aspect-square overflow-hidden rounded-md">
+          <div className="relative -mx-1 -mb-1 aspect-square overflow-hidden rounded-md bg-white">
             <Image
               src="/images/illustration-stocks.png"
               alt="Invest in stocks"
@@ -114,7 +114,7 @@ export function HomeScreen() {
 
         <SurfaceCard className="flex flex-col gap-4">
           <CardTitle label="Free tax filing" />
-          <div className="relative -mx-1 -mb-1 aspect-square overflow-hidden rounded-md">
+          <div className="relative -mx-1 -mb-1 aspect-square overflow-hidden rounded-md bg-white">
             <Image
               src="/images/illustration-tax-filing.png"
               alt="Free tax filing"
