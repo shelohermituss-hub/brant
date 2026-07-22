@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { PageTransition } from "@/components/layout/page-transition";
+import { LaunchSplash } from "@/components/layout/launch-splash";
 import { RegisterServiceWorker } from "@/components/pwa/register-service-worker";
 import "./globals.css";
 
@@ -51,6 +52,7 @@ export default function RootLayout({
           <div className="w-full max-w-[430px] h-svh bg-surface flex flex-col relative overflow-hidden pt-[env(safe-area-inset-top)]">
             <RegisterServiceWorker />
             <PageTransition>{children}</PageTransition>
+            <LaunchSplash />
           </div>
         </ThemeProvider>
       </body>

@@ -43,6 +43,7 @@
   --color-green: #9fe870; /* Button.png — CTA pleins, texte foncé associé */
   --color-green-bright: #01d651; /* Chip.png — pastilles/chips, texte accentué */
   --color-green-deep: #00b743; /* Pay amount.png — fond plein écran + texte/bordures "vert" sur fond clair */
+  --color-spinner-highlight: #39e600; /* Logo officiel fourni par l'utilisateur — point mis en avant du spinner de l'écran de lancement */
   --color-blue: #2d65db;
   --color-purple: #8420f4; /* confirmé exact par la rampe Figma */
   --color-orange: #ee9d44;
@@ -157,6 +158,7 @@
   --color-green: var(--color-green);
   --color-green-bright: var(--color-green-bright);
   --color-green-deep: var(--color-green-deep);
+  --color-spinner-highlight: var(--color-spinner-highlight);
   --color-blue: var(--color-blue);
   --color-purple: var(--color-purple);
   --color-orange: var(--color-orange);
@@ -524,4 +526,41 @@
   height: 4px;
   border-radius: var(--radius-full);
   background: var(--color-green);
+}
+
+/*
+ * Spinner de l'écran de lancement (LaunchSplash) — reprend le motif du
+ * logo officiel fourni par l'utilisateur (anneau de 8 points, un point
+ * mis en avant qui tourne). Chaque point rejoue le même keyframe avec
+ * un délai décalé (--dot-index posé en inline style par le composant),
+ * même mécanique que .burst-ray/.stagger-item plus haut.
+ */
+@keyframes splash-dot-pulse {
+  0%,
+  100% {
+    background: var(--color-green-bright);
+    transform: scale(1);
+  }
+  12.5% {
+    background: var(--color-spinner-highlight);
+    transform: scale(1.15);
+  }
+  25% {
+    background: var(--color-green-bright);
+    transform: scale(1);
+  }
+}
+
+.splash-dot {
+  animation: splash-dot-pulse 1.6s var(--ease-out) infinite;
+  animation-delay: calc(var(--dot-index, 0) * -200ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-dot {
+    animation: none;
+  }
+  .splash-dot:first-child {
+    background: var(--color-spinner-highlight);
+  }
 }
