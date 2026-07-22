@@ -22,6 +22,11 @@ const SLIDES = [
     title: "Lajan ou an Sekirite",
     subtitle: "Wallet ou pwoteje ak yon kòd PIN, tout tranzaksyon swiv.",
   },
+  {
+    image: "/images/illustration-onboarding-moncash.png",
+    title: "Konekte ak MonCash",
+    subtitle: "Peman ak vèsman ou yo pase dirèkteman nan kont MonCash ou.",
+  },
 ];
 
 export function OnboardingSplashScreen() {

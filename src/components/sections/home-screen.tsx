@@ -36,37 +36,47 @@ export function HomeScreen() {
         </Link>
       </header>
 
-      <SurfaceCard className="flex flex-col gap-7">
-        <div className="flex items-start justify-between">
-          <span className="text-lg font-bold text-ink">Balans Wallet</span>
-          <Link
-            href="/payment-hub/wallet"
-            className="flex items-center gap-0.5 text-sm text-ink-secondary"
-          >
-            Detay
-            <AssetIcon name="chevron-right" size={14} />
-          </Link>
+      <div className="relative pt-7">
+        <div className="absolute inset-x-0 top-0 h-[104px] overflow-hidden rounded-2xl" aria-hidden="true">
+          <Image
+            src="/images/illustration-balance-accent.png"
+            alt=""
+            fill
+            className="object-cover object-[right_bottom]"
+          />
         </div>
-        <p className="text-[2.75rem] leading-none font-bold text-ink">
-          {formatHtg(profile?.wallets?.balance ?? 0)}
-        </p>
-        <div className="flex gap-3">
-          <PillButton
-            variant="secondary"
-            href="/payment-hub/wallet/deposit"
-            className="h-12 flex-1 text-[0.95rem]"
-          >
-            Ajoute lajan
-          </PillButton>
-          <PillButton
-            variant="secondary"
-            href="/payment-hub/wallet/transfer"
-            className="h-12 flex-1 text-[0.95rem]"
-          >
-            Retire lajan
-          </PillButton>
-        </div>
-      </SurfaceCard>
+        <SurfaceCard className="relative flex flex-col gap-7">
+          <div className="flex items-start justify-between">
+            <span className="text-lg font-bold text-ink">Balans Wallet</span>
+            <Link
+              href="/payment-hub/wallet"
+              className="flex items-center gap-0.5 text-sm text-ink-secondary"
+            >
+              Detay
+              <AssetIcon name="chevron-right" size={14} />
+            </Link>
+          </div>
+          <p className="text-[2.75rem] leading-none font-bold text-ink">
+            {formatHtg(profile?.wallets?.balance ?? 0)}
+          </p>
+          <div className="flex gap-3">
+            <PillButton
+              variant="secondary"
+              href="/payment-hub/wallet/deposit"
+              className="h-12 flex-1 text-[0.95rem]"
+            >
+              Ajoute lajan
+            </PillButton>
+            <PillButton
+              variant="secondary"
+              href="/payment-hub/wallet/transfer"
+              className="h-12 flex-1 text-[0.95rem]"
+            >
+              Retire lajan
+            </PillButton>
+          </div>
+        </SurfaceCard>
+      </div>
 
       <div className="grid grid-cols-2 gap-3">
         <SurfaceCard className="flex flex-col gap-4">

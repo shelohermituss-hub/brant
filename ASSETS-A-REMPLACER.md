@@ -22,15 +22,18 @@ screenshot en basse résolution, généré par IA, ou approximé) et qui devra
 | 5 | Splash/onboarding — slide 1 | Carrousel "Rejwenn yon Sòl Fasilman" | `public/images/illustration-onboarding-group.png` | ✅ Généré (modèle `nano_banana_2`/`nano_banana_flash`, style 3D glossy demandé explicitement par l'utilisateur suite à des captures de référence) |
 | 6 | Splash/onboarding — slide 2 | Carrousel "Swiv Peman ou yo" | `public/images/illustration-onboarding-wallet.png` | ✅ Généré |
 | 7 | Splash/onboarding — slide 3 | Carrousel "Lajan ou an Sekirite" | `public/images/illustration-onboarding-shield.png` | ✅ Généré |
+| 8 | Splash/onboarding — slide 4 | Carrousel "Konekte ak MonCash" | `public/images/illustration-onboarding-moncash.png` | ✅ Généré (même style 3D glossy que #5-7, palette vert/orange) |
+| 9 | Home + Wallet detail | Bande décorative derrière la carte de solde ("Balans Wallet" / "Balans disponib") | `public/images/illustration-balance-accent.png` | ✅ Généré (format large 21:9, pièces + portefeuille 3D glossy sur fond vert, cadré `object-position: right bottom` pour que le motif dépasse dans la zone visible) |
 
-Les visuels #5-7 rompent délibérément avec le style trait-fin/étincelles vert
+Les visuels #5-9 rompent délibérément avec le style trait-fin/étincelles vert
 des visuels #1-4 : l'utilisateur a fourni des captures de référence (kit
 "Registration UI templates") montrant des illustrations 3D glossy et a
-explicitement demandé cette esthétique pour le carrousel d'onboarding.
-Palette recolorée aux tokens Sòlid (vert/cyan, vert/violet, vert/bleu) au
-lieu des couleurs orange/violet/noir de la référence.
+explicitement demandé cette esthétique pour le carrousel d'onboarding et,
+plus tard, pour la carte décorative derrière le solde. Palette recolorée
+aux tokens Sòlid (vert/cyan, vert/violet, vert/bleu, vert/orange) au lieu
+des couleurs orange/violet/noir/lime des références.
 
-Ces 7 visuels sont des approximations/générations IA (jamais l'original) — à remplacer
+Ces 9 visuels sont des approximations/générations IA (jamais l'original) — à remplacer
 si l'utilisateur fournit les assets officiels Cash App un jour.
 
 ## Icônes UI (chevrons, card, search, history, notifications, gift, user, cross, arrow, scan)

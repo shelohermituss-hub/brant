@@ -86,8 +86,15 @@ export function WalletDetailScreen() {
         <span className="w-[22px]" />
       </div>
 
-      <div className="relative px-4 pt-6 pb-2">
-        <div className="absolute inset-x-4 top-0 h-20 rounded-2xl bg-green-bright" aria-hidden="true" />
+      <div className="relative px-4 pt-11 pb-2">
+        <div className="absolute inset-x-4 top-0 h-[104px] overflow-hidden rounded-2xl" aria-hidden="true">
+          <Image
+            src="/images/illustration-balance-accent.png"
+            alt=""
+            fill
+            className="object-cover object-[right_bottom]"
+          />
+        </div>
         <SurfaceCard className="relative flex flex-col items-center gap-1 py-6 text-center">
           <span className="relative flex h-14 w-14 items-center justify-center">
             <Image src="/images/icon-wallet-solid.png" alt="" fill className="object-contain" />
