@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import { PageTransition } from "@/components/layout/page-transition";
-import { LaunchSplash } from "@/components/layout/launch-splash";
+import { AppShell } from "@/components/layout/app-shell";
 import { RegisterServiceWorker } from "@/components/pwa/register-service-worker";
 import "./globals.css";
 
@@ -49,11 +48,8 @@ export default function RootLayout({
     <html lang="fr" className={`${dmSans.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="h-svh overflow-hidden flex flex-col items-center bg-neutral-200">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <div className="w-full max-w-[430px] h-svh bg-surface flex flex-col relative overflow-hidden pt-[env(safe-area-inset-top)]">
-            <RegisterServiceWorker />
-            <PageTransition>{children}</PageTransition>
-            <LaunchSplash />
-          </div>
+          <RegisterServiceWorker />
+          <AppShell>{children}</AppShell>
         </ThemeProvider>
       </body>
     </html>
