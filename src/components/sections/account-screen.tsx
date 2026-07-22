@@ -14,6 +14,7 @@ import {
   Gift,
   BadgeCheck,
   SunMoon,
+  LayoutDashboard,
 } from "lucide-react";
 import { SurfaceCard } from "@/components/ui/surface-card";
 import { PillButton } from "@/components/ui/pill-button";
@@ -174,6 +175,25 @@ export function AccountScreen() {
           </div>
         </SurfaceCard>
       </div>
+
+      {profile?.role === "admin" && (
+        <div className="px-4 pb-6">
+          <SurfaceCard
+            as="button"
+            type="button"
+            onClick={() => router.push("/admin")}
+            className="flex w-full items-center gap-4 text-left"
+          >
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink">
+              <LayoutDashboard className="text-surface" size={22} />
+            </span>
+            <div className="flex flex-1 flex-col">
+              <span className="text-[0.95rem] font-bold text-ink">Dashboard admin</span>
+              <span className="text-sm text-ink-secondary">Vizib sèlman pou administratè</span>
+            </div>
+          </SurfaceCard>
+        </div>
+      )}
 
       <div className="bg-surface-muted px-5 py-2">
         <span className="text-xs font-semibold tracking-wide text-ink-secondary">
