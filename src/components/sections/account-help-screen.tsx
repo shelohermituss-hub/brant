@@ -6,13 +6,12 @@ import { SettingsListRow } from "@/components/ui/settings-list-row";
 import { AssetIcon } from "@/components/ui/asset-icon";
 
 const ARTICLES = [
-  "Can't Access Old Account",
-  "Security & Privacy",
-  "View Your Limits",
-  "Provide Requested Documentation",
-  "Non itilizatè",
-  "Loyalty Points and Rewards",
-  "Pwoteksyon fon [A VALIDER - BRH]",
+  "Kijan pou antre nan yon sòl",
+  "Kijan kotizasyon ak vèsman mache",
+  "Konekte nimewo MonCash ou",
+  "Sekirite ak kòd PIN wallet la",
+  "Dokiman ki nesesè pou konfime idantite ou",
+  "Kontakte sipò",
 ];
 
 export function AccountHelpScreen() {
@@ -30,11 +29,9 @@ export function AccountHelpScreen() {
       </div>
 
       <div className="flex flex-col gap-3 px-5 pt-4 pb-6">
-        <h1 className="text-[1.9rem] leading-tight font-bold text-ink">
-          Account &amp; Settings
-        </h1>
+        <h1 className="text-[1.9rem] leading-tight font-bold text-ink">Èd</h1>
         <p className="text-[0.95rem] text-ink-secondary">
-          Learn how to manage your info, profile, and security settings.
+          Aprann jere enfòmasyon, pwofil, ak reglaj sekirite ou.
         </p>
       </div>
 
