@@ -27,7 +27,6 @@ const backgroundByVariant: Record<PillButtonVariant, string> = {
 };
 
 const lightTextVariants: PillButtonVariant[] = [
-  "primary",
   "blue",
   "purple",
   "orange",

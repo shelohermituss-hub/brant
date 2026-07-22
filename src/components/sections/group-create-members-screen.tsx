@@ -118,7 +118,7 @@ export function GroupCreateMembersScreen() {
                   onClick={() => toggle(contact.id)}
                   className={cn(
                     "flex h-9 items-center gap-1 rounded-full px-4 text-[0.85rem] font-bold",
-                    isInvited ? "bg-green/10 text-green" : "bg-green text-white"
+                    isInvited ? "bg-green-deep/10 text-green-deep" : "bg-green text-ink"
                   )}
                 >
                   {isInvited ? (

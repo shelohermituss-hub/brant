@@ -37,7 +37,7 @@ export function SecurityPrivacyScreen() {
             <span
               className={cn(
                 "text-sm font-bold",
-                securityLock ? "text-green" : "text-ink-secondary"
+                securityLock ? "text-green-deep" : "text-ink-secondary"
               )}
             >
               {securityLock ? "On" : "Off"}
@@ -65,7 +65,7 @@ export function SecurityPrivacyScreen() {
           <button
             type="button"
             onClick={() => router.push("/pin/setup")}
-            className="text-[1.05rem] font-bold text-green"
+            className="text-[1.05rem] font-bold text-green-deep"
           >
             Chanje kòd PIN
           </button>
@@ -86,7 +86,7 @@ export function SecurityPrivacyScreen() {
 
         <div className="flex items-center gap-3 border-b border-border pb-4">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green">
-            <Smartphone className="text-white" size={20} />
+            <Smartphone className="text-ink" size={20} />
           </span>
           <div className="flex flex-col">
             <span className="text-[0.95rem] font-bold text-ink">

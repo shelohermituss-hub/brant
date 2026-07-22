@@ -36,11 +36,11 @@ export function PaymentDetailsScreen() {
         </p>
       ) : (
         <div className="flex items-center gap-3 border-t border-b border-border px-5 py-4">
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-green bg-green">
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-green bg-green text-ink">
             <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
               <path
                 d="M1 4.5L4.2 7.5L11 1"
-                stroke="white"
+                stroke="currentColor"
                 strokeWidth={1.6}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -48,7 +48,7 @@ export function PaymentDetailsScreen() {
             </svg>
           </span>
 
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green text-base font-bold text-white">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green text-base font-bold text-ink">
             M
           </span>
 

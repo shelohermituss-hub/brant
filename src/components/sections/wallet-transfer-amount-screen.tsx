@@ -69,7 +69,7 @@ export function WalletTransferAmountScreen() {
           onClick={() => router.push("/payment-hub/wallet")}
           aria-label="Fermer"
         >
-          <X className="text-green" size={26} strokeWidth={2.5} />
+          <X className="text-green-deep" size={26} strokeWidth={2.5} />
         </button>
       </div>
 

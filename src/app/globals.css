@@ -29,18 +29,26 @@
   --color-placeholder: var(--color-gray-400);
   --color-overlay-scrim: rgb(0 0 0 / 40%); /* fond assombri derrière sheet/modal */
 
-  /* Marque — 3 verts distincts confirmés par la rampe Figma */
-  --color-green: #01c248; /* Button.png — CTA pleins (Add Cash, Continue, Next...) */
+  /* Marque — vert principal recoloré vert lime façon Wise (demande explicite
+     de l'utilisateur). Les fonds pleins (CTA, badges, pills actives) passent
+     au lime, toujours associés à du texte foncé (--color-ink) pour le
+     contraste. --color-green-deep reste l'ancien vert vif : conservé tel
+     quel pour les écrans de paiement plein écran (règle explicite) ET
+     réutilisé pour le texte/bordures "vert" sur fond clair, où un lime
+     clair serait illisible. */
+  --color-green: #9fe870; /* Button.png — CTA pleins, texte foncé associé */
   --color-green-bright: #01d651; /* Chip.png — pastilles/chips, texte accentué */
-  --color-green-deep: #00b743; /* Pay amount.png — fond plein écran */
+  --color-green-deep: #00b743; /* Pay amount.png — fond plein écran + texte/bordures "vert" sur fond clair */
   --color-blue: #2d65db;
   --color-purple: #8420f4; /* confirmé exact par la rampe Figma */
   --color-orange: #ee9d44;
   --color-cyan: #05d7f7; /* confirmé exact par la rampe Figma */
   --color-red: #e5504f;
 
-  /* Statuts de paiement (Sòlid) — dérivés de la palette existante, voir DESIGN.md §3.1 */
-  --color-paid: var(--color-green);
+  /* Statuts de paiement (Sòlid) — dérivés de la palette existante, voir DESIGN.md §3.1.
+     "paid" reste calé sur green-deep (pas green) : c'est un texte/badge sur fond
+     clair, un lime clair y serait illisible. */
+  --color-paid: var(--color-green-deep);
   --color-wait: var(--color-orange);
   --color-late: var(--color-red);
 
@@ -93,7 +101,7 @@
   --popover: var(--color-surface);
   --popover-foreground: var(--color-ink);
   --primary: var(--color-green);
-  --primary-foreground: #ffffff;
+  --primary-foreground: var(--color-ink);
   --secondary: var(--color-surface-muted);
   --secondary-foreground: var(--color-ink);
   --muted: var(--color-surface-muted);

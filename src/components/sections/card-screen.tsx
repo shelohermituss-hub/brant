@@ -160,7 +160,7 @@ export function CardScreen() {
             aria-label="Kreye yon sòl"
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green transition-transform duration-[var(--duration-tap)] ease-[var(--ease-out)] active:scale-[0.97] motion-reduce:active:scale-100"
           >
-            <CopyPlus className="text-white" size={22} strokeWidth={2.5} />
+            <CopyPlus className="text-ink" size={22} strokeWidth={2.5} />
           </Link>
           <Link
             href="/account"
@@ -180,7 +180,7 @@ export function CardScreen() {
           onClick={() => setTab("active")}
           className={cn(
             "h-11 flex-1 rounded-full text-[0.95rem] font-bold transition-[color,background-color,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97]",
-            tab === "active" ? "bg-green text-white" : "bg-surface text-ink"
+            tab === "active" ? "bg-green text-ink" : "bg-surface text-ink"
           )}
         >
           Aktif
@@ -190,7 +190,7 @@ export function CardScreen() {
           onClick={() => setTab("finished")}
           className={cn(
             "h-11 flex-1 rounded-full text-[0.95rem] font-bold transition-[color,background-color,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97]",
-            tab === "finished" ? "bg-green text-white" : "bg-surface text-ink"
+            tab === "finished" ? "bg-green text-ink" : "bg-surface text-ink"
           )}
         >
           Fini

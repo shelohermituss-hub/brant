@@ -74,13 +74,13 @@ export function GroupCreateDurationScreen() {
             onClick={() => setDuration(months)}
             className={cn(
               "flex flex-1 flex-col items-center gap-2 rounded-lg border p-4",
-              duration === months ? "border-green bg-green/5" : "border-border-strong bg-surface"
+              duration === months ? "border-green-deep bg-green-deep/5" : "border-border-strong bg-surface"
             )}
           >
             <span
               className={cn(
                 "text-2xl font-bold",
-                duration === months ? "text-green" : "text-ink"
+                duration === months ? "text-green-deep" : "text-ink"
               )}
             >
               {months}
@@ -106,7 +106,7 @@ export function GroupCreateDurationScreen() {
               onClick={() => setFrequency(option.key)}
               className={cn(
                 "flex-1 rounded-full px-3 py-2 text-[0.85rem] font-bold",
-                frequency === option.key ? "bg-green text-white" : "bg-surface-muted text-ink"
+                frequency === option.key ? "bg-green text-ink" : "bg-surface-muted text-ink"
               )}
             >
               {option.label}

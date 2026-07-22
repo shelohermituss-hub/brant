@@ -21,7 +21,7 @@ export function CheckboxRow({ label, checked, onToggle, trailing, readOnly = fal
         checked ? "border-green bg-green" : "border-border-strong bg-transparent"
       )}
     >
-      {checked && <Check className="text-white" size={16} strokeWidth={3} />}
+      {checked && <Check className="text-ink" size={16} strokeWidth={3} />}
     </span>
   );
 

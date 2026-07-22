@@ -34,7 +34,7 @@ export function GroupCard({
       <div className="flex items-start justify-between gap-3">
         <p className="text-[1.6rem] leading-none font-bold text-ink">{potAmount}</p>
         {joined ? (
-          <span className="pt-1 text-[0.95rem] font-bold text-green">Konfime</span>
+          <span className="pt-1 text-[0.95rem] font-bold text-green-deep">Konfime</span>
         ) : requested ? (
           <span className="pt-1 text-[0.95rem] font-bold text-wait">An atant apwobasyon</span>
         ) : (
@@ -49,7 +49,7 @@ export function GroupCard({
       </div>
 
       <p className="text-[0.95rem]">
-        <span className="font-bold text-green">{contribution}</span>
+        <span className="font-bold text-green-deep">{contribution}</span>
         <span className="text-ink-secondary"> / mwa</span>
       </p>
 

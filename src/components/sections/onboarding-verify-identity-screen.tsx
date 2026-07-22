@@ -65,7 +65,7 @@ export function OnboardingVerifyIdentityScreen() {
   return (
     <div className="flex flex-1 flex-col overflow-y-auto px-5 pt-4 pb-6">
       <span className="mt-6 flex h-14 w-14 items-center justify-center rounded-md bg-green">
-        <Shield className="text-white" size={26} />
+        <Shield className="text-ink" size={26} />
       </span>
 
       <h1 className="pt-6 text-[1.6rem] leading-tight font-bold text-ink">
@@ -81,7 +81,7 @@ export function OnboardingVerifyIdentityScreen() {
       <div className="mt-auto flex flex-col gap-6">
         <p className="text-center text-[0.85rem] text-ink-secondary">
           Lè ou peze &quot;Kontinye&quot;, ou dakò ak{" "}
-          <span className="text-green">règleman konfidansyalite yo</span>.
+          <span className="text-green-deep">règleman konfidansyalite yo</span>.
         </p>
 
         <PillButton

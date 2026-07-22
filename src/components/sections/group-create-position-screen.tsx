@@ -56,7 +56,7 @@ export function GroupCreatePositionScreen() {
         la konfime lè ou fin envite manm yo, paske li depann de kantite manm final.
       </p>
 
-      <div className="flex flex-col gap-3 pt-6 rounded-lg border border-green bg-green/5 p-4">
+      <div className="flex flex-col gap-3 pt-6 rounded-lg border border-green-deep bg-green-deep/5 p-4">
         <span className="text-[0.95rem] font-bold text-ink">
           {minAtSmallest === null
             ? "Kalkil..."

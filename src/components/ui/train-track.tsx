@@ -97,7 +97,7 @@ export function TrainTrack({ stations, variant = "detailed", nowTooltip, classNa
 
             {isCompact && isNow && nowTooltip && (
               <span className="absolute bottom-full left-1/2 mb-2 flex -translate-x-1/2 flex-col items-center">
-                <span className="rounded-md bg-green px-2 py-1 text-xs font-bold whitespace-nowrap text-white">
+                <span className="rounded-md bg-green px-2 py-1 text-xs font-bold whitespace-nowrap text-ink">
                   {nowTooltip}
                 </span>
                 <span className="h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-green" />

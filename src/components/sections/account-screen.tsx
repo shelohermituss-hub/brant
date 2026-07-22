@@ -165,7 +165,7 @@ export function AccountScreen() {
           className="flex w-full items-center gap-4 text-left"
         >
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green">
-            <PlusCircle className="text-white" size={22} />
+            <PlusCircle className="text-ink" size={22} />
           </span>
           <div className="flex flex-1 flex-col">
             <span className="text-[0.95rem] font-bold text-ink">Envite zanmi ou</span>

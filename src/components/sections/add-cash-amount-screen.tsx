@@ -30,7 +30,7 @@ export function AddCashAmountScreen() {
           onClick={() => router.push("/add-cash")}
           aria-label="Fermer"
         >
-          <X className="text-green" size={26} strokeWidth={2.5} />
+          <X className="text-green-deep" size={26} strokeWidth={2.5} />
         </button>
       </div>
 
