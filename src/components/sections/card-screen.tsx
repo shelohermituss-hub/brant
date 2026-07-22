@@ -10,6 +10,7 @@ import { ListSkeleton } from "@/components/ui/list-skeleton";
 import { cn, formatHtg } from "@/lib/utils";
 import { useCurrentAppUser } from "@/lib/use-current-app-user";
 import { createClient } from "@/lib/supabase/client";
+import { collectionFeeRateFor } from "@/lib/merchant-tiers";
 
 interface GroupCardData {
   id: string;
@@ -24,8 +25,6 @@ interface GroupCardData {
 }
 
 const ACTIVE_STATES = ["active", "collecting", "pot_ready", "pot_sent", "next_month"];
-const COLLECTION_FEE_RATE_BRONZE = 0.005;
-const COLLECTION_FEE_RATE_SILVER_GOLD = 0.02;
 
 function formatMonth(date: Date) {
   const label = new Intl.DateTimeFormat("fr-FR", { month: "short", year: "numeric" }).format(date);
@@ -33,8 +32,7 @@ function formatMonth(date: Date) {
 }
 
 function estimateAdminFees(monthlyAmount: number, totalMembers: number, tier: string | null) {
-  const rate = tier === "bronze" || !tier ? COLLECTION_FEE_RATE_BRONZE : COLLECTION_FEE_RATE_SILVER_GOLD;
-  return Math.round(monthlyAmount * rate) * totalMembers;
+  return Math.round(monthlyAmount * collectionFeeRateFor(tier)) * totalMembers;
 }
 
 export function CardScreen() {

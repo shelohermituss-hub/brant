@@ -181,12 +181,16 @@ export function AccountScreen() {
       </div>
 
       <div className="flex flex-col bg-surface">
-        <SettingsListRow icon="user" label="Pèsonèl" showChevron={false} />
+        <SettingsListRow
+          icon="user"
+          label="Pèsonèl"
+          onClick={() => router.push("/account/personal")}
+        />
         <SettingsListRow
           icon={BadgeCheck}
           label="Kategori kont"
           badge={profile ? TIER_LABEL[profile.merchant_tier] : undefined}
-          showChevron={false}
+          onClick={() => router.push("/account/tier")}
         />
         <SettingsListRow
           icon={Shield}
@@ -194,7 +198,11 @@ export function AccountScreen() {
           onClick={() => router.push("/account/security")}
         />
         <SettingsListRow icon={Globe} label="Lang" badge="Kreyòl" showChevron={false} />
-        <SettingsListRow icon={ArrowDownToLine} label="Limit kont" showChevron={false} />
+        <SettingsListRow
+          icon={ArrowDownToLine}
+          label="Limit kont"
+          onClick={() => router.push("/account/limits")}
+        />
         <SettingsListRow
           icon="notifications"
           label="Notifications"

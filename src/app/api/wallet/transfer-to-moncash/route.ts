@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { MONCASH_TRANSFER_MAX } from "@/lib/moncash-limits";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -17,6 +18,13 @@ export async function POST(request: Request) {
 
   if (!Number.isFinite(amount) || amount <= 0) {
     return NextResponse.json({ error: "Montan pa valid." }, { status: 400 });
+  }
+
+  if (amount > MONCASH_TRANSFER_MAX) {
+    return NextResponse.json(
+      { error: `Ou pa kapab voye plis pase ${MONCASH_TRANSFER_MAX.toLocaleString("fr-FR")} HTG nan yon sèl vèsman.` },
+      { status: 400 }
+    );
   }
 
   const admin = createAdminClient();
