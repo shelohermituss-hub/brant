@@ -430,12 +430,16 @@ export type Database = {
           kyc_status: Database["public"]["Enums"]["kyc_status"]
           merchant_tier: Database["public"]["Enums"]["merchant_tier"]
           moncash_number: string
+          notification_preferences: Json
           phone: string
           referral_code: string
+          require_pin_move_money: boolean
+          require_pin_unlock_app: boolean
           role: Database["public"]["Enums"]["user_role"]
           trust_score: number
           updated_at: string
           username: string | null
+          wallet_pin_hash: string | null
         }
         Insert: {
           avatar_url?: string | null
@@ -446,12 +450,16 @@ export type Database = {
           kyc_status?: Database["public"]["Enums"]["kyc_status"]
           merchant_tier?: Database["public"]["Enums"]["merchant_tier"]
           moncash_number: string
+          notification_preferences?: Json
           phone: string
-          referral_code?: string
+          referral_code: string
+          require_pin_move_money?: boolean
+          require_pin_unlock_app?: boolean
           role?: Database["public"]["Enums"]["user_role"]
           trust_score?: number
           updated_at?: string
           username?: string | null
+          wallet_pin_hash?: string | null
         }
         Update: {
           avatar_url?: string | null
@@ -462,12 +470,16 @@ export type Database = {
           kyc_status?: Database["public"]["Enums"]["kyc_status"]
           merchant_tier?: Database["public"]["Enums"]["merchant_tier"]
           moncash_number?: string
+          notification_preferences?: Json
           phone?: string
           referral_code?: string
+          require_pin_move_money?: boolean
+          require_pin_unlock_app?: boolean
           role?: Database["public"]["Enums"]["user_role"]
           trust_score?: number
           updated_at?: string
           username?: string | null
+          wallet_pin_hash?: string | null
         }
         Relationships: []
       }
@@ -589,6 +601,12 @@ export type Database = {
           type: string
           wallet_id: string
         }
+        SetofOptions: {
+          from: "*"
+          to: "wallet_transactions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       assign_position: {
         Args: { p_group_id: string; p_user_id: string }
@@ -602,11 +620,11 @@ export type Database = {
         Returns: number
       }
       calculate_transfer_fee: { Args: { p_amount: number }; Returns: number }
+      email_exists: { Args: { p_email: string }; Returns: boolean }
+      has_wallet_pin: { Args: never; Returns: boolean }
       is_username_available: { Args: { p_username: string }; Returns: boolean }
       set_wallet_pin: { Args: { p_pin: string }; Returns: undefined }
       verify_wallet_pin: { Args: { p_pin: string }; Returns: boolean }
-      has_wallet_pin: { Args: Record<PropertyKey, never>; Returns: boolean }
-      email_exists: { Args: { p_email: string }; Returns: boolean }
     }
     Enums: {
       contribution_state: "due" | "pending" | "paid" | "late" | "defaulted"

@@ -6,6 +6,7 @@ import { Shield } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { createClient } from "@/lib/supabase/client";
 import { clearOnboardingDraft, readOnboardingDraft } from "@/lib/onboarding-store";
+import type { TablesInsert } from "@/lib/supabase/database.types";
 
 export function OnboardingVerifyIdentityScreen() {
   const router = useRouter();
@@ -36,7 +37,10 @@ export function OnboardingVerifyIdentityScreen() {
         moncash_number: draft.phone ?? "",
         username: draft.username ?? null,
         consent_signed_at: new Date().toISOString(),
-      },
+        // referral_code est généré par le trigger BEFORE INSERT
+        // generate_referral_code_for_new_user tant qu'il est absent/null —
+        // le type généré ne voit pas les triggers, d'où le cast.
+      } as unknown as TablesInsert<"users">,
       { onConflict: "id" }
     );
 
